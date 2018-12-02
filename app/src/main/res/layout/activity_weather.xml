@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/llSunrise"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sunrise_label" />
+
+            <TextView
+                android:id="@+id/tvSunrise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="23:00" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llSunset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sunset_label" />
+
+            <TextView
+                android:id="@+id/tvSunset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="23:00" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llCloud"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cloud_label" />
+
+            <TextView
+                android:id="@+id/tvCloudPercent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="0" />
+
+            <TextView
+                android:id="@+id/tvCloudDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Ясно" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llTemp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/temp_label" />
+
+            <TextView
+                android:id="@+id/tvTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="25" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llTempRange"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/temp_range_label" />
+
+            <TextView
+                android:id="@+id/tvTempMin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="22" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/temp_min_max_delimiter" />
+
+            <TextView
+                android:id="@+id/tvTempMax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="30" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llHumidity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/humidity_label" />
+
+            <TextView
+                android:id="@+id/tvHumidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="0" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llPressure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pressure_label" />
+
+            <TextView
+                android:id="@+id/tvPressure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="760" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llWind"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wind_label" />
+
+            <TextView
+                android:id="@+id/tvWind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="5" />
+
+            <TextView
+                android:id="@+id/tvWindDeg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="90" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llRainfall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rainfall_label" />
+
+            <TextView
+                android:id="@+id/tvRainfall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="без осадков" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
