@@ -10,7 +10,7 @@ import java.util.List;
 
 @InjectViewState
 public class ListCitiesPresenter extends MvpPresenter<ListCitiesView> {
-    List<CitySettings> citySettingsList;
+    private List<CitySettings> citySettingsList;
 
     public ListCitiesPresenter() {
         citySettingsList = new ArrayList<>();

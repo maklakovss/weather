@@ -27,7 +27,7 @@ public class ListCitiesActivity extends MvpAppCompatActivity implements ListCiti
     @BindView(R.id.btnAddCity)
     Button btnAddCity;
 
-    Unbinder binder;
+    private Unbinder binder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

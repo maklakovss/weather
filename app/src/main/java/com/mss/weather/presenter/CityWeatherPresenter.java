@@ -8,7 +8,7 @@ import com.mss.weather.view.models.WeatherData;
 @InjectViewState
 public class CityWeatherPresenter extends MvpPresenter<CityWeatherView> {
 
-    WeatherData weatherData;
+    private WeatherData weatherData;
 
     public void needData() {
         if (weatherData == null) {

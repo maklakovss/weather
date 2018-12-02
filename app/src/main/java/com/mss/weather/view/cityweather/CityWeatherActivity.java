@@ -1,6 +1,7 @@
 package com.mss.weather.view.cityweather;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -65,10 +66,10 @@ public class CityWeatherActivity extends MvpAppCompatActivity implements CityWea
     @BindView(R.id.llRainfall)
     LinearLayout llRainfall;
 
-    Unbinder binder;
+    private Unbinder binder;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@NonNull final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
         binder = ButterKnife.bind(this);
@@ -76,8 +77,8 @@ public class CityWeatherActivity extends MvpAppCompatActivity implements CityWea
     }
 
     @Override
-    public void showWeather(WeatherData weatherData) {
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
+    public void showWeather(@NonNull final WeatherData weatherData) {
+        final SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
         tvSunrise.setText(formatter.format(weatherData.getSunrise()));
         tvSunset.setText(formatter.format(weatherData.getSunset()));
         tvTemp.setText(String.valueOf(weatherData.getTemp()));
