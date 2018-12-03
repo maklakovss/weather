@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -25,7 +25,7 @@ public class ListCitiesActivity extends MvpAppCompatActivity implements ListCiti
     @BindView(R.id.rvCitiesList)
     RecyclerView rvCitiesList;
     @BindView(R.id.btnAddCity)
-    Button btnAddCity;
+    ImageButton btnAddCity;
 
     private Unbinder binder;
 
