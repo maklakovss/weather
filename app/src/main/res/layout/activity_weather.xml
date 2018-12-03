@@ -18,12 +18,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:text="@string/sunrise_label" />
 
             <TextView
                 android:id="@+id/tvSunrise"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 tools:text="23:00" />
         </LinearLayout>
 
@@ -36,12 +38,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:text="@string/sunset_label" />
 
             <TextView
                 android:id="@+id/tvSunset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 tools:text="23:00" />
         </LinearLayout>
 
@@ -54,18 +58,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:text="@string/cloud_label" />
 
             <TextView
                 android:id="@+id/tvCloudPercent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 tools:text="0" />
 
             <TextView
                 android:id="@+id/tvCloudDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 tools:text="Ясно" />
         </LinearLayout>
 
@@ -78,12 +85,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:text="@string/temp_label" />
 
             <TextView
                 android:id="@+id/tvTemp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 tools:text="25" />
         </LinearLayout>
 
@@ -96,23 +105,27 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:text="@string/temp_range_label" />
 
             <TextView
                 android:id="@+id/tvTempMin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 tools:text="22" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:text="@string/temp_min_max_delimiter" />
 
             <TextView
                 android:id="@+id/tvTempMax"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 tools:text="30" />
         </LinearLayout>
 
@@ -125,12 +138,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:text="@string/humidity_label" />
 
             <TextView
                 android:id="@+id/tvHumidity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 tools:text="0" />
         </LinearLayout>
 
@@ -143,12 +158,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:text="@string/pressure_label" />
 
             <TextView
                 android:id="@+id/tvPressure"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 tools:text="760" />
         </LinearLayout>
 
@@ -161,18 +178,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:text="@string/wind_label" />
 
             <TextView
                 android:id="@+id/tvWind"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 tools:text="5" />
 
             <TextView
                 android:id="@+id/tvWindDeg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 tools:text="90" />
         </LinearLayout>
 
@@ -185,12 +205,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:text="@string/rainfall_label" />
 
             <TextView
                 android:id="@+id/tvRainfall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 tools:text="без осадков" />
         </LinearLayout>
 

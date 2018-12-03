@@ -1,19 +1,22 @@
 <resources>
     <string name="app_name">weather</string>
-    <string name="weather">Погода</string>
-    <string name="sunrise_label">Восход</string>
-    <string name="sunset_label">Закат</string>
-    <string name="cloud_label">Облачность</string>
-    <string name="temp_label">Температура</string>
+    <string name="weather">Weather</string>
+    <string name="sunrise_label">Sunrise</string>
+    <string name="sunset_label">Sunset</string>
+    <string name="cloud_label">Cloud</string>
+    <string name="temp_label">Temperature</string>
     <string name="temp_min_max_delimiter">-</string>
-    <string name="temp_range_label">Интервал температур</string>
-    <string name="humidity_label">Влажность</string>
-    <string name="pressure_label">Давление</string>
-    <string name="wind_label">Ветер</string>
-    <string name="snow_label">Снег</string>
-    <string name="rainfall_label">Осадки</string>
-    <string name="city_label">Город</string>
-    <string name="extended_settings_label">Настройка показа погоды</string>
-    <string name="show_temp_label">Температура</string>
-    <string name="add_city_label">Добавить город</string>
+    <string name="temp_range_label">Temperature range</string>
+    <string name="humidity_label">Humidity</string>
+    <string name="pressure_label">Pressure</string>
+    <string name="wind_label">Wind</string>
+    <string name="snow_label">Snow</string>
+    <string name="rainfall_label">Rainfall</string>
+    <string name="city_label">City</string>
+    <string name="extended_settings_label">Settings showing</string>
+    <string name="show_temp_label">Temperature</string>
+    <string name="add_city_label">Add city</string>
+    <string name="show_temp_range">Temperature range</string>
+    <string name="wind_deg_label">Wind direction</string>
+    <string name="save_label">Apply</string>
 </resources>

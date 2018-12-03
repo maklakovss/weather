@@ -8,7 +8,7 @@ import com.mss.weather.view.models.CitySettings;
 @InjectViewState
 public class CitySettingsPresenter extends MvpPresenter<CitySettingsView> {
 
-    CitySettings settings;
+    private CitySettings settings;
 
     public void needSettings() {
         if (settings == null) {
