@@ -1,23 +1,23 @@
 package com.mss.weather.view.listcities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.arellomobile.mvp.MvpAppCompatActivity;
+import com.arellomobile.mvp.MvpFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.mss.weather.R;
 import com.mss.weather.presenter.ListCitiesPresenter;
-import com.mss.weather.view.citysettings.CitySettingsActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class ListCitiesActivity extends MvpAppCompatActivity implements ListCitiesView {
+public class ListCitiesFragment extends MvpFragment implements ListCitiesView {
 
     @InjectPresenter
     ListCitiesPresenter listCitiesPresenter;
@@ -30,20 +30,22 @@ public class ListCitiesActivity extends MvpAppCompatActivity implements ListCiti
     private Unbinder binder;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_cities);
-        binder = ButterKnife.bind(this);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        View layout = inflater.inflate(R.layout.activity_list_cities, container, false);
+        binder = ButterKnife.bind(this, layout);
+        return layout;
     }
 
     @OnClick(R.id.btnAddCity)
     void AddClick(View view) {
-        Intent intent = new Intent(this, CitySettingsActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this, CitySettingsActivity.class);
+        //startActivity(intent);
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         binder.unbind();
         super.onDestroy();
     }

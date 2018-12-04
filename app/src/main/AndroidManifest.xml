@@ -11,7 +11,8 @@
         android:theme="@style/Theme.AppCompat.Light.MyStyle">
         <activity android:name=".view.cityweather.CityWeatherActivity" />
         <activity android:name=".view.citysettings.CitySettingsActivity" />
-        <activity android:name=".view.listcities.ListCitiesActivity">
+        <activity android:name=".view.listcities.ListCitiesFragment" />
+        <activity android:name=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
