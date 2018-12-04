@@ -10,11 +10,11 @@ public class CityWeatherPresenter extends MvpPresenter<CityWeatherView> {
 
     private WeatherData weatherData;
 
-    public void needData() {
-        if (weatherData == null) {
+    public void needData(String cityName) {
+        if (weatherData == null || !cityName.equals(weatherData.getCityName())) {
             //тут запрашиваем данные с сервера
             weatherData = new WeatherData();
-            weatherData.setCityName("test");
+            weatherData.setCityName(cityName);
             weatherData.getSunrise().setHours(6);
             weatherData.getSunrise().setMinutes(0);
             weatherData.getSunrise().setSeconds(0);

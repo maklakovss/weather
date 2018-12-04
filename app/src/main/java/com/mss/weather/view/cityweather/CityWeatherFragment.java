@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.arellomobile.mvp.MvpFragment;
+import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.mss.weather.R;
 import com.mss.weather.presenter.CityWeatherPresenter;
@@ -21,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class CityWeatherFragment extends MvpFragment implements CityWeatherView {
+public class CityWeatherFragment extends MvpAppCompatFragment implements CityWeatherView {
 
     @InjectPresenter
     CityWeatherPresenter cityWeatherPresenter;
@@ -79,7 +79,6 @@ public class CityWeatherFragment extends MvpFragment implements CityWeatherView 
         super.onCreateView(inflater, container, savedInstanceState);
         View layout = inflater.inflate(R.layout.fragment_weather, container, false);
         binder = ButterKnife.bind(this, layout);
-        cityWeatherPresenter.needData();
         return layout;
     }
 
@@ -103,6 +102,10 @@ public class CityWeatherFragment extends MvpFragment implements CityWeatherView 
         } else if (weatherData.getRain() > 0) {
             tvRainfall.setText(String.valueOf(weatherData.getRain()));
         }
+    }
+
+    public void changeCity(String cityName) {
+        cityWeatherPresenter.needData(cityName);
     }
 
     @Override

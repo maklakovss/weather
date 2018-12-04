@@ -10,13 +10,16 @@ import java.util.List;
 
 @InjectViewState
 public class ListCitiesPresenter extends MvpPresenter<ListCitiesView> {
+
     private List<CitySettings> citySettingsList;
+    private int checkedCity;
 
     public ListCitiesPresenter() {
         citySettingsList = new ArrayList<>();
         citySettingsList.add(new CitySettings("Москва"));
         citySettingsList.add(new CitySettings("Санкт-Петербург"));
         citySettingsList.add(new CitySettings("Тюмень"));
+        checkedCity = 0;
     }
 
     public void needCities() {
@@ -24,6 +27,10 @@ public class ListCitiesPresenter extends MvpPresenter<ListCitiesView> {
         for (int i = 0; i < citySettingsList.size(); i++) {
             cities[i] = citySettingsList.get(i).getName();
         }
-        getViewState().updateList(cities);
+        getViewState().updateList(cities, checkedCity);
+    }
+
+    public void setCheckedCity(int checkedCity) {
+        this.checkedCity = checkedCity;
     }
 }
