@@ -14,5 +14,16 @@ public class ListCitiesPresenter extends MvpPresenter<ListCitiesView> {
 
     public ListCitiesPresenter() {
         citySettingsList = new ArrayList<>();
+        citySettingsList.add(new CitySettings("Москва"));
+        citySettingsList.add(new CitySettings("Санкт-Петербург"));
+        citySettingsList.add(new CitySettings("Тюмень"));
+    }
+
+    public void needCities() {
+        String[] cities = new String[citySettingsList.size()];
+        for (int i = 0; i < citySettingsList.size(); i++) {
+            cities[i] = citySettingsList.get(i).getName();
+        }
+        getViewState().updateList(cities);
     }
 }

@@ -1,11 +1,12 @@
 package com.mss.weather.view.listcities;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
 
 import com.arellomobile.mvp.MvpFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -22,8 +23,8 @@ public class ListCitiesFragment extends MvpFragment implements ListCitiesView {
     @InjectPresenter
     ListCitiesPresenter listCitiesPresenter;
 
-    @BindView(R.id.rvCitiesList)
-    RecyclerView rvCitiesList;
+    @BindView(R.id.lvCitiesList)
+    ListView lvCitiesList;
     @BindView(R.id.btnAddCity)
     ImageButton btnAddCity;
 
@@ -33,8 +34,10 @@ public class ListCitiesFragment extends MvpFragment implements ListCitiesView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View layout = inflater.inflate(R.layout.activity_list_cities, container, false);
+        View layout = inflater.inflate(R.layout.fragment_list_cities, container, false);
         binder = ButterKnife.bind(this, layout);
+        lvCitiesList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        listCitiesPresenter.needCities();
         return layout;
     }
 
@@ -48,5 +51,12 @@ public class ListCitiesFragment extends MvpFragment implements ListCitiesView {
     public void onDestroy() {
         binder.unbind();
         super.onDestroy();
+    }
+
+    @Override
+    public void updateList(String[] cities) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_list_item_1, cities);
+        lvCitiesList.setAdapter(adapter);
     }
 }

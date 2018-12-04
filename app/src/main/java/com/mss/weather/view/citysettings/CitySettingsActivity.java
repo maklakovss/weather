@@ -12,7 +12,7 @@ import android.widget.EditText;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.mss.weather.R;
 import com.mss.weather.presenter.CitySettingsPresenter;
-import com.mss.weather.view.cityweather.CityWeatherActivity;
+import com.mss.weather.view.cityweather.CityWeatherFragment;
 import com.mss.weather.view.models.CitySettings;
 
 import butterknife.BindView;
@@ -64,7 +64,7 @@ public class CitySettingsActivity extends AppCompatActivity implements CitySetti
 
     @OnClick(R.id.button)
     void saveClick(View view) {
-        final Intent intent = new Intent(this, CityWeatherActivity.class);
+        final Intent intent = new Intent(this, CityWeatherFragment.class);
         startActivity(intent);
     }
 

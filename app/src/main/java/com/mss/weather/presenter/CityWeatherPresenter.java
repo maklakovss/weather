@@ -14,6 +14,7 @@ public class CityWeatherPresenter extends MvpPresenter<CityWeatherView> {
         if (weatherData == null) {
             //тут запрашиваем данные с сервера
             weatherData = new WeatherData();
+            weatherData.setCityName("test");
             weatherData.getSunrise().setHours(6);
             weatherData.getSunrise().setMinutes(0);
             weatherData.getSunrise().setSeconds(0);

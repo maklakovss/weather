@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class WeatherData {
+    String cityName;
     Date sunrise = new Date();
     Date sunset = new Date();
     float cloudsPercent;

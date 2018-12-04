@@ -16,11 +16,11 @@
         android:layout_height="match_parent"
         android:layout_weight="2">
 
-        <!--<fragment-->
-        <!--android:id="@+id/weather"-->
-        <!--android:name="com.mss.weather.view.listcities.ListCitiesFragment"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent" />-->
+        <fragment
+            android:id="@+id/weather"
+            android:name="com.mss.weather.view.cityweather.CityWeatherFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </FrameLayout>
 
