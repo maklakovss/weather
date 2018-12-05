@@ -4,9 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <fragment
-        android:id="@+id/cities"
-        android:name="com.mss.weather.view.listcities.ListCitiesFragment"
+    <FrameLayout
+        android:id="@+id/flMain"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />
@@ -15,14 +14,6 @@
         android:id="@+id/flDetails"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2">
-
-        <fragment
-            android:id="@+id/weather"
-            android:name="com.mss.weather.view.cityweather.CityWeatherFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </FrameLayout>
+        android:layout_weight="2" />
 
 </LinearLayout>

@@ -6,16 +6,8 @@
 
     <!-- в книжной ориентации у активити только один фрагмент -->
     <FrameLayout
-        android:id="@+id/flMainFrame"
+        android:id="@+id/flMain"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <fragment
-            android:id="@+id/cities"
-            android:name="com.mss.weather.view.listcities.ListCitiesFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </FrameLayout>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

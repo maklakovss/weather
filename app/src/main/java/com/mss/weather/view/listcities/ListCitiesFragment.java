@@ -1,7 +1,7 @@
 package com.mss.weather.view.listcities;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +14,7 @@ import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.mss.weather.R;
 import com.mss.weather.presenter.ListCitiesPresenter;
-import com.mss.weather.view.cityweather.CityWeatherFragment;
+import com.mss.weather.view.main.WeatherFragmentsInteractor;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +33,20 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
 
     private Unbinder binder;
 
+    private WeatherFragmentsInteractor weatherFragmentsInteractor;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        weatherFragmentsInteractor = (WeatherFragmentsInteractor) context;
+    }
+
+    @Override
+    public void onDetach() {
+        weatherFragmentsInteractor = null;
+        super.onDetach();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,38 +57,18 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 listCitiesPresenter.setCheckedCity(i);
-                refreshWeatherFragment(i);
+                if (weatherFragmentsInteractor != null)
+                    weatherFragmentsInteractor.setCurrentCity(lvCitiesList.getAdapter().getItem(i).toString(), true);
             }
         });
         listCitiesPresenter.needCities();
         return layout;
     }
 
-    private void refreshWeatherFragment(int i) {
-        CityWeatherFragment cityWeatherFragment = getWeatherFragment();
-        if (cityWeatherFragment != null) {
-            cityWeatherFragment.changeCity(lvCitiesList.getAdapter().getItem(i).toString());
-        }
-    }
-
-    private CityWeatherFragment getWeatherFragment() {
-        CityWeatherFragment cityWeatherFragment = (CityWeatherFragment) getFragmentManager()
-                .findFragmentById(R.id.weather);
-        if (cityWeatherFragment == null) {
-            cityWeatherFragment = new CityWeatherFragment();
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.flMainFrame, cityWeatherFragment);  // замена фрагмента
-            ft.setTransition(android.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            ft.addToBackStack("");
-            ft.commit();
-        }
-        return cityWeatherFragment;
-    }
-
     @OnClick(R.id.btnAddCity)
     void AddClick(View view) {
-        //Intent intent = new Intent(this, CitySettingsActivity.class);
-        //startActivity(intent);
+        if (weatherFragmentsInteractor != null)
+            weatherFragmentsInteractor.addCity();
     }
 
     @Override
@@ -89,6 +83,7 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
                 android.R.layout.simple_list_item_activated_1, cities);
         lvCitiesList.setAdapter(adapter);
         lvCitiesList.setItemChecked(checkedItem, true);
-        //refreshWeatherFragment(checkedItem);
+        if (weatherFragmentsInteractor != null)
+            weatherFragmentsInteractor.setCurrentCity(lvCitiesList.getAdapter().getItem(checkedItem).toString(), false);
     }
 }

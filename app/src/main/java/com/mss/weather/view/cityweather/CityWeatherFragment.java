@@ -73,12 +73,17 @@ public class CityWeatherFragment extends MvpAppCompatFragment implements CityWea
 
     private Unbinder binder;
 
+    String cityName = "";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View layout = inflater.inflate(R.layout.fragment_weather, container, false);
         binder = ButterKnife.bind(this, layout);
+        if (!cityName.equals("")) {
+            cityWeatherPresenter.needData(cityName);
+        }
         return layout;
     }
 
@@ -105,7 +110,9 @@ public class CityWeatherFragment extends MvpAppCompatFragment implements CityWea
     }
 
     public void changeCity(String cityName) {
-        cityWeatherPresenter.needData(cityName);
+        this.cityName = cityName;
+        if (cityWeatherPresenter != null)
+            cityWeatherPresenter.needData(cityName);
     }
 
     @Override
