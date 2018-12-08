@@ -16,18 +16,22 @@ public class ListCitiesPresenter extends MvpPresenter<ListCitiesView> {
     private List<CitySettings> citySettingsList;
     private int checkedCity;
 
+    public void needCities() {
+        loadCities();
+        getViewState().updateList(listCitiesToStringArray());
+        getViewState().setCurrentCity(checkedCity);
+    }
+
+    public void setCheckedCity(int checkedCity) {
+        this.checkedCity = checkedCity;
+    }
+
     private void loadCities() {
         citySettingsList = new ArrayList<>();
         citySettingsList.add(new CitySettings("Москва"));
         citySettingsList.add(new CitySettings("Санкт-Петербург"));
         citySettingsList.add(new CitySettings("Тюмень"));
         checkedCity = 0;
-    }
-
-    public void needCities() {
-        loadCities();
-        getViewState().updateList(listCitiesToStringArray());
-        getViewState().setCurrentCity(checkedCity);
     }
 
     @NonNull
@@ -39,7 +43,4 @@ public class ListCitiesPresenter extends MvpPresenter<ListCitiesView> {
         return cities;
     }
 
-    public void setCheckedCity(int checkedCity) {
-        this.checkedCity = checkedCity;
-    }
 }
