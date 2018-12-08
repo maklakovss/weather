@@ -6,5 +6,6 @@ import com.arellomobile.mvp.MvpView;
 import com.mss.weather.view.models.CitySettings;
 
 public interface CitySettingsView extends MvpView {
+
     void showSettings(@NonNull final CitySettings citySettings);
 }

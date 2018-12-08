@@ -15,7 +15,7 @@ import com.mss.weather.view.listcities.ListCitiesFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends MvpAppCompatActivity implements WeatherFragmentsInteractor, MainView {
+public class MainActivity extends MvpAppCompatActivity implements WeatherFragmentsNavigator, MainView {
 
     @InjectPresenter
     MainActivityPresenter mainActivityPresenter;

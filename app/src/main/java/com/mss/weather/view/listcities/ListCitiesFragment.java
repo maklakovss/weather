@@ -14,7 +14,7 @@ import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.mss.weather.R;
 import com.mss.weather.presenter.ListCitiesPresenter;
-import com.mss.weather.view.main.WeatherFragmentsInteractor;
+import com.mss.weather.view.main.WeatherFragmentsNavigator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,17 +33,17 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
 
     private Unbinder binder;
 
-    private WeatherFragmentsInteractor weatherFragmentsInteractor;
+    private WeatherFragmentsNavigator weatherFragmentsNavigator;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        weatherFragmentsInteractor = (WeatherFragmentsInteractor) context;
+        weatherFragmentsNavigator = (WeatherFragmentsNavigator) context;
     }
 
     @Override
     public void onDetach() {
-        weatherFragmentsInteractor = null;
+        weatherFragmentsNavigator = null;
         super.onDetach();
     }
 
@@ -57,8 +57,8 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 listCitiesPresenter.setCheckedCity(i);
-                if (weatherFragmentsInteractor != null)
-                    weatherFragmentsInteractor.setCurrentCity(lvCitiesList.getAdapter().getItem(i).toString(), true);
+                if (weatherFragmentsNavigator != null)
+                    weatherFragmentsNavigator.setCurrentCity(lvCitiesList.getAdapter().getItem(i).toString(), true);
             }
         });
         listCitiesPresenter.needCities();
@@ -67,8 +67,8 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
 
     @OnClick(R.id.btnAddCity)
     void AddClick(View view) {
-        if (weatherFragmentsInteractor != null)
-            weatherFragmentsInteractor.addCity();
+        if (weatherFragmentsNavigator != null)
+            weatherFragmentsNavigator.addCity();
     }
 
     @Override
@@ -78,12 +78,16 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
     }
 
     @Override
-    public void updateList(String[] cities, int checkedItem) {
+    public void updateList(String[] cities) {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_activated_1, cities);
         lvCitiesList.setAdapter(adapter);
-        lvCitiesList.setItemChecked(checkedItem, true);
-        if (weatherFragmentsInteractor != null)
-            weatherFragmentsInteractor.setCurrentCity(lvCitiesList.getAdapter().getItem(checkedItem).toString(), false);
+    }
+
+    @Override
+    public void setCurrentCity(int checkedCity) {
+        lvCitiesList.setItemChecked(checkedCity, true);
+        if (weatherFragmentsNavigator != null)
+            weatherFragmentsNavigator.setCurrentCity(lvCitiesList.getAdapter().getItem(checkedCity).toString(), false);
     }
 }

@@ -1,5 +1,7 @@
 package com.mss.weather.presenter;
 
+import android.support.annotation.NonNull;
+
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.mss.weather.view.listcities.ListCitiesView;
@@ -14,7 +16,7 @@ public class ListCitiesPresenter extends MvpPresenter<ListCitiesView> {
     private List<CitySettings> citySettingsList;
     private int checkedCity;
 
-    public ListCitiesPresenter() {
+    private void loadCities() {
         citySettingsList = new ArrayList<>();
         citySettingsList.add(new CitySettings("Москва"));
         citySettingsList.add(new CitySettings("Санкт-Петербург"));
@@ -23,11 +25,18 @@ public class ListCitiesPresenter extends MvpPresenter<ListCitiesView> {
     }
 
     public void needCities() {
+        loadCities();
+        getViewState().updateList(listCitiesToStringArray());
+        getViewState().setCurrentCity(checkedCity);
+    }
+
+    @NonNull
+    private String[] listCitiesToStringArray() {
         String[] cities = new String[citySettingsList.size()];
         for (int i = 0; i < citySettingsList.size(); i++) {
             cities[i] = citySettingsList.get(i).getName();
         }
-        getViewState().updateList(cities, checkedCity);
+        return cities;
     }
 
     public void setCheckedCity(int checkedCity) {

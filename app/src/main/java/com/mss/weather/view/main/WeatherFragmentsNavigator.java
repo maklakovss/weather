@@ -1,6 +1,6 @@
 package com.mss.weather.view.main;
 
-public interface WeatherFragmentsInteractor {
+public interface WeatherFragmentsNavigator {
 
     void setCurrentCity(String cityName, boolean clicked);
 
