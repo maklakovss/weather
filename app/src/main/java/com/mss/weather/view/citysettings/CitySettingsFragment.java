@@ -1,18 +1,18 @@
 package com.mss.weather.view.citysettings;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.mss.weather.R;
 import com.mss.weather.presenter.CitySettingsPresenter;
-import com.mss.weather.view.cityweather.CityWeatherFragment;
 import com.mss.weather.view.models.CitySettings;
 
 import butterknife.BindView;
@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class CitySettingsActivity extends AppCompatActivity implements CitySettingsView {
+public class CitySettingsFragment extends MvpAppCompatFragment implements CitySettingsView {
 
     @InjectPresenter
     CitySettingsPresenter citySettingsPresenter;
@@ -51,10 +51,12 @@ public class CitySettingsActivity extends AppCompatActivity implements CitySetti
     Unbinder binder;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
-        binder = ButterKnife.bind(this);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        View layout = inflater.inflate(R.layout.fragment_weather, container, false);
+        binder = ButterKnife.bind(this, layout);
+        return layout;
     }
 
     @Override
@@ -64,12 +66,12 @@ public class CitySettingsActivity extends AppCompatActivity implements CitySetti
 
     @OnClick(R.id.button)
     void saveClick(View view) {
-        final Intent intent = new Intent(this, CityWeatherFragment.class);
-        startActivity(intent);
+        //final Intent intent = new Intent(this, CityWeatherFragment.class);
+        //startActivity(intent);
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         binder.unbind();
         super.onDestroy();
     }
