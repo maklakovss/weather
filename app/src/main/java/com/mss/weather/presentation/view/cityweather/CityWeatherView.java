@@ -1,9 +1,9 @@
-package com.mss.weather.view.cityweather;
+package com.mss.weather.presentation.view.cityweather;
 
 import android.support.annotation.NonNull;
 
 import com.arellomobile.mvp.MvpView;
-import com.mss.weather.view.models.WeatherData;
+import com.mss.weather.presentation.view.models.WeatherData;
 
 public interface CityWeatherView extends MvpView {
 

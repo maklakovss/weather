@@ -1,4 +1,4 @@
-package com.mss.weather.view.cityweather;
+package com.mss.weather.presentation.view.cityweather;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,8 +11,8 @@ import android.widget.TextView;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.mss.weather.R;
-import com.mss.weather.presenter.CityWeatherPresenter;
-import com.mss.weather.view.models.WeatherData;
+import com.mss.weather.presentation.presenter.CityWeatherPresenter;
+import com.mss.weather.presentation.view.models.WeatherData;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -73,17 +73,13 @@ public class CityWeatherFragment extends MvpAppCompatFragment implements CityWea
 
     private Unbinder binder;
 
-    String cityName = "";
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View layout = inflater.inflate(R.layout.fragment_weather, container, false);
         binder = ButterKnife.bind(this, layout);
-        if (!cityName.equals("")) {
-            cityWeatherPresenter.needData(cityName);
-        }
+        cityWeatherPresenter.needData();
         return layout;
     }
 
@@ -107,12 +103,6 @@ public class CityWeatherFragment extends MvpAppCompatFragment implements CityWea
         } else if (weatherData.getRain() > 0) {
             tvRainfall.setText(String.valueOf(weatherData.getRain()));
         }
-    }
-
-    public void changeCity(String cityName) {
-        this.cityName = cityName;
-        if (cityWeatherPresenter != null)
-            cityWeatherPresenter.needData(cityName);
     }
 
     @Override

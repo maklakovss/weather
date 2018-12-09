@@ -1,4 +1,4 @@
-package com.mss.weather.view.listcities;
+package com.mss.weather.presentation.view.listcities;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,15 +13,15 @@ import android.widget.ListView;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.mss.weather.R;
-import com.mss.weather.presenter.ListCitiesPresenter;
-import com.mss.weather.view.main.WeatherFragmentsNavigator;
+import com.mss.weather.presentation.presenter.ListCitiesPresenter;
+import com.mss.weather.presentation.view.main.WeatherFragmentsNavigator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class ListCitiesFragment extends MvpAppCompatFragment implements ListCitiesView {
+public class ListCitiesFragment extends MvpAppCompatFragment implements ListCitiesView, AdapterView.OnItemClickListener {
 
     @InjectPresenter
     ListCitiesPresenter listCitiesPresenter;
@@ -53,22 +53,16 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
         super.onCreateView(inflater, container, savedInstanceState);
         View layout = inflater.inflate(R.layout.fragment_list_cities, container, false);
         binder = ButterKnife.bind(this, layout);
-        lvCitiesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                listCitiesPresenter.setCheckedCity(i);
-                if (weatherFragmentsNavigator != null)
-                    weatherFragmentsNavigator.setCurrentCity(lvCitiesList.getAdapter().getItem(i).toString(), true);
-            }
-        });
-        listCitiesPresenter.needCities();
+        lvCitiesList.setOnItemClickListener(this);
+        if (lvCitiesList.getAdapter() == null)
+            listCitiesPresenter.needCities();
         return layout;
     }
 
     @OnClick(R.id.btnAddCity)
     void AddClick(View view) {
         if (weatherFragmentsNavigator != null)
-            weatherFragmentsNavigator.addCity();
+            weatherFragmentsNavigator.showAddCity();
     }
 
     @Override
@@ -87,7 +81,17 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
     @Override
     public void setCurrentCity(int checkedCity) {
         lvCitiesList.setItemChecked(checkedCity, true);
-        if (weatherFragmentsNavigator != null)
-            weatherFragmentsNavigator.setCurrentCity(lvCitiesList.getAdapter().getItem(checkedCity).toString(), false);
+    }
+
+    @Override
+    public void showWeather() {
+        if (weatherFragmentsNavigator != null) {
+            weatherFragmentsNavigator.showWeather();
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        listCitiesPresenter.onClickCity(i);
     }
 }

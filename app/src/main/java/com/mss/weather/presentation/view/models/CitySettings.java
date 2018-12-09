@@ -1,4 +1,4 @@
-package com.mss.weather.view.models;
+package com.mss.weather.presentation.view.models;
 
 import lombok.Data;
 

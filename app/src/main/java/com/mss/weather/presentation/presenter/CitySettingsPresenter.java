@@ -1,9 +1,9 @@
-package com.mss.weather.presenter;
+package com.mss.weather.presentation.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.mss.weather.view.citysettings.CitySettingsView;
-import com.mss.weather.view.models.CitySettings;
+import com.mss.weather.presentation.view.citysettings.CitySettingsView;
+import com.mss.weather.presentation.view.models.CitySettings;
 
 @InjectViewState
 public class CitySettingsPresenter extends MvpPresenter<CitySettingsView> {

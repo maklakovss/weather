@@ -1,4 +1,4 @@
-package com.mss.weather.view.citysettings;
+package com.mss.weather.presentation.view.citysettings;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,8 +12,8 @@ import android.widget.EditText;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.mss.weather.R;
-import com.mss.weather.presenter.CitySettingsPresenter;
-import com.mss.weather.view.models.CitySettings;
+import com.mss.weather.presentation.presenter.CitySettingsPresenter;
+import com.mss.weather.presentation.view.models.CitySettings;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
