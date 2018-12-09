@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 
 import com.mss.weather.R;
+import com.mss.weather.presentation.view.citysettings.CitySettingsFragment;
 import com.mss.weather.presentation.view.cityweather.CityWeatherFragment;
 import com.mss.weather.presentation.view.listcities.ListCitiesFragment;
 
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity implements WeatherFragmentsN
 
     private static final String CITY_LIST_TAG = "CITY_LIST_TAG";
     private static final String WEATHER_TAG = "WEATHER_TAG";
+    private static final String SETTINGS_TAG = "SETTINGS_TAG";
 
     @BindView(R.id.flMain)
     FrameLayout flMain;
@@ -36,11 +38,31 @@ public class MainActivity extends AppCompatActivity implements WeatherFragmentsN
         if (flDetails != null) {
             createWeatherFragmentInDetailFrame();
         } else {
-            final CityWeatherFragment cityWeatherFragment = getCityWeatherFragment();
-            if (cityWeatherFragment != null) {
-                final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.remove(cityWeatherFragment);
-                ft.commit();
+            removeCityWeatherFragment();
+            removeCitySettingsFragment();
+        }
+    }
+
+    @Override
+    public void showCitySettings() {
+        CitySettingsFragment citySettingsFragment = getCitySettingsFragment();
+        if (citySettingsFragment == null) {
+            if (flDetails == null) {
+                citySettingsFragment = createCitySettingsFragmentInMainFrame();
+            } else {
+                citySettingsFragment = createCitySettingsFragmentInDetailFrame();
+            }
+        }
+    }
+
+    @Override
+    public void showWeather() {
+        CityWeatherFragment cityWeatherFragment = getCityWeatherFragment();
+        if (cityWeatherFragment == null) {
+            if (flDetails == null) {
+                cityWeatherFragment = createWeatherFragmentInMainFrame();
+            } else {
+                cityWeatherFragment = createWeatherFragmentInDetailFrame();
             }
         }
     }
@@ -62,26 +84,8 @@ public class MainActivity extends AppCompatActivity implements WeatherFragmentsN
     }
 
     private CityWeatherFragment getCityWeatherFragment() {
-        CityWeatherFragment cityWeatherFragment = (CityWeatherFragment) getSupportFragmentManager()
+        return (CityWeatherFragment) getSupportFragmentManager()
                 .findFragmentByTag(WEATHER_TAG);
-        return cityWeatherFragment;
-    }
-
-    @Override
-    public void showAddCity() {
-//TODO
-    }
-
-    @Override
-    public void showWeather() {
-        CityWeatherFragment cityWeatherFragment = getCityWeatherFragment();
-        if (cityWeatherFragment == null) {
-            if (flDetails == null) {
-                cityWeatherFragment = createWeatherFragmentInMainFrame();
-            } else {
-                cityWeatherFragment = createWeatherFragmentInDetailFrame();
-            }
-        }
     }
 
     @NonNull
@@ -104,4 +108,44 @@ public class MainActivity extends AppCompatActivity implements WeatherFragmentsN
         return cityWeatherFragment;
     }
 
+    private void removeCityWeatherFragment() {
+        final CityWeatherFragment cityWeatherFragment = getCityWeatherFragment();
+        if (cityWeatherFragment != null) {
+            final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.remove(cityWeatherFragment);
+            ft.commit();
+        }
+    }
+
+    private CitySettingsFragment getCitySettingsFragment() {
+        return (CitySettingsFragment) getSupportFragmentManager()
+                .findFragmentByTag(SETTINGS_TAG);
+    }
+
+    private CitySettingsFragment createCitySettingsFragmentInMainFrame() {
+        final CitySettingsFragment citySettingsFragment = new CitySettingsFragment();
+        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.flMain, citySettingsFragment, SETTINGS_TAG);
+        ft.commit();
+        return citySettingsFragment;
+    }
+
+    private CitySettingsFragment createCitySettingsFragmentInDetailFrame() {
+        final CitySettingsFragment citySettingsFragment = new CitySettingsFragment();
+        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.flDetails, citySettingsFragment, SETTINGS_TAG);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        ft.addToBackStack("");
+        ft.commit();
+        return citySettingsFragment;
+    }
+
+    private void removeCitySettingsFragment() {
+        final CitySettingsFragment citySettingsFragment = getCitySettingsFragment();
+        if (citySettingsFragment != null) {
+            final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.remove(citySettingsFragment);
+            ft.commit();
+        }
+    }
 }

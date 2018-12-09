@@ -70,4 +70,13 @@ public class WeatherInteractorImpl implements WeatherInteractor {
         this.onCurrentCityChanged = onCurrentCityChanged;
     }
 
+    @Override
+    public CitySettings getCitySettings(String cityName) {
+        for (int i = 0; i < citySettingsList.size(); i++) {
+            if (citySettingsList.get(i).getName().equals(cityName))
+                return citySettingsList.get(i);
+        }
+        return null;
+    }
+
 }

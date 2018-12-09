@@ -17,6 +17,8 @@ public interface WeatherInteractor {
 
     void setOnCurrentCityChanged(OnCurrentCityChanged onCurrentCityChanged);
 
+    CitySettings getCitySettings(String cityName);
+
     public interface OnCurrentCityChanged {
         void onChanged(String currentCityName);
     }

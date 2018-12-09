@@ -48,4 +48,11 @@ public class ListCitiesPresenter extends MvpPresenter<ListCitiesView> {
         return cities;
     }
 
+    public void onClickAdd() {
+        getViewState().showSettings();
+    }
+
+    public void onLongClickCity(int i) {
+        getViewState().showSettings();
+    }
 }

@@ -14,8 +14,7 @@ public class CitySettings {
     boolean showPressure = true;
     boolean showWindSpeed = true;
     boolean showWindDeg = true;
-    boolean showSnow = true;
-    boolean showRain = true;
+    boolean showRainfall = true;
 
     public CitySettings(String name) {
         this.name = name;

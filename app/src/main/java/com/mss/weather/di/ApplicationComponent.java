@@ -1,5 +1,6 @@
 package com.mss.weather.di;
 
+import com.mss.weather.presentation.presenter.CitySettingsPresenter;
 import com.mss.weather.presentation.presenter.CityWeatherPresenter;
 import com.mss.weather.presentation.presenter.ListCitiesPresenter;
 
@@ -15,4 +16,6 @@ public interface ApplicationComponent {
     void inject(ListCitiesPresenter settingsPresenter);
 
     void inject(CityWeatherPresenter cityWeatherPresenter);
+
+    void inject(CitySettingsPresenter citySettingsPresenter);
 }

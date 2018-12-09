@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class ListCitiesFragment extends MvpAppCompatFragment implements ListCitiesView, AdapterView.OnItemClickListener {
+public class ListCitiesFragment extends MvpAppCompatFragment implements ListCitiesView, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     @InjectPresenter
     ListCitiesPresenter listCitiesPresenter;
@@ -53,16 +53,18 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
         super.onCreateView(inflater, container, savedInstanceState);
         View layout = inflater.inflate(R.layout.fragment_list_cities, container, false);
         binder = ButterKnife.bind(this, layout);
+
         lvCitiesList.setOnItemClickListener(this);
-        if (lvCitiesList.getAdapter() == null)
-            listCitiesPresenter.needCities();
+        lvCitiesList.setOnItemLongClickListener(this);
+
+        listCitiesPresenter.needCities();
+
         return layout;
     }
 
     @OnClick(R.id.btnAddCity)
     void AddClick(View view) {
-        if (weatherFragmentsNavigator != null)
-            weatherFragmentsNavigator.showAddCity();
+        listCitiesPresenter.onClickAdd();
     }
 
     @Override
@@ -91,7 +93,19 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
     }
 
     @Override
+    public void showSettings() {
+        if (weatherFragmentsNavigator != null)
+            weatherFragmentsNavigator.showCitySettings();
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         listCitiesPresenter.onClickCity(i);
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+        listCitiesPresenter.onLongClickCity(i);
+        return true;
     }
 }

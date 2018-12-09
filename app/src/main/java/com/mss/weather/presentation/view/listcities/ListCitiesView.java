@@ -15,4 +15,6 @@ public interface ListCitiesView extends MvpView {
 
     @StateStrategyType(SkipStrategy.class)
     void showWeather();
+
+    void showSettings();
 }

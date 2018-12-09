@@ -54,14 +54,23 @@ public class CitySettingsFragment extends MvpAppCompatFragment implements CitySe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View layout = inflater.inflate(R.layout.fragment_weather, container, false);
+        View layout = inflater.inflate(R.layout.fragment_settings, container, false);
         binder = ButterKnife.bind(this, layout);
+        citySettingsPresenter.needSettings();
         return layout;
     }
 
     @Override
     public void showSettings(@NonNull final CitySettings citySettings) {
-
+        etCity.setText(citySettings.getName());
+        cbShowSunrise.setChecked(citySettings.isShowSunrise());
+        cbShowSunset.setChecked(citySettings.isShowSunset());
+        cbShowTemp.setChecked(citySettings.isShowTemp());
+        cbShowTempRange.setChecked(citySettings.isShowTempRange());
+        cbShowPressure.setChecked(citySettings.isShowPressure());
+        cbShowWindSpeed.setChecked(citySettings.isShowWindSpeed());
+        cbShowWindDeg.setChecked(citySettings.isShowWindDeg());
+        cbRainfall.setChecked(citySettings.isShowRainfall());
     }
 
     @OnClick(R.id.button)
