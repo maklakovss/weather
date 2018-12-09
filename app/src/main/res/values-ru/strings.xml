@@ -20,4 +20,5 @@
     <string name="show_temp_range">Диапазон температур</string>
     <string name="wind_deg_label">Направление ветра</string>
     <string name="save_label">Применить</string>
+    <string name="cityname_label">Город</string>
 </resources>

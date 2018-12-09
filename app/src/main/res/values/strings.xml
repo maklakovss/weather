@@ -19,4 +19,7 @@
     <string name="show_temp_range">Temperature range</string>
     <string name="wind_deg_label">Wind direction</string>
     <string name="save_label">Apply</string>
+    <string name="cityname_label">City</string>
+    <string name="list_fragment_tag">listFragment</string>
+    <string name="weather_fragment_tag">weatherTag</string>
 </resources>

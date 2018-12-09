@@ -1,15 +1,18 @@
-package com.mss.weather.view.cityweather;
+package com.mss.weather.presentation.view.cityweather;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.arellomobile.mvp.MvpAppCompatActivity;
+import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.mss.weather.R;
-import com.mss.weather.presenter.CityWeatherPresenter;
-import com.mss.weather.view.models.WeatherData;
+import com.mss.weather.presentation.presenter.CityWeatherPresenter;
+import com.mss.weather.presentation.view.models.WeatherData;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -18,11 +21,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class CityWeatherActivity extends MvpAppCompatActivity implements CityWeatherView {
+public class CityWeatherFragment extends MvpAppCompatFragment implements CityWeatherView {
 
     @InjectPresenter
     CityWeatherPresenter cityWeatherPresenter;
 
+    @BindView(R.id.tvCityName)
+    TextView tvCityName;
     @BindView(R.id.tvSunrise)
     TextView tvSunrise;
     @BindView(R.id.llSunrise)
@@ -69,15 +74,18 @@ public class CityWeatherActivity extends MvpAppCompatActivity implements CityWea
     private Unbinder binder;
 
     @Override
-    protected void onCreate(@NonNull final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_weather);
-        binder = ButterKnife.bind(this);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        View layout = inflater.inflate(R.layout.fragment_weather, container, false);
+        binder = ButterKnife.bind(this, layout);
         cityWeatherPresenter.needData();
+        return layout;
     }
 
     @Override
     public void showWeather(@NonNull final WeatherData weatherData) {
+        tvCityName.setText(weatherData.getCityName());
         final SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
         tvSunrise.setText(formatter.format(weatherData.getSunrise()));
         tvSunset.setText(formatter.format(weatherData.getSunset()));
@@ -98,8 +106,8 @@ public class CityWeatherActivity extends MvpAppCompatActivity implements CityWea
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroyView() {
         binder.unbind();
-        super.onDestroy();
+        super.onDestroyView();
     }
 }

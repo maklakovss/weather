@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.AppCompat.Light.MyStyle">
+    <style name="MyStyle" parent="Theme.AppCompat.Light">
         <item name="android:textColor">#0000FF</item>
         <item name="android:textSize">16sp</item>
     </style>

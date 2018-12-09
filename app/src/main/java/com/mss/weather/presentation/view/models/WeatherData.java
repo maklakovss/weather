@@ -1,4 +1,4 @@
-package com.mss.weather.view.models;
+package com.mss.weather.presentation.view.models;
 
 import java.util.Date;
 
@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class WeatherData {
+    String cityName;
     Date sunrise = new Date();
     Date sunset = new Date();
     float cloudsPercent;
