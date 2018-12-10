@@ -12,9 +12,13 @@ import android.widget.ListView;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.mss.weather.R;
+import com.mss.weather.di.MyApplication;
 import com.mss.weather.presentation.presenter.ListCitiesPresenter;
 import com.mss.weather.presentation.view.main.WeatherFragmentsNavigator;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +27,7 @@ import butterknife.Unbinder;
 
 public class ListCitiesFragment extends MvpAppCompatFragment implements ListCitiesView, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
+    @Inject
     @InjectPresenter
     ListCitiesPresenter listCitiesPresenter;
 
@@ -45,6 +50,10 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
     public void onDetach() {
         weatherFragmentsNavigator = null;
         super.onDetach();
+    }
+
+    public ListCitiesFragment() {
+        MyApplication.getApplicationComponent().inject(this);
     }
 
     @Override
@@ -107,5 +116,10 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
         listCitiesPresenter.onLongClickCity(i);
         return true;
+    }
+
+    @ProvidePresenter
+    public ListCitiesPresenter providePresenter() {
+        return listCitiesPresenter;
     }
 }

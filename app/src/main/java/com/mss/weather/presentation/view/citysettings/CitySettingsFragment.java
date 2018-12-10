@@ -11,9 +11,13 @@ import android.widget.EditText;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.mss.weather.R;
+import com.mss.weather.di.MyApplication;
 import com.mss.weather.presentation.presenter.CitySettingsPresenter;
 import com.mss.weather.presentation.view.models.CitySettings;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,6 +26,7 @@ import butterknife.Unbinder;
 
 public class CitySettingsFragment extends MvpAppCompatFragment implements CitySettingsView {
 
+    @Inject
     @InjectPresenter
     CitySettingsPresenter citySettingsPresenter;
 
@@ -49,6 +54,10 @@ public class CitySettingsFragment extends MvpAppCompatFragment implements CitySe
     Button button;
 
     Unbinder binder;
+
+    public CitySettingsFragment() {
+        MyApplication.getApplicationComponent().inject(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,4 +94,8 @@ public class CitySettingsFragment extends MvpAppCompatFragment implements CitySe
         super.onDestroy();
     }
 
+    @ProvidePresenter
+    public CitySettingsPresenter providePresenter() {
+        return citySettingsPresenter;
+    }
 }

@@ -10,12 +10,16 @@ import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.mss.weather.R;
+import com.mss.weather.di.MyApplication;
 import com.mss.weather.presentation.presenter.CityWeatherPresenter;
 import com.mss.weather.presentation.view.models.WeatherData;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +27,7 @@ import butterknife.Unbinder;
 
 public class CityWeatherFragment extends MvpAppCompatFragment implements CityWeatherView {
 
+    @Inject
     @InjectPresenter
     CityWeatherPresenter cityWeatherPresenter;
 
@@ -73,6 +78,10 @@ public class CityWeatherFragment extends MvpAppCompatFragment implements CityWea
 
     private Unbinder binder;
 
+    public CityWeatherFragment() {
+        MyApplication.getApplicationComponent().inject(this);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -109,5 +118,10 @@ public class CityWeatherFragment extends MvpAppCompatFragment implements CityWea
     public void onDestroyView() {
         binder.unbind();
         super.onDestroyView();
+    }
+
+    @ProvidePresenter
+    public CityWeatherPresenter providePresenter() {
+        return cityWeatherPresenter;
     }
 }
