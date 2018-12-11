@@ -26,5 +26,6 @@ public class CityWeatherPresenter extends MvpPresenter<CityWeatherView> {
 
     public void needData() {
         getViewState().showWeather(weatherInteractor.getWeatherByCity(weatherInteractor.getCurrentCityName()));
+        getViewState().showWeatherList(weatherInteractor.getWeatherList(weatherInteractor.getCurrentCityName()));
     }
 }

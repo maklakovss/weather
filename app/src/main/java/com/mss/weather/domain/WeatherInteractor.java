@@ -15,6 +15,8 @@ public interface WeatherInteractor {
 
     WeatherData getWeatherByCity(String cityName);
 
+    List<WeatherData> getWeatherList(String cityName);
+
     void setOnCurrentCityChanged(OnCurrentCityChanged onCurrentCityChanged);
 
     CitySettings getCitySettings(String cityName);

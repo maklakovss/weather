@@ -1,9 +1,13 @@
 package com.mss.weather.domain;
 
+import android.support.annotation.NonNull;
+
 import com.mss.weather.presentation.view.models.CitySettings;
 import com.mss.weather.presentation.view.models.WeatherData;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class WeatherInteractorImpl implements WeatherInteractor {
@@ -11,7 +15,6 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     private List<CitySettings> citySettingsList;
     private String currentCityName;
     private OnCurrentCityChanged onCurrentCityChanged;
-
 
     @Override
     public List<CitySettings> getListCities() {
@@ -36,8 +39,15 @@ public class WeatherInteractorImpl implements WeatherInteractor {
 
     @Override
     public WeatherData getWeatherByCity(String cityName) {
+        WeatherData weatherData = getWeatherData(cityName, new Date());
+        return weatherData;
+    }
+
+    @NonNull
+    private WeatherData getWeatherData(String cityName, Date date) {
         WeatherData weatherData = new WeatherData();
         weatherData.setCityName(cityName);
+        weatherData.setWeatherDate(date);
         weatherData.getSunrise().setHours(6);
         weatherData.getSunrise().setMinutes(0);
         weatherData.getSunrise().setSeconds(0);
@@ -56,6 +66,17 @@ public class WeatherInteractorImpl implements WeatherInteractor {
         weatherData.setSnow(10);
         weatherData.setRain(0);
         return weatherData;
+    }
+
+    @Override
+    public List<WeatherData> getWeatherList(String cityName) {
+        List<WeatherData> weatherDataList = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        for (int i = 0; i < 10; i++) {
+            calendar.add(Calendar.DATE, 1);
+            weatherDataList.add(getWeatherData(cityName, calendar.getTime()));
+        }
+        return weatherDataList;
     }
 
     private void loadCities() {
