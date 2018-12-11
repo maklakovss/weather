@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements WeatherFragmentsN
     }
 
     private void createListCitiesFragmentInMainFrame() {
-        listCitiesFragment = new ListCitiesFragment();
+        listCitiesFragment = ListCitiesFragment.newInstance();
         listCitiesFragment.setRetainInstance(true);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.flMain, listCitiesFragment, CITY_LIST_TAG);
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements WeatherFragmentsN
 
     @NonNull
     private CityWeatherFragment createWeatherFragmentInDetailFrame() {
-        final CityWeatherFragment cityWeatherFragment = new CityWeatherFragment();
+        final CityWeatherFragment cityWeatherFragment = CityWeatherFragment.newInstance();
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flDetails, cityWeatherFragment, WEATHER_TAG);
         ft.commit();
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements WeatherFragmentsN
 
     @NonNull
     private CityWeatherFragment createWeatherFragmentInMainFrame() {
-        final CityWeatherFragment cityWeatherFragment = new CityWeatherFragment();
+        final CityWeatherFragment cityWeatherFragment = CityWeatherFragment.newInstance();
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flMain, cityWeatherFragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements WeatherFragmentsN
     }
 
     private CitySettingsFragment createCitySettingsFragmentInMainFrame() {
-        final CitySettingsFragment citySettingsFragment = new CitySettingsFragment();
+        final CitySettingsFragment citySettingsFragment = CitySettingsFragment.newInstance();
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flMain, citySettingsFragment, SETTINGS_TAG);
         ft.commit();
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements WeatherFragmentsN
     }
 
     private CitySettingsFragment createCitySettingsFragmentInDetailFrame() {
-        final CitySettingsFragment citySettingsFragment = new CitySettingsFragment();
+        final CitySettingsFragment citySettingsFragment = CitySettingsFragment.newInstance();
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flDetails, citySettingsFragment, SETTINGS_TAG);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);

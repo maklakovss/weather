@@ -78,8 +78,8 @@ public class CityWeatherFragment extends MvpAppCompatFragment implements CityWea
 
     private Unbinder binder;
 
-    public CityWeatherFragment() {
-        MyApplication.getApplicationComponent().inject(this);
+    public static CityWeatherFragment newInstance() {
+        return new CityWeatherFragment();
     }
 
     @Override
@@ -122,6 +122,8 @@ public class CityWeatherFragment extends MvpAppCompatFragment implements CityWea
 
     @ProvidePresenter
     public CityWeatherPresenter providePresenter() {
+        if (cityWeatherPresenter == null)
+            MyApplication.getApplicationComponent().inject(this);
         return cityWeatherPresenter;
     }
 }

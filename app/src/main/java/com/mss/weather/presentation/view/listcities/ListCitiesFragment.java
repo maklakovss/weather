@@ -52,8 +52,8 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
         super.onDetach();
     }
 
-    public ListCitiesFragment() {
-        MyApplication.getApplicationComponent().inject(this);
+    public static ListCitiesFragment newInstance() {
+        return new ListCitiesFragment();
     }
 
     @Override
@@ -120,6 +120,8 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
 
     @ProvidePresenter
     public ListCitiesPresenter providePresenter() {
+        if (listCitiesPresenter == null)
+            MyApplication.getApplicationComponent().inject(this);
         return listCitiesPresenter;
     }
 }

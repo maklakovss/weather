@@ -55,8 +55,8 @@ public class CitySettingsFragment extends MvpAppCompatFragment implements CitySe
 
     Unbinder binder;
 
-    public CitySettingsFragment() {
-        MyApplication.getApplicationComponent().inject(this);
+    public static CitySettingsFragment newInstance() {
+        return new CitySettingsFragment();
     }
 
     @Override
@@ -96,6 +96,8 @@ public class CitySettingsFragment extends MvpAppCompatFragment implements CitySe
 
     @ProvidePresenter
     public CitySettingsPresenter providePresenter() {
+        if (citySettingsPresenter == null)
+            MyApplication.getApplicationComponent().inject(this);
         return citySettingsPresenter;
     }
 }
