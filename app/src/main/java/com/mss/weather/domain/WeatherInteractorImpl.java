@@ -15,6 +15,7 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     private List<CitySettings> citySettingsList;
     private CitySettings currentCity;
     private OnCurrentCityChanged onCurrentCityChanged;
+    private OnCityUpdated onCityUpdated;
 
     @Override
     public List<CitySettings> getListCities() {
@@ -92,13 +93,20 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     }
 
     @Override
+    public void setOnOnCityUpdated(OnCityUpdated onCityUpdated) {
+        this.onCityUpdated = onCityUpdated;
+    }
+
+    @Override
     public void addCity(CitySettings citySettings) {
         citySettingsList.add(citySettings);
     }
 
     @Override
     public void saveSettings(CitySettings citySettings) {
-
+        if (onCityUpdated != null) {
+            onCityUpdated.onUpdated(citySettings);
+        }
     }
 
 }

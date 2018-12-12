@@ -19,12 +19,18 @@ public interface WeatherInteractor {
 
     void setOnCurrentCityChanged(OnCurrentCityChanged onCurrentCityChanged);
 
+    void setOnOnCityUpdated(OnCityUpdated onCityUpdated);
+
     void addCity(CitySettings s);
 
     void saveSettings(CitySettings citySettings);
 
     public interface OnCurrentCityChanged {
         void onChanged(CitySettings currentCity);
+    }
+
+    public interface OnCityUpdated {
+        void onUpdated(CitySettings currentCity);
     }
 
 }

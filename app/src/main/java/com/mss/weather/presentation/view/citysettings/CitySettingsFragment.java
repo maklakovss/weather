@@ -84,7 +84,7 @@ public class CitySettingsFragment extends MvpAppCompatFragment implements CitySe
 
     @OnClick(R.id.button)
     void saveClick(View view) {
-        CitySettings citySettings = new CitySettings();
+        CitySettings citySettings = citySettingsPresenter.getCurrentSettings();
         citySettings.setName(etCity.getText().toString());
         citySettings.setShowSunrise(cbShowSunrise.isChecked());
         citySettings.setShowSunset(cbShowSunset.isChecked());

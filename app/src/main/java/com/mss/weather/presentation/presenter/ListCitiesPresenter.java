@@ -19,17 +19,18 @@ public class ListCitiesPresenter extends MvpPresenter<ListCitiesView> {
 
     public ListCitiesPresenter() {
         MyApplication.getApplicationComponent().inject(this);
+        weatherInteractor.setOnOnCityUpdated(new WeatherInteractor.OnCityUpdated() {
+            @Override
+            public void onUpdated(CitySettings currentCity) {
+                getViewState().updateCity(weatherInteractor.getListCities().indexOf(currentCity));
+            }
+        });
     }
 
     public void needCities() {
         List<CitySettings> cityNamesList = weatherInteractor.getListCities();
         getViewState().updateList(cityNamesList);
-        for (int i = 0; i < cityNamesList.size(); i++) {
-            if (cityNamesList.get(i).equals(weatherInteractor.getCurrentCity())) {
-                getViewState().setCurrentCity(i);
-                break;
-            }
-        }
+        getViewState().setCurrentCity(cityNamesList.indexOf(weatherInteractor.getCurrentCity()));
     }
 
     public void onClickCity(int checkedCity) {
@@ -48,4 +49,5 @@ public class ListCitiesPresenter extends MvpPresenter<ListCitiesView> {
     public void onLongClickCity(int i) {
         getViewState().showSettings();
     }
+
 }

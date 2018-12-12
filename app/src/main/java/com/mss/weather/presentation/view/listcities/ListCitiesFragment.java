@@ -122,6 +122,11 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
             weatherFragmentsNavigator.showCitySettings();
     }
 
+    @Override
+    public void updateCity(int position) {
+        rvCitiesList.getAdapter().notifyItemChanged(position);
+    }
+
     @ProvidePresenter
     public ListCitiesPresenter providePresenter() {
         if (listCitiesPresenter == null)

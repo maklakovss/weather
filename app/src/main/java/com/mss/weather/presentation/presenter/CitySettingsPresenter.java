@@ -26,4 +26,8 @@ public class CitySettingsPresenter extends MvpPresenter<CitySettingsView> {
     public void saveSettings(CitySettings citySettings) {
         weatherInteractor.saveSettings(citySettings);
     }
+
+    public CitySettings getCurrentSettings() {
+        return weatherInteractor.getCurrentCity();
+    }
 }

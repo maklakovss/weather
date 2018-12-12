@@ -21,4 +21,7 @@ public interface ListCitiesView extends MvpView {
 
     @StateStrategyType(SkipStrategy.class)
     void showSettings();
+
+    @StateStrategyType(SkipStrategy.class)
+    void updateCity(int position);
 }

@@ -91,7 +91,7 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder
                     if (onItemLongClickListener != null) {
                         onItemLongClickListener.onItemLongClick(view, getAdapterPosition());
                     }
-                    return false;
+                    return true;
                 }
             });
         }
