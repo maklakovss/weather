@@ -1,7 +1,5 @@
 package com.mss.weather.presentation.presenter;
 
-import android.support.annotation.NonNull;
-
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.mss.weather.di.MyApplication;
@@ -9,6 +7,7 @@ import com.mss.weather.domain.WeatherInteractor;
 import com.mss.weather.presentation.view.listcities.ListCitiesView;
 import com.mss.weather.presentation.view.models.CitySettings;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -24,28 +23,27 @@ public class ListCitiesPresenter extends MvpPresenter<ListCitiesView> {
     }
 
     public void needCities() {
-        List<CitySettings> citySettingsList = weatherInteractor.getListCities();
-        getViewState().updateList(listCitiesToStringArray(citySettingsList));
-        for (int i = 0; i < citySettingsList.size(); i++) {
-            if (citySettingsList.get(i).getName().equals(weatherInteractor.getCurrentCityName())) {
+        List<String> cityNamesList = listCitySettingsToListString(weatherInteractor.getListCities());
+        getViewState().updateList(cityNamesList);
+        for (int i = 0; i < cityNamesList.size(); i++) {
+            if (cityNamesList.get(i).equals(weatherInteractor.getCurrentCityName())) {
                 getViewState().setCurrentCity(i);
                 break;
             }
         }
     }
 
+    private List<String> listCitySettingsToListString(List<CitySettings> listCities) {
+        List<String> namesList = new ArrayList<>();
+        for (CitySettings listCity : listCities) {
+            namesList.add(listCity.getName());
+        }
+        return namesList;
+    }
+
     public void onClickCity(int checkedCity) {
         weatherInteractor.setCurrentCityName(weatherInteractor.getListCities().get(checkedCity).getName());
         getViewState().showWeather();
-    }
-
-    @NonNull
-    private String[] listCitiesToStringArray(List<CitySettings> listCities) {
-        String[] cities = new String[listCities.size()];
-        for (int i = 0; i < listCities.size(); i++) {
-            cities[i] = listCities.get(i).getName();
-        }
-        return cities;
     }
 
     public void onClickAdd() {

@@ -1,4 +1,4 @@
-package com.mss.weather.presentation.view.listcities;
+package com.mss.weather.presentation.view.main;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
