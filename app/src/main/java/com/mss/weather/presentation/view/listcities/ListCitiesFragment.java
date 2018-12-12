@@ -17,6 +17,7 @@ import com.mss.weather.R;
 import com.mss.weather.di.MyApplication;
 import com.mss.weather.presentation.presenter.ListCitiesPresenter;
 import com.mss.weather.presentation.view.main.WeatherFragmentsNavigator;
+import com.mss.weather.presentation.view.models.CitySettings;
 
 import java.util.List;
 
@@ -86,7 +87,7 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
     }
 
     @Override
-    public void updateList(List<String> cities) {
+    public void updateList(List<CitySettings> cities) {
         final CitiesAdapter citiesAdapter = new CitiesAdapter(cities);
         citiesAdapter.setOnItemClickListener(new CitiesAdapter.OnItemClickListener() {
             @Override

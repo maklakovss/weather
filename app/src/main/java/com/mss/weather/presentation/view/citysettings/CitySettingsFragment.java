@@ -48,8 +48,8 @@ public class CitySettingsFragment extends MvpAppCompatFragment implements CitySe
     CheckBox cbShowWindSpeed;
     @BindView(R.id.cbShowWindDeg)
     CheckBox cbShowWindDeg;
-    @BindView(R.id.cbRainfall)
-    CheckBox cbRainfall;
+    @BindView(R.id.cbShowRainfall)
+    CheckBox cbShowRainfall;
     @BindView(R.id.button)
     Button button;
 
@@ -79,13 +79,22 @@ public class CitySettingsFragment extends MvpAppCompatFragment implements CitySe
         cbShowPressure.setChecked(citySettings.isShowPressure());
         cbShowWindSpeed.setChecked(citySettings.isShowWindSpeed());
         cbShowWindDeg.setChecked(citySettings.isShowWindDeg());
-        cbRainfall.setChecked(citySettings.isShowRainfall());
+        cbShowRainfall.setChecked(citySettings.isShowRainfall());
     }
 
     @OnClick(R.id.button)
     void saveClick(View view) {
-        //final Intent intent = new Intent(this, CityWeatherFragment.class);
-        //startActivity(intent);
+        CitySettings citySettings = new CitySettings();
+        citySettings.setName(etCity.getText().toString());
+        citySettings.setShowSunrise(cbShowSunrise.isChecked());
+        citySettings.setShowSunset(cbShowSunset.isChecked());
+        citySettings.setShowTemp(cbShowTemp.isChecked());
+        citySettings.setShowTempRange(cbShowTempRange.isChecked());
+        citySettings.setShowPressure(cbShowPressure.isChecked());
+        citySettings.setShowWindSpeed(cbShowWindSpeed.isChecked());
+        citySettings.setShowWindDeg(cbShowWindDeg.isChecked());
+        citySettings.setShowRainfall(cbShowRainfall.isChecked());
+        citySettingsPresenter.saveSettings(citySettings);
     }
 
     @Override

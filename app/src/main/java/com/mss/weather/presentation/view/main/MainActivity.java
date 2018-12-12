@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements WeatherFragmentsN
         final CitySettingsFragment citySettingsFragment = CitySettingsFragment.newInstance();
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flMain, citySettingsFragment, SETTINGS_TAG);
+        ft.addToBackStack("");
         ft.commit();
         return citySettingsFragment;
     }
@@ -135,7 +136,6 @@ public class MainActivity extends AppCompatActivity implements WeatherFragmentsN
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flDetails, citySettingsFragment, SETTINGS_TAG);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        ft.addToBackStack("");
         ft.commit();
         return citySettingsFragment;
     }

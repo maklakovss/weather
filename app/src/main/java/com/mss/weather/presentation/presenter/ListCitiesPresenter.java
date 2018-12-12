@@ -7,7 +7,6 @@ import com.mss.weather.domain.WeatherInteractor;
 import com.mss.weather.presentation.view.listcities.ListCitiesView;
 import com.mss.weather.presentation.view.models.CitySettings;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -23,30 +22,26 @@ public class ListCitiesPresenter extends MvpPresenter<ListCitiesView> {
     }
 
     public void needCities() {
-        List<String> cityNamesList = listCitySettingsToListString(weatherInteractor.getListCities());
+        List<CitySettings> cityNamesList = weatherInteractor.getListCities();
         getViewState().updateList(cityNamesList);
         for (int i = 0; i < cityNamesList.size(); i++) {
-            if (cityNamesList.get(i).equals(weatherInteractor.getCurrentCityName())) {
+            if (cityNamesList.get(i).equals(weatherInteractor.getCurrentCity())) {
                 getViewState().setCurrentCity(i);
                 break;
             }
         }
     }
 
-    private List<String> listCitySettingsToListString(List<CitySettings> listCities) {
-        List<String> namesList = new ArrayList<>();
-        for (CitySettings listCity : listCities) {
-            namesList.add(listCity.getName());
-        }
-        return namesList;
-    }
-
     public void onClickCity(int checkedCity) {
-        weatherInteractor.setCurrentCityName(weatherInteractor.getListCities().get(checkedCity).getName());
+        weatherInteractor.setCurrentCity(weatherInteractor.getListCities().get(checkedCity));
         getViewState().showWeather();
     }
 
     public void onClickAdd() {
+        CitySettings newCity = new CitySettings("");
+        weatherInteractor.addCity(newCity);
+        weatherInteractor.setCurrentCity(newCity);
+        needCities();
         getViewState().showSettings();
     }
 
