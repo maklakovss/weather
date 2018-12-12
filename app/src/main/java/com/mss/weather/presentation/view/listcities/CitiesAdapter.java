@@ -19,6 +19,7 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder
     private List<String> citiesList;
     private OnItemClickListener onItemClickListener;
     private OnItemLongClickListener onItemLongClickListener;
+    private int focusedItem = -1;
 
     public CitiesAdapter(List<String> cities) {
         citiesList = cities;
@@ -29,13 +30,21 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.city_list_item, viewGroup, false);
-
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         viewHolder.tvCityName.setText(citiesList.get(i));
+        viewHolder.itemView.setSelected(focusedItem == i);
+    }
+
+    public int getFocusedItem() {
+        return focusedItem;
+    }
+
+    public void setFocusedItem(int focusedItem) {
+        this.focusedItem = focusedItem;
     }
 
     @Override
@@ -69,6 +78,7 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder
             tvCityName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    updateFocusedItem(getAdapterPosition());
                     if (onItemClickListener != null) {
                         onItemClickListener.onItemClick(view, getAdapterPosition());
                     }
@@ -83,6 +93,12 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder
                     return false;
                 }
             });
+        }
+
+        private void updateFocusedItem(int newFocusedItem) {
+            notifyItemChanged(focusedItem);
+            focusedItem = newFocusedItem;
+            notifyItemChanged(focusedItem);
         }
     }
 }

@@ -105,7 +105,7 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
 
     @Override
     public void setCurrentCity(int checkedCity) {
-//        lvCitiesList.setItemChecked(checkedCity, true);
+        ((CitiesAdapter) rvCitiesList.getAdapter()).setFocusedItem(checkedCity);
     }
 
     @Override
