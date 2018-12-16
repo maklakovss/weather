@@ -88,7 +88,7 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
 
     @Override
     public void updateList(List<CitySettings> cities) {
-        final CitiesAdapter citiesAdapter = new CitiesAdapter(cities);
+        final CitiesAdapter citiesAdapter = new CitiesAdapter(cities, getContext());
         citiesAdapter.setOnItemClickListener(new CitiesAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
