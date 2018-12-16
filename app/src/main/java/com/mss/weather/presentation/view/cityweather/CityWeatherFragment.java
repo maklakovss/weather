@@ -2,6 +2,8 @@ package com.mss.weather.presentation.view.cityweather;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +12,18 @@ import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.mss.weather.R;
+import com.mss.weather.di.MyApplication;
 import com.mss.weather.presentation.presenter.CityWeatherPresenter;
+import com.mss.weather.presentation.view.main.WeatherListAdapter;
 import com.mss.weather.presentation.view.models.WeatherData;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Locale;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +31,7 @@ import butterknife.Unbinder;
 
 public class CityWeatherFragment extends MvpAppCompatFragment implements CityWeatherView {
 
+    @Inject
     @InjectPresenter
     CityWeatherPresenter cityWeatherPresenter;
 
@@ -70,8 +79,16 @@ public class CityWeatherFragment extends MvpAppCompatFragment implements CityWea
     TextView tvRainfall;
     @BindView(R.id.llRainfall)
     LinearLayout llRainfall;
+    @BindView(R.id.tvDate)
+    TextView tvDate;
+    @BindView(R.id.rvWeatherList)
+    RecyclerView rvWeatherList;
 
     private Unbinder binder;
+
+    public static CityWeatherFragment newInstance() {
+        return new CityWeatherFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,6 +96,10 @@ public class CityWeatherFragment extends MvpAppCompatFragment implements CityWea
         super.onCreateView(inflater, container, savedInstanceState);
         View layout = inflater.inflate(R.layout.fragment_weather, container, false);
         binder = ButterKnife.bind(this, layout);
+        rvWeatherList.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        rvWeatherList.setLayoutManager(linearLayoutManager);
         cityWeatherPresenter.needData();
         return layout;
     }
@@ -86,9 +107,14 @@ public class CityWeatherFragment extends MvpAppCompatFragment implements CityWea
     @Override
     public void showWeather(@NonNull final WeatherData weatherData) {
         tvCityName.setText(weatherData.getCityName());
-        final SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
-        tvSunrise.setText(formatter.format(weatherData.getSunrise()));
-        tvSunset.setText(formatter.format(weatherData.getSunset()));
+
+        final SimpleDateFormat formatterDateTime = new SimpleDateFormat("dd.MM.YYYY HH:mm", Locale.getDefault());
+        tvDate.setText(formatterDateTime.format(weatherData.getWeatherDate()));
+
+        final SimpleDateFormat formatterTime = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        tvSunrise.setText(formatterTime.format(weatherData.getSunrise()));
+        tvSunset.setText(formatterTime.format(weatherData.getSunset()));
+
         tvTemp.setText(String.valueOf(weatherData.getTemp()));
         tvTempMin.setText(String.valueOf(weatherData.getTempMin()));
         tvTempMax.setText(String.valueOf(weatherData.getTempMax()));
@@ -106,8 +132,20 @@ public class CityWeatherFragment extends MvpAppCompatFragment implements CityWea
     }
 
     @Override
+    public void showWeatherList(List<WeatherData> weatherList) {
+        rvWeatherList.setAdapter(new WeatherListAdapter(weatherList));
+    }
+
+    @Override
     public void onDestroyView() {
         binder.unbind();
         super.onDestroyView();
+    }
+
+    @ProvidePresenter
+    public CityWeatherPresenter providePresenter() {
+        if (cityWeatherPresenter == null)
+            MyApplication.getApplicationComponent().inject(this);
+        return cityWeatherPresenter;
     }
 }

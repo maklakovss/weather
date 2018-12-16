@@ -1,7 +1,5 @@
 package com.mss.weather.presentation.presenter;
 
-import android.support.annotation.NonNull;
-
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.mss.weather.di.MyApplication;
@@ -21,38 +19,35 @@ public class ListCitiesPresenter extends MvpPresenter<ListCitiesView> {
 
     public ListCitiesPresenter() {
         MyApplication.getApplicationComponent().inject(this);
+        weatherInteractor.setOnOnCityUpdated(new WeatherInteractor.OnCityUpdated() {
+            @Override
+            public void onUpdated(CitySettings currentCity) {
+                getViewState().updateCity(weatherInteractor.getListCities().indexOf(currentCity));
+            }
+        });
     }
 
     public void needCities() {
-        List<CitySettings> citySettingsList = weatherInteractor.getListCities();
-        getViewState().updateList(listCitiesToStringArray(citySettingsList));
-        for (int i = 0; i < citySettingsList.size(); i++) {
-            if (citySettingsList.get(i).getName().equals(weatherInteractor.getCurrentCityName())) {
-                getViewState().setCurrentCity(i);
-                break;
-            }
-        }
+        List<CitySettings> cityNamesList = weatherInteractor.getListCities();
+        getViewState().updateList(cityNamesList);
+        getViewState().setCurrentCity(cityNamesList.indexOf(weatherInteractor.getCurrentCity()));
     }
 
     public void onClickCity(int checkedCity) {
-        weatherInteractor.setCurrentCityName(weatherInteractor.getListCities().get(checkedCity).getName());
+        weatherInteractor.setCurrentCity(weatherInteractor.getListCities().get(checkedCity));
         getViewState().showWeather();
     }
 
-    @NonNull
-    private String[] listCitiesToStringArray(List<CitySettings> listCities) {
-        String[] cities = new String[listCities.size()];
-        for (int i = 0; i < listCities.size(); i++) {
-            cities[i] = listCities.get(i).getName();
-        }
-        return cities;
-    }
-
     public void onClickAdd() {
+        CitySettings newCity = new CitySettings("");
+        weatherInteractor.addCity(newCity);
+        weatherInteractor.setCurrentCity(newCity);
+        needCities();
         getViewState().showSettings();
     }
 
     public void onLongClickCity(int i) {
         getViewState().showSettings();
     }
+
 }

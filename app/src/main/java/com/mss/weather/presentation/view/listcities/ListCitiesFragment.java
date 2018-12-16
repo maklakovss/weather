@@ -2,32 +2,40 @@ package com.mss.weather.presentation.view.listcities;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.ListView;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.mss.weather.R;
+import com.mss.weather.di.MyApplication;
 import com.mss.weather.presentation.presenter.ListCitiesPresenter;
 import com.mss.weather.presentation.view.main.WeatherFragmentsNavigator;
+import com.mss.weather.presentation.view.models.CitySettings;
+
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class ListCitiesFragment extends MvpAppCompatFragment implements ListCitiesView, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+public class ListCitiesFragment extends MvpAppCompatFragment implements ListCitiesView {
 
+    @Inject
     @InjectPresenter
     ListCitiesPresenter listCitiesPresenter;
 
-    @BindView(R.id.lvCitiesList)
-    ListView lvCitiesList;
+    @BindView(R.id.rvCitiesList)
+    RecyclerView rvCitiesList;
     @BindView(R.id.btnAddCity)
     ImageButton btnAddCity;
 
@@ -47,6 +55,10 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
         super.onDetach();
     }
 
+    public static ListCitiesFragment newInstance() {
+        return new ListCitiesFragment();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,8 +66,9 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
         View layout = inflater.inflate(R.layout.fragment_list_cities, container, false);
         binder = ButterKnife.bind(this, layout);
 
-        lvCitiesList.setOnItemClickListener(this);
-        lvCitiesList.setOnItemLongClickListener(this);
+        rvCitiesList.setItemAnimator(new DefaultItemAnimator());
+        rvCitiesList.setHasFixedSize(true);
+        rvCitiesList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         listCitiesPresenter.needCities();
 
@@ -74,15 +87,26 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
     }
 
     @Override
-    public void updateList(String[] cities) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_activated_1, cities);
-        lvCitiesList.setAdapter(adapter);
+    public void updateList(List<CitySettings> cities) {
+        final CitiesAdapter citiesAdapter = new CitiesAdapter(cities);
+        citiesAdapter.setOnItemClickListener(new CitiesAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                listCitiesPresenter.onClickCity(position);
+            }
+        });
+        citiesAdapter.setOnItemLongClickListener(new CitiesAdapter.OnItemLongClickListener() {
+            @Override
+            public void onItemLongClick(View view, int position) {
+                listCitiesPresenter.onLongClickCity(position);
+            }
+        });
+        rvCitiesList.setAdapter(citiesAdapter);
     }
 
     @Override
     public void setCurrentCity(int checkedCity) {
-        lvCitiesList.setItemChecked(checkedCity, true);
+        ((CitiesAdapter) rvCitiesList.getAdapter()).setFocusedItem(checkedCity);
     }
 
     @Override
@@ -99,13 +123,14 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
     }
 
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        listCitiesPresenter.onClickCity(i);
+    public void updateCity(int position) {
+        rvCitiesList.getAdapter().notifyItemChanged(position);
     }
 
-    @Override
-    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-        listCitiesPresenter.onLongClickCity(i);
-        return true;
+    @ProvidePresenter
+    public ListCitiesPresenter providePresenter() {
+        if (listCitiesPresenter == null)
+            MyApplication.getApplicationComponent().inject(this);
+        return listCitiesPresenter;
     }
 }

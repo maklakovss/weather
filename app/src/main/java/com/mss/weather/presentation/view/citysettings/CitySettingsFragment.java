@@ -11,9 +11,13 @@ import android.widget.EditText;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.mss.weather.R;
+import com.mss.weather.di.MyApplication;
 import com.mss.weather.presentation.presenter.CitySettingsPresenter;
 import com.mss.weather.presentation.view.models.CitySettings;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,6 +26,7 @@ import butterknife.Unbinder;
 
 public class CitySettingsFragment extends MvpAppCompatFragment implements CitySettingsView {
 
+    @Inject
     @InjectPresenter
     CitySettingsPresenter citySettingsPresenter;
 
@@ -43,12 +48,16 @@ public class CitySettingsFragment extends MvpAppCompatFragment implements CitySe
     CheckBox cbShowWindSpeed;
     @BindView(R.id.cbShowWindDeg)
     CheckBox cbShowWindDeg;
-    @BindView(R.id.cbRainfall)
-    CheckBox cbRainfall;
+    @BindView(R.id.cbShowRainfall)
+    CheckBox cbShowRainfall;
     @BindView(R.id.button)
     Button button;
 
     Unbinder binder;
+
+    public static CitySettingsFragment newInstance() {
+        return new CitySettingsFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,13 +79,22 @@ public class CitySettingsFragment extends MvpAppCompatFragment implements CitySe
         cbShowPressure.setChecked(citySettings.isShowPressure());
         cbShowWindSpeed.setChecked(citySettings.isShowWindSpeed());
         cbShowWindDeg.setChecked(citySettings.isShowWindDeg());
-        cbRainfall.setChecked(citySettings.isShowRainfall());
+        cbShowRainfall.setChecked(citySettings.isShowRainfall());
     }
 
     @OnClick(R.id.button)
     void saveClick(View view) {
-        //final Intent intent = new Intent(this, CityWeatherFragment.class);
-        //startActivity(intent);
+        CitySettings citySettings = citySettingsPresenter.getCurrentSettings();
+        citySettings.setName(etCity.getText().toString());
+        citySettings.setShowSunrise(cbShowSunrise.isChecked());
+        citySettings.setShowSunset(cbShowSunset.isChecked());
+        citySettings.setShowTemp(cbShowTemp.isChecked());
+        citySettings.setShowTempRange(cbShowTempRange.isChecked());
+        citySettings.setShowPressure(cbShowPressure.isChecked());
+        citySettings.setShowWindSpeed(cbShowWindSpeed.isChecked());
+        citySettings.setShowWindDeg(cbShowWindDeg.isChecked());
+        citySettings.setShowRainfall(cbShowRainfall.isChecked());
+        citySettingsPresenter.saveSettings(citySettings);
     }
 
     @Override
@@ -85,4 +103,10 @@ public class CitySettingsFragment extends MvpAppCompatFragment implements CitySe
         super.onDestroy();
     }
 
+    @ProvidePresenter
+    public CitySettingsPresenter providePresenter() {
+        if (citySettingsPresenter == null)
+            MyApplication.getApplicationComponent().inject(this);
+        return citySettingsPresenter;
+    }
 }

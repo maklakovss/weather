@@ -5,6 +5,7 @@ import com.arellomobile.mvp.MvpPresenter;
 import com.mss.weather.di.MyApplication;
 import com.mss.weather.domain.WeatherInteractor;
 import com.mss.weather.presentation.view.citysettings.CitySettingsView;
+import com.mss.weather.presentation.view.models.CitySettings;
 
 import javax.inject.Inject;
 
@@ -19,7 +20,14 @@ public class CitySettingsPresenter extends MvpPresenter<CitySettingsView> {
     }
 
     public void needSettings() {
-        getViewState().showSettings(weatherInteractor.getCitySettings(weatherInteractor.getCurrentCityName()));
+        getViewState().showSettings(weatherInteractor.getCurrentCity());
     }
 
+    public void saveSettings(CitySettings citySettings) {
+        weatherInteractor.saveSettings(citySettings);
+    }
+
+    public CitySettings getCurrentSettings() {
+        return weatherInteractor.getCurrentCity();
+    }
 }

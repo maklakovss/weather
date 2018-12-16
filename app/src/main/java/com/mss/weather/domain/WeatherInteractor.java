@@ -9,18 +9,28 @@ public interface WeatherInteractor {
 
     List<CitySettings> getListCities();
 
-    String getCurrentCityName();
+    CitySettings getCurrentCity();
 
-    void setCurrentCityName(String currentCityName);
+    void setCurrentCity(CitySettings currentCity);
 
-    WeatherData getWeatherByCity(String cityName);
+    WeatherData getWeatherByCity(CitySettings cityName);
+
+    List<WeatherData> getWeatherList(CitySettings cityName);
 
     void setOnCurrentCityChanged(OnCurrentCityChanged onCurrentCityChanged);
 
-    CitySettings getCitySettings(String cityName);
+    void setOnOnCityUpdated(OnCityUpdated onCityUpdated);
+
+    void addCity(CitySettings s);
+
+    void saveSettings(CitySettings citySettings);
 
     public interface OnCurrentCityChanged {
-        void onChanged(String currentCityName);
+        void onChanged(CitySettings currentCity);
+    }
+
+    public interface OnCityUpdated {
+        void onUpdated(CitySettings currentCity);
     }
 
 }

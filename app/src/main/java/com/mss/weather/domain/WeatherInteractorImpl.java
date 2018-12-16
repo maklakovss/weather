@@ -1,17 +1,21 @@
 package com.mss.weather.domain;
 
+import android.support.annotation.NonNull;
+
 import com.mss.weather.presentation.view.models.CitySettings;
 import com.mss.weather.presentation.view.models.WeatherData;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class WeatherInteractorImpl implements WeatherInteractor {
 
     private List<CitySettings> citySettingsList;
-    private String currentCityName;
+    private CitySettings currentCity;
     private OnCurrentCityChanged onCurrentCityChanged;
-
+    private OnCityUpdated onCityUpdated;
 
     @Override
     public List<CitySettings> getListCities() {
@@ -22,22 +26,29 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     }
 
     @Override
-    public String getCurrentCityName() {
-        return currentCityName;
+    public CitySettings getCurrentCity() {
+        return currentCity;
     }
 
     @Override
-    public void setCurrentCityName(String currentCityName) {
-        this.currentCityName = currentCityName;
+    public void setCurrentCity(CitySettings currentCity) {
+        this.currentCity = currentCity;
         if (onCurrentCityChanged != null) {
-            onCurrentCityChanged.onChanged(currentCityName);
+            onCurrentCityChanged.onChanged(currentCity);
         }
     }
 
     @Override
-    public WeatherData getWeatherByCity(String cityName) {
+    public WeatherData getWeatherByCity(CitySettings citySettings) {
+        WeatherData weatherData = getWeatherData(citySettings, new Date());
+        return weatherData;
+    }
+
+    @NonNull
+    private WeatherData getWeatherData(CitySettings citySettings, Date date) {
         WeatherData weatherData = new WeatherData();
-        weatherData.setCityName(cityName);
+        weatherData.setCityName(citySettings.getName());
+        weatherData.setWeatherDate(date);
         weatherData.getSunrise().setHours(6);
         weatherData.getSunrise().setMinutes(0);
         weatherData.getSunrise().setSeconds(0);
@@ -58,12 +69,23 @@ public class WeatherInteractorImpl implements WeatherInteractor {
         return weatherData;
     }
 
+    @Override
+    public List<WeatherData> getWeatherList(CitySettings citySettings) {
+        List<WeatherData> weatherDataList = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        for (int i = 0; i < 10; i++) {
+            calendar.add(Calendar.DATE, 1);
+            weatherDataList.add(getWeatherData(citySettings, calendar.getTime()));
+        }
+        return weatherDataList;
+    }
+
     private void loadCities() {
         citySettingsList = new ArrayList<>();
         citySettingsList.add(new CitySettings("Москва"));
         citySettingsList.add(new CitySettings("Санкт-Петербург"));
         citySettingsList.add(new CitySettings("Тюмень"));
-        currentCityName = citySettingsList.get(0).getName();
+        currentCity = citySettingsList.get(0);
     }
 
     public void setOnCurrentCityChanged(OnCurrentCityChanged onCurrentCityChanged) {
@@ -71,12 +93,20 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     }
 
     @Override
-    public CitySettings getCitySettings(String cityName) {
-        for (int i = 0; i < citySettingsList.size(); i++) {
-            if (citySettingsList.get(i).getName().equals(cityName))
-                return citySettingsList.get(i);
+    public void setOnOnCityUpdated(OnCityUpdated onCityUpdated) {
+        this.onCityUpdated = onCityUpdated;
+    }
+
+    @Override
+    public void addCity(CitySettings citySettings) {
+        citySettingsList.add(citySettings);
+    }
+
+    @Override
+    public void saveSettings(CitySettings citySettings) {
+        if (onCityUpdated != null) {
+            onCityUpdated.onUpdated(citySettings);
         }
-        return null;
     }
 
 }
