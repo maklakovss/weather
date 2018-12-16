@@ -1,6 +1,5 @@
 package com.mss.weather.presentation.view.listcities;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -22,11 +21,11 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder
     private List<CitySettings> citiesList;
     private OnItemClickListener onItemClickListener;
     private OnItemLongClickListener onItemLongClickListener;
-    private Context context;
-    private int focusedItem = -1;
+//    private Context context;
+//    private int focusedItem = -1;
 
-    public CitiesAdapter(List<CitySettings> cities, Context context) {
-        this.context = context;
+    public CitiesAdapter(List<CitySettings> cities/*, Context context*/) {
+//        this.context = context;
         citiesList = cities;
     }
 
@@ -41,20 +40,20 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         viewHolder.tvCityName.setText(citiesList.get(i).getName());
-        viewHolder.cvItem.setCardBackgroundColor(
-                focusedItem == i ?
-                        context.getResources().getColor(R.color.colorAccent)
-                        : context.getResources().getColor(R.color.colorCard));
+//        viewHolder.cvItem.setCardBackgroundColor(
+//                focusedItem == i ?
+//                        context.getResources().getColor(R.color.colorAccent)
+//                        : context.getResources().getColor(R.color.colorCard));
     }
 
-    public int getFocusedItem() {
-        return focusedItem;
-    }
+//    public int getFocusedItem() {
+//        return focusedItem;
+//    }
 
-    public void setFocusedItem(int focusedItem) {
-        this.focusedItem = focusedItem;
-    }
-
+    //    public void setFocusedItem(int focusedItem) {
+//        this.focusedItem = focusedItem;
+//    }
+//
     @Override
     public int getItemCount() {
         return citiesList.size();
@@ -88,7 +87,7 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder
             cvItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    updateFocusedItem(getAdapterPosition());
+//                    updateFocusedItem(getAdapterPosition());
                     if (onItemClickListener != null) {
                         onItemClickListener.onItemClick(view, getAdapterPosition());
                     }
@@ -105,10 +104,10 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder
             });
         }
 
-        private void updateFocusedItem(int newFocusedItem) {
-            notifyItemChanged(focusedItem);
-            focusedItem = newFocusedItem;
-            notifyItemChanged(focusedItem);
-        }
+//        private void updateFocusedItem(int newFocusedItem) {
+//            notifyItemChanged(focusedItem);
+//            focusedItem = newFocusedItem;
+//            notifyItemChanged(focusedItem);
+//        }
     }
 }
