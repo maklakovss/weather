@@ -4,7 +4,7 @@
     <string name="sunrise_label">Sunrise</string>
     <string name="sunset_label">Sunset</string>
     <string name="cloud_label">Cloud</string>
-    <string name="temp_label">Temperature</string>
+    <string name="temp_label">C</string>
     <string name="temp_min_max_delimiter">-</string>
     <string name="temp_range_label">Temperature range</string>
     <string name="humidity_label">Humidity</string>
@@ -22,4 +22,5 @@
     <string name="cityname_label">City</string>
     <string name="list_fragment_tag">listFragment</string>
     <string name="weather_fragment_tag">weatherTag</string>
+    <string name="refresh_label">Refresh</string>
 </resources>

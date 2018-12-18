@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.widget.FrameLayout;
 
 import com.mss.weather.R;
@@ -26,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements WeatherFragmentsN
     @Nullable
     @BindView(R.id.flDetails)
     FrameLayout flDetails;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     ListCitiesFragment listCitiesFragment;
 
@@ -34,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements WeatherFragmentsN
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
         initListCitiesFragment();
         if (flDetails != null) {
             createWeatherFragmentInDetailFrame();
@@ -147,5 +152,11 @@ public class MainActivity extends AppCompatActivity implements WeatherFragmentsN
             ft.remove(citySettingsFragment);
             ft.commit();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }
