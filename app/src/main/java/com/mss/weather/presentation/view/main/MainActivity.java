@@ -3,10 +3,15 @@ package com.mss.weather.presentation.view.main;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.mss.weather.R;
@@ -17,7 +22,7 @@ import com.mss.weather.presentation.view.listcities.ListCitiesFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements WeatherFragmentsNavigator {
+public class MainActivity extends AppCompatActivity implements WeatherFragmentsNavigator, NavigationView.OnNavigationItemSelectedListener {
 
     private static final String CITY_LIST_TAG = "CITY_LIST_TAG";
     private static final String WEATHER_TAG = "WEATHER_TAG";
@@ -30,15 +35,27 @@ public class MainActivity extends AppCompatActivity implements WeatherFragmentsN
     FrameLayout flDetails;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawer;
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
 
     ListCitiesFragment listCitiesFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.navigation);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(this);
+
         initListCitiesFragment();
         if (flDetails != null) {
             createWeatherFragmentInDetailFrame();
@@ -158,5 +175,19 @@ public class MainActivity extends AppCompatActivity implements WeatherFragmentsN
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START))
+            drawer.closeDrawer(GravityCompat.START);
+        else
+            super.onBackPressed();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

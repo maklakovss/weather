@@ -22,4 +22,7 @@
     <string name="save_label">Применить</string>
     <string name="cityname_label">Город</string>
     <string name="refresh_label">Обновить</string>
+    <string name="settings_label">Настройки</string>
+    <string name="feedback_label">Обратная связь</string>
+    <string name="about_label">О программе</string>
 </resources>

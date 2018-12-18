@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">weather</string>
+    <string name="app_name">Weather</string>
     <string name="weather">Weather</string>
     <string name="sunrise_label">Sunrise</string>
     <string name="sunset_label">Sunset</string>
@@ -23,4 +23,10 @@
     <string name="list_fragment_tag">listFragment</string>
     <string name="weather_fragment_tag">weatherTag</string>
     <string name="refresh_label">Refresh</string>
+    <string name="settings_label">Settings</string>
+    <string name="feedback_label">Feedback</string>
+    <string name="about_label">About</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
 </resources>
