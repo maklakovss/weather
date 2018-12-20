@@ -2,13 +2,13 @@ package com.mss.weather.presentation.view.listcities;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -37,7 +37,7 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
     @BindView(R.id.rvCitiesList)
     RecyclerView rvCitiesList;
     @BindView(R.id.btnAddCity)
-    ImageButton btnAddCity;
+    FloatingActionButton btnAddCity;
 
     private Unbinder binder;
 
@@ -88,7 +88,7 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
 
     @Override
     public void updateList(List<CitySettings> cities) {
-        final CitiesAdapter citiesAdapter = new CitiesAdapter(cities);
+        final CitiesAdapter citiesAdapter = new CitiesAdapter(cities);//, getContext());
         citiesAdapter.setOnItemClickListener(new CitiesAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -104,10 +104,10 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
         rvCitiesList.setAdapter(citiesAdapter);
     }
 
-    @Override
-    public void setCurrentCity(int checkedCity) {
-        ((CitiesAdapter) rvCitiesList.getAdapter()).setFocusedItem(checkedCity);
-    }
+//    @Override
+//    public void setCurrentCity(int checkedCity) {
+//        ((CitiesAdapter) rvCitiesList.getAdapter()).setFocusedItem(checkedCity);
+//    }
 
     @Override
     public void showWeather() {

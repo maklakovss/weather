@@ -30,7 +30,7 @@ public class ListCitiesPresenter extends MvpPresenter<ListCitiesView> {
     public void needCities() {
         List<CitySettings> cityNamesList = weatherInteractor.getListCities();
         getViewState().updateList(cityNamesList);
-        getViewState().setCurrentCity(cityNamesList.indexOf(weatherInteractor.getCurrentCity()));
+//        getViewState().setCurrentCity(cityNamesList.indexOf(weatherInteractor.getCurrentCity()));
     }
 
     public void onClickCity(int checkedCity) {
