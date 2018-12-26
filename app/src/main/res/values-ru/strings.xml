@@ -5,7 +5,7 @@
     <string name="sunrise_label">Восход</string>
     <string name="sunset_label">Закат</string>
     <string name="cloud_label">Облачность</string>
-    <string name="temp_label">Температура</string>
+    <string name="temp_label">C</string>
     <string name="temp_min_max_delimiter">-</string>
     <string name="temp_range_label">Интервал температур</string>
     <string name="humidity_label">Влажность</string>
@@ -21,4 +21,8 @@
     <string name="wind_deg_label">Направление ветра</string>
     <string name="save_label">Применить</string>
     <string name="cityname_label">Город</string>
+    <string name="refresh_label">Обновить</string>
+    <string name="settings_label">Настройки</string>
+    <string name="feedback_label">Обратная связь</string>
+    <string name="about_label">О программе</string>
 </resources>
