@@ -1,6 +1,8 @@
 package com.mss.weather.presentation.view.main;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.ResultReceiver;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -14,10 +16,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.mss.weather.MyIntentService;
 import com.mss.weather.R;
 import com.mss.weather.presentation.view.citysettings.CitySettingsFragment;
 import com.mss.weather.presentation.view.cityweather.CityWeatherFragment;
 import com.mss.weather.presentation.view.listcities.ListCitiesFragment;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -190,4 +195,20 @@ public class MainActivity extends AppCompatActivity implements WeatherFragmentsN
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public class WeatherServiceResultReceiver<T> extends ResultReceiver {
+
+        public WeatherServiceResultReceiver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+            if (resultCode == MyIntentService.RESULT_SUCCESS) {
+                ArrayList listCities = resultData.getStringArrayList(MyIntentService.RESULT_CITIES_NAME_LIST_KEY);
+            }
+            super.onReceiveResult(resultCode, resultData);
+        }
+    }
+
 }
