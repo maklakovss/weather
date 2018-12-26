@@ -39,12 +39,8 @@ public class CityWeatherFragment extends MvpAppCompatFragment implements CityWea
     TextView tvCityName;
     @BindView(R.id.tvSunrise)
     TextView tvSunrise;
-    @BindView(R.id.llSunrise)
-    LinearLayout llSunrise;
     @BindView(R.id.tvSunset)
     TextView tvSunset;
-    @BindView(R.id.llSunset)
-    LinearLayout llSunset;
     @BindView(R.id.tvCloudPercent)
     TextView tvCloudPercent;
     @BindView(R.id.tvCloudDescription)
@@ -53,8 +49,6 @@ public class CityWeatherFragment extends MvpAppCompatFragment implements CityWea
     LinearLayout llCloud;
     @BindView(R.id.tvTemp)
     TextView tvTemp;
-    @BindView(R.id.llTemp)
-    LinearLayout llTemp;
     @BindView(R.id.tvTempMin)
     TextView tvTempMin;
     @BindView(R.id.tvTempMax)
@@ -115,9 +109,9 @@ public class CityWeatherFragment extends MvpAppCompatFragment implements CityWea
         tvSunrise.setText(formatterTime.format(weatherData.getSunrise()));
         tvSunset.setText(formatterTime.format(weatherData.getSunset()));
 
-        tvTemp.setText(String.valueOf(weatherData.getTemp()));
-        tvTempMin.setText(String.valueOf(weatherData.getTempMin()));
-        tvTempMax.setText(String.valueOf(weatherData.getTempMax()));
+        tvTemp.setText(String.valueOf((int) weatherData.getTemp()));
+        tvTempMin.setText(String.valueOf((int) weatherData.getTempMin()));
+        tvTempMax.setText(String.valueOf((int) weatherData.getTempMax()));
         tvCloudPercent.setText(String.valueOf(weatherData.getCloudsPercent()));
         tvCloudDescription.setText(weatherData.getCloudsDescription());
         tvHumidity.setText(String.valueOf(weatherData.getHumidity()));
