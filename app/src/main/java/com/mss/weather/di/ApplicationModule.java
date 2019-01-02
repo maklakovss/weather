@@ -1,5 +1,9 @@
 package com.mss.weather.di;
 
+import android.content.Context;
+
+import com.mss.weather.domain.PreferencesRepository;
+import com.mss.weather.domain.PreferencesRepositoryImpl;
 import com.mss.weather.domain.WeatherInteractor;
 import com.mss.weather.domain.WeatherInteractorImpl;
 import com.mss.weather.presentation.presenter.CitySettingsPresenter;
@@ -14,10 +18,16 @@ import dagger.Provides;
 @Module
 public class ApplicationModule {
 
+    private Context appContext;
+
+    public ApplicationModule(Context context) {
+        appContext = context;
+    }
+
     @Singleton
     @Provides
-    public WeatherInteractor provideWeatherInteractor() {
-        return new WeatherInteractorImpl();
+    public WeatherInteractor provideWeatherInteractor(PreferencesRepository preferencesRepository) {
+        return new WeatherInteractorImpl(preferencesRepository);
     }
 
     @Singleton
@@ -36,6 +46,18 @@ public class ApplicationModule {
     @Provides
     public ListCitiesPresenter provideListCitiesPresenter() {
         return new ListCitiesPresenter();
+    }
+
+    @Singleton
+    @Provides
+    public Context provideAppContext() {
+        return appContext;
+    }
+
+    @Singleton
+    @Provides
+    public PreferencesRepository providePreferencesRepository(Context context) {
+        return new PreferencesRepositoryImpl(context);
     }
 
 }

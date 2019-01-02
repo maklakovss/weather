@@ -10,12 +10,21 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class WeatherInteractorImpl implements WeatherInteractor {
+
+    private final PreferencesRepository preferencesRepository;
 
     private List<CitySettings> citySettingsList;
     private CitySettings currentCity;
     private OnCurrentCityChanged onCurrentCityChanged;
     private OnCityUpdated onCityUpdated;
+
+    @Inject
+    public WeatherInteractorImpl(PreferencesRepository preferencesRepository) {
+        this.preferencesRepository = preferencesRepository;
+    }
 
     @Override
     public List<CitySettings> getListCities() {
@@ -33,9 +42,14 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     @Override
     public void setCurrentCity(CitySettings currentCity) {
         this.currentCity = currentCity;
+        saveDefaultCity(currentCity.getName());
         if (onCurrentCityChanged != null) {
             onCurrentCityChanged.onChanged(currentCity);
         }
+    }
+
+    private void saveDefaultCity(String name) {
+        preferencesRepository.setDefaultCityName(name);
     }
 
     @Override
@@ -85,7 +99,16 @@ public class WeatherInteractorImpl implements WeatherInteractor {
         citySettingsList.add(new CitySettings("Москва"));
         citySettingsList.add(new CitySettings("Санкт-Петербург"));
         citySettingsList.add(new CitySettings("Тюмень"));
-        currentCity = citySettingsList.get(0);
+        loadDefaultCity();
+    }
+
+    private void loadDefaultCity() {
+        String defaultCity = preferencesRepository.getDefaultCityName();
+        for (int i = 0; i < citySettingsList.size(); i++) {
+            if (defaultCity.equals(citySettingsList.get(i).getName())) {
+                currentCity = citySettingsList.get(i);
+            }
+        }
     }
 
     public void setOnCurrentCityChanged(OnCurrentCityChanged onCurrentCityChanged) {
