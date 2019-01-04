@@ -1,8 +1,6 @@
 package com.mss.weather.presentation.view.main;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.ResultReceiver;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -16,13 +14,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
-import com.mss.weather.MyIntentService;
 import com.mss.weather.R;
-import com.mss.weather.presentation.view.citysettings.CitySettingsFragment;
 import com.mss.weather.presentation.view.cityweather.CityWeatherFragment;
 import com.mss.weather.presentation.view.listcities.ListCitiesFragment;
-
-import java.util.ArrayList;
+import com.mss.weather.presentation.view.selectcity.SelectCityFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,13 +66,13 @@ public class MainActivity extends AppCompatActivity implements WeatherFragmentsN
     }
 
     @Override
-    public void showCitySettings() {
-        CitySettingsFragment citySettingsFragment = getCitySettingsFragment();
-        if (citySettingsFragment == null) {
+    public void showCity() {
+        SelectCityFragment addCityFragment = getCitySettingsFragment();
+        if (addCityFragment == null) {
             if (flDetails == null) {
-                citySettingsFragment = createCitySettingsFragmentInMainFrame();
+                addCityFragment = createCitySettingsFragmentInMainFrame();
             } else {
-                citySettingsFragment = createCitySettingsFragmentInDetailFrame();
+                addCityFragment = createCitySettingsFragmentInDetailFrame();
             }
         }
     }
@@ -144,34 +139,34 @@ public class MainActivity extends AppCompatActivity implements WeatherFragmentsN
         }
     }
 
-    private CitySettingsFragment getCitySettingsFragment() {
-        return (CitySettingsFragment) getSupportFragmentManager()
+    private SelectCityFragment getCitySettingsFragment() {
+        return (SelectCityFragment) getSupportFragmentManager()
                 .findFragmentByTag(SETTINGS_TAG);
     }
 
-    private CitySettingsFragment createCitySettingsFragmentInMainFrame() {
-        final CitySettingsFragment citySettingsFragment = CitySettingsFragment.newInstance();
+    private SelectCityFragment createCitySettingsFragmentInMainFrame() {
+        final SelectCityFragment addCityFragment = SelectCityFragment.newInstance();
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.flMain, citySettingsFragment, SETTINGS_TAG);
+        ft.replace(R.id.flMain, addCityFragment, SETTINGS_TAG);
         ft.addToBackStack("");
         ft.commit();
-        return citySettingsFragment;
+        return addCityFragment;
     }
 
-    private CitySettingsFragment createCitySettingsFragmentInDetailFrame() {
-        final CitySettingsFragment citySettingsFragment = CitySettingsFragment.newInstance();
+    private SelectCityFragment createCitySettingsFragmentInDetailFrame() {
+        final SelectCityFragment addCityFragment = SelectCityFragment.newInstance();
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.flDetails, citySettingsFragment, SETTINGS_TAG);
+        ft.replace(R.id.flDetails, addCityFragment, SETTINGS_TAG);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
-        return citySettingsFragment;
+        return addCityFragment;
     }
 
     private void removeCitySettingsFragment() {
-        final CitySettingsFragment citySettingsFragment = getCitySettingsFragment();
-        if (citySettingsFragment != null) {
+        final SelectCityFragment addCityFragment = getCitySettingsFragment();
+        if (addCityFragment != null) {
             final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.remove(citySettingsFragment);
+            ft.remove(addCityFragment);
             ft.commit();
         }
     }
@@ -195,20 +190,4 @@ public class MainActivity extends AppCompatActivity implements WeatherFragmentsN
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    public class WeatherServiceResultReceiver<T> extends ResultReceiver {
-
-        public WeatherServiceResultReceiver(Handler handler) {
-            super(handler);
-        }
-
-        @Override
-        protected void onReceiveResult(int resultCode, Bundle resultData) {
-            if (resultCode == MyIntentService.RESULT_SUCCESS) {
-                ArrayList listCities = resultData.getStringArrayList(MyIntentService.RESULT_CITIES_NAME_LIST_KEY);
-            }
-            super.onReceiveResult(resultCode, resultData);
-        }
-    }
-
 }

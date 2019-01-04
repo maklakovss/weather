@@ -3,9 +3,9 @@ package com.mss.weather.presentation.presenter;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.mss.weather.di.MyApplication;
-import com.mss.weather.domain.WeatherInteractor;
+import com.mss.weather.domain.city.models.City;
+import com.mss.weather.domain.weather.WeatherInteractor;
 import com.mss.weather.presentation.view.cityweather.CityWeatherView;
-import com.mss.weather.presentation.view.models.CitySettings;
 
 import javax.inject.Inject;
 
@@ -19,7 +19,7 @@ public class CityWeatherPresenter extends MvpPresenter<CityWeatherView> {
         MyApplication.getApplicationComponent().inject(this);
         weatherInteractor.setOnCurrentCityChanged(new WeatherInteractor.OnCurrentCityChanged() {
             @Override
-            public void onChanged(CitySettings currentCityName) {
+            public void onChanged(City currentCityName) {
                 needData();
             }
         });

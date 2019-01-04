@@ -1,11 +1,11 @@
 package com.mss.weather.di;
 
-import com.mss.weather.presentation.presenter.CitySettingsPresenter;
 import com.mss.weather.presentation.presenter.CityWeatherPresenter;
 import com.mss.weather.presentation.presenter.ListCitiesPresenter;
-import com.mss.weather.presentation.view.citysettings.CitySettingsFragment;
+import com.mss.weather.presentation.presenter.SelectCityPresenter;
 import com.mss.weather.presentation.view.cityweather.CityWeatherFragment;
 import com.mss.weather.presentation.view.listcities.ListCitiesFragment;
+import com.mss.weather.presentation.view.selectcity.SelectCityFragment;
 
 import javax.inject.Singleton;
 
@@ -20,10 +20,10 @@ public interface ApplicationComponent {
 
     void inject(CityWeatherPresenter cityWeatherPresenter);
 
-    void inject(CitySettingsPresenter citySettingsPresenter);
+    void inject(SelectCityPresenter selectCityPresenter);
 
     //fragments
-    void inject(CitySettingsFragment citySettingsFragment);
+    void inject(SelectCityFragment addCityFragment);
 
     void inject(CityWeatherFragment cityWeatherFragment);
 

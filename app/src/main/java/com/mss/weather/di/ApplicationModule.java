@@ -1,10 +1,10 @@
 package com.mss.weather.di;
 
-import com.mss.weather.domain.WeatherInteractor;
-import com.mss.weather.domain.WeatherInteractorImpl;
-import com.mss.weather.presentation.presenter.CitySettingsPresenter;
+import com.mss.weather.domain.weather.WeatherInteractor;
+import com.mss.weather.domain.weather.WeatherInteractorImpl;
 import com.mss.weather.presentation.presenter.CityWeatherPresenter;
 import com.mss.weather.presentation.presenter.ListCitiesPresenter;
+import com.mss.weather.presentation.presenter.SelectCityPresenter;
 
 import javax.inject.Singleton;
 
@@ -22,8 +22,8 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    public CitySettingsPresenter provideCitySettingsPresenter() {
-        return new CitySettingsPresenter();
+    public SelectCityPresenter provideCitySettingsPresenter() {
+        return new SelectCityPresenter();
     }
 
     @Singleton

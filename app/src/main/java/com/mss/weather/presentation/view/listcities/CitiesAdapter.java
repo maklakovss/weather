@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mss.weather.R;
-import com.mss.weather.presentation.view.models.CitySettings;
+import com.mss.weather.domain.city.models.City;
 
 import java.util.List;
 
@@ -18,13 +18,13 @@ import butterknife.ButterKnife;
 
 public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder> {
 
-    private List<CitySettings> citiesList;
+    private List<City> citiesList;
     private OnItemClickListener onItemClickListener;
     private OnItemLongClickListener onItemLongClickListener;
 //    private Context context;
 //    private int focusedItem = -1;
 
-    public CitiesAdapter(List<CitySettings> cities/*, Context context*/) {
+    public CitiesAdapter(List<City> cities/*, Context context*/) {
 //        this.context = context;
         citiesList = cities;
     }
@@ -39,7 +39,7 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.tvCityName.setText(citiesList.get(i).getName());
+        viewHolder.tvCityName.setText(citiesList.get(i).getAreaName());
 //        viewHolder.cvItem.setCardBackgroundColor(
 //                focusedItem == i ?
 //                        context.getResources().getColor(R.color.colorAccent)

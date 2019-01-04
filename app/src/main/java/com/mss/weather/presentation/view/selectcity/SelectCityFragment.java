@@ -1,4 +1,4 @@
-package com.mss.weather.presentation.view.citysettings;
+package com.mss.weather.presentation.view.selectcity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,8 +14,8 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.mss.weather.R;
 import com.mss.weather.di.MyApplication;
-import com.mss.weather.presentation.presenter.CitySettingsPresenter;
-import com.mss.weather.presentation.view.models.CitySettings;
+import com.mss.weather.domain.city.models.City;
+import com.mss.weather.presentation.presenter.SelectCityPresenter;
 
 import javax.inject.Inject;
 
@@ -24,11 +24,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class CitySettingsFragment extends MvpAppCompatFragment implements CitySettingsView {
+public class SelectCityFragment extends MvpAppCompatFragment implements SelectCityView {
 
     @Inject
     @InjectPresenter
-    CitySettingsPresenter citySettingsPresenter;
+    SelectCityPresenter selectCityPresenter;
 
     @BindView(R.id.etCity)
     EditText etCity;
@@ -55,8 +55,8 @@ public class CitySettingsFragment extends MvpAppCompatFragment implements CitySe
 
     Unbinder binder;
 
-    public static CitySettingsFragment newInstance() {
-        return new CitySettingsFragment();
+    public static SelectCityFragment newInstance() {
+        return new SelectCityFragment();
     }
 
     @Override
@@ -65,36 +65,20 @@ public class CitySettingsFragment extends MvpAppCompatFragment implements CitySe
         super.onCreateView(inflater, container, savedInstanceState);
         View layout = inflater.inflate(R.layout.fragment_settings, container, false);
         binder = ButterKnife.bind(this, layout);
-        citySettingsPresenter.needSettings();
+        selectCityPresenter.needSettings();
         return layout;
     }
 
     @Override
-    public void showSettings(@NonNull final CitySettings citySettings) {
-        etCity.setText(citySettings.getName());
-        cbShowSunrise.setChecked(citySettings.isShowSunrise());
-        cbShowSunset.setChecked(citySettings.isShowSunset());
-        cbShowTemp.setChecked(citySettings.isShowTemp());
-        cbShowTempRange.setChecked(citySettings.isShowTempRange());
-        cbShowPressure.setChecked(citySettings.isShowPressure());
-        cbShowWindSpeed.setChecked(citySettings.isShowWindSpeed());
-        cbShowWindDeg.setChecked(citySettings.isShowWindDeg());
-        cbShowRainfall.setChecked(citySettings.isShowRainfall());
+    public void showCity(@NonNull final City city) {
+        etCity.setText(city.getAreaName());
     }
 
     @OnClick(R.id.button)
     void saveClick(View view) {
-        CitySettings citySettings = citySettingsPresenter.getCurrentSettings();
-        citySettings.setName(etCity.getText().toString());
-        citySettings.setShowSunrise(cbShowSunrise.isChecked());
-        citySettings.setShowSunset(cbShowSunset.isChecked());
-        citySettings.setShowTemp(cbShowTemp.isChecked());
-        citySettings.setShowTempRange(cbShowTempRange.isChecked());
-        citySettings.setShowPressure(cbShowPressure.isChecked());
-        citySettings.setShowWindSpeed(cbShowWindSpeed.isChecked());
-        citySettings.setShowWindDeg(cbShowWindDeg.isChecked());
-        citySettings.setShowRainfall(cbShowRainfall.isChecked());
-        citySettingsPresenter.saveSettings(citySettings);
+        City city = selectCityPresenter.getCurrentCity();
+        city.setAreaName(etCity.getText().toString());
+        selectCityPresenter.saveSettings(city);
     }
 
     @Override
@@ -104,9 +88,9 @@ public class CitySettingsFragment extends MvpAppCompatFragment implements CitySe
     }
 
     @ProvidePresenter
-    public CitySettingsPresenter providePresenter() {
-        if (citySettingsPresenter == null)
+    public SelectCityPresenter providePresenter() {
+        if (selectCityPresenter == null)
             MyApplication.getApplicationComponent().inject(this);
-        return citySettingsPresenter;
+        return selectCityPresenter;
     }
 }

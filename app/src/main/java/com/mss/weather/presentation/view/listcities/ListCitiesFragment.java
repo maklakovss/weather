@@ -15,9 +15,9 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.mss.weather.R;
 import com.mss.weather.di.MyApplication;
+import com.mss.weather.domain.city.models.City;
 import com.mss.weather.presentation.presenter.ListCitiesPresenter;
 import com.mss.weather.presentation.view.main.WeatherFragmentsNavigator;
-import com.mss.weather.presentation.view.models.CitySettings;
 
 import java.util.List;
 
@@ -87,7 +87,7 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
     }
 
     @Override
-    public void updateList(List<CitySettings> cities) {
+    public void updateList(List<City> cities) {
         final CitiesAdapter citiesAdapter = new CitiesAdapter(cities);//, getContext());
         citiesAdapter.setOnItemClickListener(new CitiesAdapter.OnItemClickListener() {
             @Override
@@ -117,9 +117,9 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
     }
 
     @Override
-    public void showSettings() {
+    public void showCity() {
         if (weatherFragmentsNavigator != null)
-            weatherFragmentsNavigator.showCitySettings();
+            weatherFragmentsNavigator.showCity();
     }
 
     @Override
