@@ -28,5 +28,8 @@
     <string name="about_label">About</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="search_location_hint">Input location</string>
+    <string name="region_label">Region:</string>
+    <string name="country_label">Country:</string>
 
 </resources>

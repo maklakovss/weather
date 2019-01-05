@@ -2,6 +2,7 @@ package com.mss.weather.domain.weather;
 
 import android.support.annotation.NonNull;
 
+import com.mss.weather.domain.city.CityRepository;
 import com.mss.weather.domain.city.models.City;
 import com.mss.weather.presentation.view.models.WeatherData;
 
@@ -10,12 +11,25 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import io.reactivex.Maybe;
+
 public class WeatherInteractorImpl implements WeatherInteractor {
 
+    @Inject
+    CityRepository cityRepository;
+
     private List<City> citySettingsList;
+
     private City currentCity;
     private OnCurrentCityChanged onCurrentCityChanged;
     private OnCityUpdated onCityUpdated;
+
+    @Inject
+    public WeatherInteractorImpl(CityRepository cityRepository) {
+        this.cityRepository = cityRepository;
+    }
 
     @Override
     public List<City> getListCities() {
@@ -107,6 +121,11 @@ public class WeatherInteractorImpl implements WeatherInteractor {
         if (onCityUpdated != null) {
             onCityUpdated.onUpdated(citySettings);
         }
+    }
+
+    @Override
+    public Maybe<List<City>> getAutoCompleteLocations(String searchTemplate) {
+        return cityRepository.getCities(searchTemplate);
     }
 
 }

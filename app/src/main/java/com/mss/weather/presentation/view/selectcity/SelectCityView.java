@@ -5,7 +5,9 @@ import android.support.annotation.NonNull;
 import com.arellomobile.mvp.MvpView;
 import com.mss.weather.domain.city.models.City;
 
+import java.util.List;
+
 public interface SelectCityView extends MvpView {
 
-    void showCity(@NonNull final City citySettings);
+    void showCities(@NonNull List<City> cities);
 }

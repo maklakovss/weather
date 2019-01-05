@@ -5,6 +5,8 @@ import com.mss.weather.presentation.view.models.WeatherData;
 
 import java.util.List;
 
+import io.reactivex.Maybe;
+
 public interface WeatherInteractor {
 
     List<City> getListCities();
@@ -24,6 +26,8 @@ public interface WeatherInteractor {
     void addCity(City s);
 
     void saveSettings(City citySettings);
+
+    Maybe<List<City>> getAutoCompleteLocations(String searchTemplate);
 
     public interface OnCurrentCityChanged {
         void onChanged(City currentCity);

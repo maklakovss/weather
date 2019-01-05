@@ -2,8 +2,10 @@ package com.mss.weather.domain.city;
 
 import com.mss.weather.domain.city.models.City;
 
-import io.reactivex.Observable;
+import java.util.List;
+
+import io.reactivex.Maybe;
 
 public interface CityRepository {
-    Observable<City> getCities(String startWith);
+    Maybe<List<City>> getCities(String startWith);
 }

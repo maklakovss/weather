@@ -1,5 +1,7 @@
 package com.mss.weather.di;
 
+import com.mss.weather.data.repositories.CityRepositoryImpl;
+import com.mss.weather.domain.city.CityRepository;
 import com.mss.weather.domain.weather.WeatherInteractor;
 import com.mss.weather.domain.weather.WeatherInteractorImpl;
 import com.mss.weather.presentation.presenter.CityWeatherPresenter;
@@ -16,8 +18,8 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    public WeatherInteractor provideWeatherInteractor() {
-        return new WeatherInteractorImpl();
+    public WeatherInteractor provideWeatherInteractor(CityRepository cityRepository) {
+        return new WeatherInteractorImpl(cityRepository);
     }
 
     @Singleton
@@ -36,6 +38,12 @@ public class ApplicationModule {
     @Provides
     public ListCitiesPresenter provideListCitiesPresenter() {
         return new ListCitiesPresenter();
+    }
+
+    @Singleton
+    @Provides
+    public CityRepository provideCityRepository() {
+        return new CityRepositoryImpl();
     }
 
 }

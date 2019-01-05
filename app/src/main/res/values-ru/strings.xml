@@ -25,4 +25,7 @@
     <string name="settings_label">Настройки</string>
     <string name="feedback_label">Обратная связь</string>
     <string name="about_label">О программе</string>
+    <string name="search_location_hint">Введите местоположение</string>
+    <string name="region_label">Регион:</string>
+    <string name="country_label">Страна:</string>
 </resources>

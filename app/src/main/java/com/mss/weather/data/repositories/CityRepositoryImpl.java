@@ -3,18 +3,21 @@ package com.mss.weather.data.repositories;
 import com.mss.weather.BuildConfig;
 import com.mss.weather.data.network.WorldWeatherOnline;
 import com.mss.weather.data.network.model.response.CitiesResponse;
+import com.mss.weather.data.network.model.response.Result;
 import com.mss.weather.domain.city.CityRepository;
 import com.mss.weather.domain.city.models.City;
 
-import io.reactivex.Observable;
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.Maybe;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.schedulers.Schedulers;
 
-class CityRepositoryImpl implements CityRepository {
+public class CityRepositoryImpl implements CityRepository {
 
     private static final String BASE_URL = "http://api.worldweatheronline.com/";
     private static final String FORMAT = "json";
@@ -27,27 +30,52 @@ class CityRepositoryImpl implements CityRepository {
                 .addInterceptor(new HttpLoggingInterceptor().setLevel((BuildConfig.DEBUG) ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE))
                 .build();
 
-        RxJavaCallAdapterFactory rxAdapter = RxJavaCallAdapterFactory
-                .createWithScheduler(Schedulers.io());
+        //RxJavaCallAdapterFactory rxAdapter = RxJavaCallAdapterFactory
+        //        .createWithScheduler(Schedulers.io());
 
         worldWeatherOnline = new Retrofit.Builder()
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(rxAdapter)
+                //.addCallAdapterFactory(rxAdapter)
                 .baseUrl(BASE_URL)
                 .client(okHttpClient)
                 .build()
                 .create(WorldWeatherOnline.class);
     }
 
-    private static City mapCitiesResponseToCity(CitiesResponse citiesResponse) {
-        final City city = new City();
-        city.setAreaName(citiesResponse.getSearchApi().getResult().get(0).getAreaName().get(0).getValue());
-        return city;
+    private static List<City> mapCitiesResponseToCity(CitiesResponse citiesResponse) {
+        final List<City> cities = new ArrayList<>();
+        if (citiesResponse != null && citiesResponse.getSearchApi() != null && citiesResponse.getSearchApi().getResult() != null)
+            for (Result result : citiesResponse.getSearchApi().getResult()) {
+                final City city = new City();
+                if (result.getAreaName().size() > 0)
+                    city.setAreaName(result.getAreaName().get(0).getValue());
+                if (result.getCountry().size() > 0)
+                    city.setCountry(result.getCountry().get(0).getValue());
+                if (result.getRegion().size() > 0)
+                    city.setRegion(result.getRegion().get(0).getValue());
+                city.setLatitude(result.getLatitude());
+                city.setLongitude(result.getLongitude());
+                city.setPopulation(result.getPopulation());
+                if (result.getTimezone() != null) {
+                    city.setTimeOffset(result.getTimezone().getOffset());
+                    city.setTimeZone(result.getTimezone().getZone());
+                }
+                if (result.getWeatherUrl().size() > 0)
+                    city.setId(getIdFromUrl(result.getWeatherUrl().get(0).getValue()));
+                cities.add(city);
+            }
+        return cities;
+    }
+
+    private static String getIdFromUrl(String url) {
+        return url.substring(url.indexOf("=") + 1);
     }
 
     @Override
-    public Observable<City> getCities(String startWith) {
+    public Maybe<List<City>> getCities(String startWith) {
         return worldWeatherOnline.getCities(startWith, KEY, FORMAT)
-                .map(CityRepositoryImpl::mapCitiesResponseToCity);
+                .map(CityRepositoryImpl::mapCitiesResponseToCity)
+                .firstElement();
     }
 }

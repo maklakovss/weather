@@ -9,6 +9,9 @@ import com.mss.weather.presentation.view.selectcity.SelectCityView;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
 @InjectViewState
 public class SelectCityPresenter extends MvpPresenter<SelectCityView> {
 
@@ -19,12 +22,11 @@ public class SelectCityPresenter extends MvpPresenter<SelectCityView> {
         MyApplication.getApplicationComponent().inject(this);
     }
 
-    public void needSettings() {
-        getViewState().showCity(weatherInteractor.getCurrentCity());
-    }
-
-    public void saveSettings(City city) {
-        weatherInteractor.saveSettings(city);
+    public void searchClicked(String searchTemplate) {
+        weatherInteractor.getAutoCompleteLocations(searchTemplate)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(cities -> getViewState().showCities(cities));
     }
 
     public City getCurrentCity() {

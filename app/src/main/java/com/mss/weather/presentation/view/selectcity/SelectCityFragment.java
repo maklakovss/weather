@@ -2,12 +2,15 @@ package com.mss.weather.presentation.view.selectcity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -16,6 +19,8 @@ import com.mss.weather.R;
 import com.mss.weather.di.MyApplication;
 import com.mss.weather.domain.city.models.City;
 import com.mss.weather.presentation.presenter.SelectCityPresenter;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -30,30 +35,13 @@ public class SelectCityFragment extends MvpAppCompatFragment implements SelectCi
     @InjectPresenter
     SelectCityPresenter selectCityPresenter;
 
-    @BindView(R.id.etCity)
-    EditText etCity;
-    @BindView(R.id.cbShowSunrise)
-    CheckBox cbShowSunrise;
-    @BindView(R.id.cbShowSunset)
-    CheckBox cbShowSunset;
-    @BindView(R.id.cbShowTemp)
-    CheckBox cbShowTemp;
-    @BindView(R.id.cbShowTempRange)
-    CheckBox cbShowTempRange;
-    @BindView(R.id.cbShowHumidity)
-    CheckBox cbShowHumidity;
-    @BindView(R.id.cbShowPressure)
-    CheckBox cbShowPressure;
-    @BindView(R.id.cbShowWindSpeed)
-    CheckBox cbShowWindSpeed;
-    @BindView(R.id.cbShowWindDeg)
-    CheckBox cbShowWindDeg;
-    @BindView(R.id.cbShowRainfall)
-    CheckBox cbShowRainfall;
-    @BindView(R.id.button)
-    Button button;
-
     Unbinder binder;
+    @BindView(R.id.tilSearchTemplate)
+    TextInputLayout tilSearchTemplate;
+    @BindView(R.id.btnSearch)
+    ImageButton btnSearch;
+    @BindView(R.id.rvAutoCompleteList)
+    RecyclerView rvAutoCompleteList;
 
     public static SelectCityFragment newInstance() {
         return new SelectCityFragment();
@@ -63,28 +51,34 @@ public class SelectCityFragment extends MvpAppCompatFragment implements SelectCi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View layout = inflater.inflate(R.layout.fragment_settings, container, false);
+        View layout = inflater.inflate(R.layout.fragment_select_city, container, false);
         binder = ButterKnife.bind(this, layout);
-        selectCityPresenter.needSettings();
+
+        rvAutoCompleteList.setItemAnimator(new DefaultItemAnimator());
+        rvAutoCompleteList.setHasFixedSize(true);
+        rvAutoCompleteList.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvAutoCompleteList.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+
+
+
         return layout;
     }
 
     @Override
-    public void showCity(@NonNull final City city) {
-        etCity.setText(city.getAreaName());
+    public void showCities(@NonNull final List<City> cities) {
+        final SelectCityAdapter citiesAdapter = new SelectCityAdapter(cities);
+        citiesAdapter.setOnItemClickListener(new SelectCityAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                //listCitiesPresenter.onClickCity(position);
+            }
+        });
+        rvAutoCompleteList.setAdapter(citiesAdapter);
     }
 
-    @OnClick(R.id.button)
-    void saveClick(View view) {
-        City city = selectCityPresenter.getCurrentCity();
-        city.setAreaName(etCity.getText().toString());
-        selectCityPresenter.saveSettings(city);
-    }
-
-    @Override
-    public void onDestroy() {
-        binder.unbind();
-        super.onDestroy();
+    @OnClick(R.id.btnSearch)
+    void searchClick(View view) {
+        selectCityPresenter.searchClicked(tilSearchTemplate.getEditText().getText().toString());
     }
 
     @ProvidePresenter
@@ -92,5 +86,11 @@ public class SelectCityFragment extends MvpAppCompatFragment implements SelectCi
         if (selectCityPresenter == null)
             MyApplication.getApplicationComponent().inject(this);
         return selectCityPresenter;
+    }
+
+    @Override
+    public void onDestroyView() {
+        binder.unbind();
+        super.onDestroyView();
     }
 }
