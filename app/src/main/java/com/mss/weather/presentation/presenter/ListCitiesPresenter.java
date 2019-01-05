@@ -7,8 +7,6 @@ import com.mss.weather.domain.city.models.City;
 import com.mss.weather.domain.weather.WeatherInteractor;
 import com.mss.weather.presentation.view.listcities.ListCitiesView;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 @InjectViewState
@@ -28,9 +26,7 @@ public class ListCitiesPresenter extends MvpPresenter<ListCitiesView> {
     }
 
     public void needCities() {
-        List<City> cityNamesList = weatherInteractor.getListCities();
-        getViewState().updateList(cityNamesList);
-//        getViewState().setCurrentCity(cityNamesList.indexOf(weatherInteractor.getCurrentCity()));
+        getViewState().updateList(weatherInteractor.getListCities());
     }
 
     public void onClickCity(int checkedCity) {

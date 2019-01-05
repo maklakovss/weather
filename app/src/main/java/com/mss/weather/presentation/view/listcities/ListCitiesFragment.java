@@ -104,11 +104,6 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
         rvCitiesList.setAdapter(citiesAdapter);
     }
 
-//    @Override
-//    public void setCurrentCity(int checkedCity) {
-//        ((CitiesAdapter) rvCitiesList.getAdapter()).setFocusedItem(checkedCity);
-//    }
-
     @Override
     public void showWeather() {
         if (weatherFragmentsNavigator != null) {

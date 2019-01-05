@@ -96,10 +96,6 @@ public class WeatherInteractorImpl implements WeatherInteractor {
 
     private void loadCities() {
         citySettingsList = new ArrayList<>();
-        citySettingsList.add(new City("Москва"));
-        citySettingsList.add(new City("Санкт-Петербург"));
-        citySettingsList.add(new City("Тюмень"));
-        currentCity = citySettingsList.get(0);
     }
 
     public void setOnCurrentCityChanged(OnCurrentCityChanged onCurrentCityChanged) {
