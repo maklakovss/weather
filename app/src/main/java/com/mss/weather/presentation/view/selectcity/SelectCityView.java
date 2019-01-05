@@ -13,4 +13,6 @@ public interface SelectCityView extends MvpView {
 
     void showProgress(boolean visible);
 
+    void back();
+
 }

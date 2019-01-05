@@ -6,4 +6,6 @@ public interface WeatherFragmentsNavigator {
 
     void showCity();
 
+    void back();
+
 }

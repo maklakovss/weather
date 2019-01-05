@@ -20,7 +20,7 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     @Inject
     CityRepository cityRepository;
 
-    private List<City> citySettingsList;
+    private List<City> cityList;
 
     private City currentCity;
     private OnCurrentCityChanged onCurrentCityChanged;
@@ -33,10 +33,10 @@ public class WeatherInteractorImpl implements WeatherInteractor {
 
     @Override
     public List<City> getListCities() {
-        if (citySettingsList == null) {
+        if (cityList == null) {
             loadCities();
         }
-        return citySettingsList;
+        return cityList;
     }
 
     @Override
@@ -95,7 +95,7 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     }
 
     private void loadCities() {
-        citySettingsList = new ArrayList<>();
+        cityList = new ArrayList<>();
     }
 
     public void setOnCurrentCityChanged(OnCurrentCityChanged onCurrentCityChanged) {
@@ -109,7 +109,7 @@ public class WeatherInteractorImpl implements WeatherInteractor {
 
     @Override
     public void addCity(City citySettings) {
-        citySettingsList.add(citySettings);
+        cityList.add(citySettings);
     }
 
     @Override

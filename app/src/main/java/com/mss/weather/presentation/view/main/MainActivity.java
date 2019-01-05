@@ -78,6 +78,11 @@ public class MainActivity extends AppCompatActivity implements WeatherFragmentsN
     }
 
     @Override
+    public void back() {
+        getSupportFragmentManager().popBackStack();
+    }
+
+    @Override
     public void showWeather() {
         CityWeatherFragment cityWeatherFragment = getCityWeatherFragment();
         if (cityWeatherFragment == null) {

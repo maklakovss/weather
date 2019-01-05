@@ -1,5 +1,6 @@
 package com.mss.weather.presentation.view.selectcity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -22,6 +23,7 @@ import com.mss.weather.R;
 import com.mss.weather.di.MyApplication;
 import com.mss.weather.domain.city.models.City;
 import com.mss.weather.presentation.presenter.SelectCityPresenter;
+import com.mss.weather.presentation.view.main.WeatherFragmentsNavigator;
 
 import java.util.List;
 
@@ -31,7 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class SelectCityFragment extends MvpAppCompatFragment implements SelectCityView {
+public class SelectCityFragment extends MvpAppCompatFragment implements SelectCityView, TextView.OnEditorActionListener, SelectCityAdapter.OnItemClickListener {
 
     @Inject
     @InjectPresenter
@@ -44,6 +46,8 @@ public class SelectCityFragment extends MvpAppCompatFragment implements SelectCi
     RecyclerView rvAutoCompleteList;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
+
+    private WeatherFragmentsNavigator weatherFragmentsNavigator;
 
     public static SelectCityFragment newInstance() {
         return new SelectCityFragment();
@@ -61,28 +65,48 @@ public class SelectCityFragment extends MvpAppCompatFragment implements SelectCi
         rvAutoCompleteList.setLayoutManager(new LinearLayoutManager(getContext()));
         rvAutoCompleteList.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
-        tilSearchTemplate.getEditText().setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH
-                        || (keyEvent != null && keyEvent.getAction() == KeyEvent.ACTION_DOWN))
-                    selectCityPresenter.searchClicked(textView.getText().toString());
-                return false;
-            }
-        });
+        tilSearchTemplate.getEditText().setOnEditorActionListener(this);
 
         return layout;
+    }
+
+    @ProvidePresenter
+    public SelectCityPresenter providePresenter() {
+        if (selectCityPresenter == null)
+            MyApplication.getApplicationComponent().inject(this);
+        return selectCityPresenter;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        weatherFragmentsNavigator = (WeatherFragmentsNavigator) context;
+    }
+
+    @Override
+    public void onDetach() {
+        weatherFragmentsNavigator = null;
+        super.onDetach();
+    }
+
+    @Override
+    public void onDestroyView() {
+        binder.unbind();
+        super.onDestroyView();
+    }
+
+    @Override
+    public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH
+                || (keyEvent != null && keyEvent.getAction() == KeyEvent.ACTION_DOWN))
+            selectCityPresenter.searchClicked(textView.getText().toString());
+        return false;
     }
 
     @Override
     public void showCities(@NonNull final List<City> cities) {
         final SelectCityAdapter citiesAdapter = new SelectCityAdapter(cities);
-        citiesAdapter.setOnItemClickListener(new SelectCityAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                //listCitiesPresenter.onClickCity(position);
-            }
-        });
+        citiesAdapter.setOnItemClickListener(this);
         rvAutoCompleteList.setAdapter(citiesAdapter);
     }
 
@@ -95,16 +119,13 @@ public class SelectCityFragment extends MvpAppCompatFragment implements SelectCi
         }
     }
 
-    @ProvidePresenter
-    public SelectCityPresenter providePresenter() {
-        if (selectCityPresenter == null)
-            MyApplication.getApplicationComponent().inject(this);
-        return selectCityPresenter;
+    @Override
+    public void back() {
+        weatherFragmentsNavigator.back();
     }
 
     @Override
-    public void onDestroyView() {
-        binder.unbind();
-        super.onDestroyView();
+    public void onItemClick(View view, int position) {
+        selectCityPresenter.onClickCity(position);
     }
 }
