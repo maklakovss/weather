@@ -35,15 +35,11 @@ public class ListCitiesPresenter extends MvpPresenter<ListCitiesView> {
     }
 
     public void onClickAdd() {
-        City newCity = new City("");
-        weatherInteractor.addCity(newCity);
-        weatherInteractor.setCurrentCity(newCity);
-        needCities();
-        getViewState().showCity();
+        getViewState().showSelectCity();
     }
 
     public void onLongClickCity(int i) {
-        getViewState().showCity();
+        getViewState().showSelectCity();
     }
 
 }

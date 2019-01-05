@@ -43,18 +43,6 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
 
     private WeatherFragmentsNavigator weatherFragmentsNavigator;
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        weatherFragmentsNavigator = (WeatherFragmentsNavigator) context;
-    }
-
-    @Override
-    public void onDetach() {
-        weatherFragmentsNavigator = null;
-        super.onDetach();
-    }
-
     public static ListCitiesFragment newInstance() {
         return new ListCitiesFragment();
     }
@@ -75,15 +63,34 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
         return layout;
     }
 
-    @OnClick(R.id.btnAddCity)
-    void AddClick(View view) {
-        listCitiesPresenter.onClickAdd();
+    @ProvidePresenter
+    public ListCitiesPresenter providePresenter() {
+        if (listCitiesPresenter == null)
+            MyApplication.getApplicationComponent().inject(this);
+        return listCitiesPresenter;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        weatherFragmentsNavigator = (WeatherFragmentsNavigator) context;
+    }
+
+    @Override
+    public void onDetach() {
+        weatherFragmentsNavigator = null;
+        super.onDetach();
     }
 
     @Override
     public void onDestroy() {
         binder.unbind();
         super.onDestroy();
+    }
+
+    @OnClick(R.id.btnAddCity)
+    void AddClick(View view) {
+        listCitiesPresenter.onClickAdd();
     }
 
     @Override
@@ -105,6 +112,11 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
     }
 
     @Override
+    public void updateCity(int position) {
+        rvCitiesList.getAdapter().notifyItemChanged(position);
+    }
+
+    @Override
     public void showWeather() {
         if (weatherFragmentsNavigator != null) {
             weatherFragmentsNavigator.showWeather();
@@ -112,20 +124,8 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
     }
 
     @Override
-    public void showCity() {
+    public void showSelectCity() {
         if (weatherFragmentsNavigator != null)
             weatherFragmentsNavigator.showCity();
-    }
-
-    @Override
-    public void updateCity(int position) {
-        rvCitiesList.getAdapter().notifyItemChanged(position);
-    }
-
-    @ProvidePresenter
-    public ListCitiesPresenter providePresenter() {
-        if (listCitiesPresenter == null)
-            MyApplication.getApplicationComponent().inject(this);
-        return listCitiesPresenter;
     }
 }

@@ -13,14 +13,11 @@ public interface ListCitiesView extends MvpView {
     @StateStrategyType(AddToEndSingleStrategy.class)
     void updateList(List<City> cities);
 
-//    @StateStrategyType(AddToEndSingleStrategy.class)
-//    void setCurrentCity(int checkedCity);
-
     @StateStrategyType(SkipStrategy.class)
     void showWeather();
 
     @StateStrategyType(SkipStrategy.class)
-    void showCity();
+    void showSelectCity();
 
     @StateStrategyType(SkipStrategy.class)
     void updateCity(int position);
