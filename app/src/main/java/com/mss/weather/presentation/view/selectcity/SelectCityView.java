@@ -10,4 +10,7 @@ import java.util.List;
 public interface SelectCityView extends MvpView {
 
     void showCities(@NonNull List<City> cities);
+
+    void showProgress(boolean visible);
+
 }

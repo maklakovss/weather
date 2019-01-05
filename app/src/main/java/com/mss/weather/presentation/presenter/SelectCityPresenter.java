@@ -3,7 +3,6 @@ package com.mss.weather.presentation.presenter;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.mss.weather.di.MyApplication;
-import com.mss.weather.domain.city.models.City;
 import com.mss.weather.domain.weather.WeatherInteractor;
 import com.mss.weather.presentation.view.selectcity.SelectCityView;
 
@@ -23,13 +22,15 @@ public class SelectCityPresenter extends MvpPresenter<SelectCityView> {
     }
 
     public void searchClicked(String searchTemplate) {
+        getViewState().showProgress(true);
         weatherInteractor.getAutoCompleteLocations(searchTemplate)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(cities -> getViewState().showCities(cities));
-    }
-
-    public City getCurrentCity() {
-        return weatherInteractor.getCurrentCity();
+                .subscribe(
+                        cities -> {
+                            getViewState().showCities(cities);
+                            getViewState().showProgress(false);
+                        },
+                        e -> getViewState().showProgress(false));
     }
 }

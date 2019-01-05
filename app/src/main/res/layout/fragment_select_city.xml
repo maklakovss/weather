@@ -13,26 +13,18 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/btnSearch"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/search_location_hint" />
+            android:drawableStart="@android:drawable/ic_menu_search"
+            android:hint="@string/search_location_hint"
+            android:imeOptions="actionSearch"
+            android:singleLine="true" />
     </android.support.design.widget.TextInputLayout>
-
-    <ImageButton
-        android:id="@+id/btnSearch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tilSearchTemplate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_search" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvAutoCompleteList"
@@ -45,5 +37,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tilSearchTemplate" />
+        app:layout_constraintTop_toBottomOf="@+id/tilSearchTemplate">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/rvAutoCompleteList"
+        app:layout_constraintEnd_toEndOf="@+id/rvAutoCompleteList"
+        app:layout_constraintStart_toStartOf="@+id/rvAutoCompleteList"
+        app:layout_constraintTop_toTopOf="@+id/rvAutoCompleteList" />
 </android.support.constraint.ConstraintLayout>

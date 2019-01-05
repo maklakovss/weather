@@ -7,10 +7,13 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.view.inputmethod.EditorInfo;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -26,7 +29,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class SelectCityFragment extends MvpAppCompatFragment implements SelectCityView {
@@ -38,10 +40,10 @@ public class SelectCityFragment extends MvpAppCompatFragment implements SelectCi
     Unbinder binder;
     @BindView(R.id.tilSearchTemplate)
     TextInputLayout tilSearchTemplate;
-    @BindView(R.id.btnSearch)
-    ImageButton btnSearch;
     @BindView(R.id.rvAutoCompleteList)
     RecyclerView rvAutoCompleteList;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
 
     public static SelectCityFragment newInstance() {
         return new SelectCityFragment();
@@ -59,7 +61,15 @@ public class SelectCityFragment extends MvpAppCompatFragment implements SelectCi
         rvAutoCompleteList.setLayoutManager(new LinearLayoutManager(getContext()));
         rvAutoCompleteList.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
-
+        tilSearchTemplate.getEditText().setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH
+                        || (keyEvent != null && keyEvent.getAction() == KeyEvent.ACTION_DOWN))
+                    selectCityPresenter.searchClicked(textView.getText().toString());
+                return false;
+            }
+        });
 
         return layout;
     }
@@ -76,9 +86,13 @@ public class SelectCityFragment extends MvpAppCompatFragment implements SelectCi
         rvAutoCompleteList.setAdapter(citiesAdapter);
     }
 
-    @OnClick(R.id.btnSearch)
-    void searchClick(View view) {
-        selectCityPresenter.searchClicked(tilSearchTemplate.getEditText().getText().toString());
+    @Override
+    public void showProgress(boolean visible) {
+        if (visible) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+        }
     }
 
     @ProvidePresenter
