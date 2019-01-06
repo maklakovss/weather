@@ -21,20 +21,11 @@ public interface WeatherInteractor {
 
     void setOnCurrentCityChanged(OnCurrentCityChanged onCurrentCityChanged);
 
-    void setOnOnCityUpdated(OnCityUpdated onCityUpdated);
-
     void addCity(City s);
-
-    void saveSettings(City citySettings);
 
     Maybe<List<City>> getAutoCompleteLocations(String searchTemplate);
 
     public interface OnCurrentCityChanged {
         void onChanged(City currentCity);
     }
-
-    public interface OnCityUpdated {
-        void onUpdated(City currentCity);
-    }
-
 }

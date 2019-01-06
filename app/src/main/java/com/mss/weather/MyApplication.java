@@ -1,6 +1,12 @@
-package com.mss.weather.di;
+package com.mss.weather;
 
 import android.app.Application;
+
+import com.mss.weather.di.ApplicationComponent;
+import com.mss.weather.di.DaggerApplicationComponent;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class MyApplication extends Application {
     private static ApplicationComponent applicationComponent;
@@ -12,6 +18,13 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        Realm.init(this);
+        RealmConfiguration realmConfiguration = new RealmConfiguration
+                .Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(realmConfiguration);
 
         initComponent();
     }

@@ -1,10 +1,11 @@
 package com.mss.weather.data.repositories;
 
 import com.mss.weather.BuildConfig;
+import com.mss.weather.data.db.RealmRepository;
 import com.mss.weather.data.network.WorldWeatherOnline;
 import com.mss.weather.data.network.model.response.CitiesResponse;
 import com.mss.weather.data.network.model.response.Result;
-import com.mss.weather.domain.city.CityRepository;
+import com.mss.weather.domain.city.WeatherRepository;
 import com.mss.weather.domain.city.models.City;
 
 import java.util.ArrayList;
@@ -17,30 +18,29 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class CityRepositoryImpl implements CityRepository {
+public class WeatherRepositoryImpl implements WeatherRepository {
 
     private static final String BASE_URL = "http://api.worldweatheronline.com/";
     private static final String FORMAT = "json";
     private static final String KEY = "fcb691d5d4c64b45a8b124513182112";
 
     private WorldWeatherOnline worldWeatherOnline;
+    private RealmRepository realmRepository;
 
-    public CityRepositoryImpl() {
+    public WeatherRepositoryImpl() {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(new HttpLoggingInterceptor().setLevel((BuildConfig.DEBUG) ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE))
                 .build();
 
-        //RxJavaCallAdapterFactory rxAdapter = RxJavaCallAdapterFactory
-        //        .createWithScheduler(Schedulers.io());
-
         worldWeatherOnline = new Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-                //.addCallAdapterFactory(rxAdapter)
                 .baseUrl(BASE_URL)
                 .client(okHttpClient)
                 .build()
                 .create(WorldWeatherOnline.class);
+
+        realmRepository = new RealmRepository();
     }
 
     private static List<City> mapCitiesResponseToCity(CitiesResponse citiesResponse) {
@@ -73,9 +73,19 @@ public class CityRepositoryImpl implements CityRepository {
     }
 
     @Override
-    public Maybe<List<City>> getCities(String startWith) {
+    public Maybe<List<City>> getAutoCompleteCities(String startWith) {
         return worldWeatherOnline.getCities(startWith, KEY, FORMAT)
-                .map(CityRepositoryImpl::mapCitiesResponseToCity)
+                .map(WeatherRepositoryImpl::mapCitiesResponseToCity)
                 .firstElement();
+    }
+
+    @Override
+    public List<City> getCities() {
+        return realmRepository.getAllCities();
+    }
+
+    @Override
+    public void addCity(City city) {
+        realmRepository.insertCity(city);
     }
 }

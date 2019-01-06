@@ -2,7 +2,7 @@ package com.mss.weather.domain.weather;
 
 import android.support.annotation.NonNull;
 
-import com.mss.weather.domain.city.CityRepository;
+import com.mss.weather.domain.city.WeatherRepository;
 import com.mss.weather.domain.city.models.City;
 import com.mss.weather.presentation.view.models.WeatherData;
 
@@ -18,17 +18,16 @@ import io.reactivex.Maybe;
 public class WeatherInteractorImpl implements WeatherInteractor {
 
     @Inject
-    CityRepository cityRepository;
+    WeatherRepository weatherRepository;
 
     private List<City> cityList;
 
     private City currentCity;
     private OnCurrentCityChanged onCurrentCityChanged;
-    private OnCityUpdated onCityUpdated;
 
     @Inject
-    public WeatherInteractorImpl(CityRepository cityRepository) {
-        this.cityRepository = cityRepository;
+    public WeatherInteractorImpl(WeatherRepository weatherRepository) {
+        this.weatherRepository = weatherRepository;
     }
 
     @Override
@@ -53,15 +52,15 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     }
 
     @Override
-    public WeatherData getWeatherByCity(City citySettings) {
-        WeatherData weatherData = getWeatherData(citySettings, new Date());
+    public WeatherData getWeatherByCity(City city) {
+        WeatherData weatherData = getWeatherData(city, new Date());
         return weatherData;
     }
 
     @NonNull
-    private WeatherData getWeatherData(City citySettings, Date date) {
+    private WeatherData getWeatherData(City city, Date date) {
         WeatherData weatherData = new WeatherData();
-        weatherData.setCityName(citySettings.getAreaName());
+        weatherData.setCityName(city.getAreaName());
         weatherData.setWeatherDate(date);
         weatherData.getSunrise().setHours(6);
         weatherData.getSunrise().setMinutes(0);
@@ -84,18 +83,18 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     }
 
     @Override
-    public List<WeatherData> getWeatherList(City citySettings) {
+    public List<WeatherData> getWeatherList(City city) {
         List<WeatherData> weatherDataList = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
         for (int i = 0; i < 10; i++) {
             calendar.add(Calendar.DATE, 1);
-            weatherDataList.add(getWeatherData(citySettings, calendar.getTime()));
+            weatherDataList.add(getWeatherData(city, calendar.getTime()));
         }
         return weatherDataList;
     }
 
     private void loadCities() {
-        cityList = new ArrayList<>();
+        cityList = weatherRepository.getCities();
     }
 
     public void setOnCurrentCityChanged(OnCurrentCityChanged onCurrentCityChanged) {
@@ -103,25 +102,14 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     }
 
     @Override
-    public void setOnOnCityUpdated(OnCityUpdated onCityUpdated) {
-        this.onCityUpdated = onCityUpdated;
-    }
-
-    @Override
-    public void addCity(City citySettings) {
-        cityList.add(citySettings);
-    }
-
-    @Override
-    public void saveSettings(City citySettings) {
-        if (onCityUpdated != null) {
-            onCityUpdated.onUpdated(citySettings);
-        }
+    public void addCity(City city) {
+        cityList.add(city);
+        weatherRepository.addCity(city);
     }
 
     @Override
     public Maybe<List<City>> getAutoCompleteLocations(String searchTemplate) {
-        return cityRepository.getCities(searchTemplate);
+        return weatherRepository.getAutoCompleteCities(searchTemplate);
     }
 
 }
