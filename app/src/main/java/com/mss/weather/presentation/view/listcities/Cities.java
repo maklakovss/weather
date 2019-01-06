@@ -16,15 +16,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder> {
+public class Cities extends RecyclerView.Adapter<Cities.ViewHolder> {
 
     private List<City> citiesList;
     private OnItemClickListener onItemClickListener;
     private OnItemLongClickListener onItemLongClickListener;
-//    private Context context;
-//    private int focusedItem = -1;
 
-    public CitiesAdapter(List<City> cities/*, Context context*/) {
+    public Cities(List<City> cities/*, Context context*/) {
 //        this.context = context;
         citiesList = cities;
     }
@@ -46,14 +44,6 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder
 //                        : context.getResources().getColor(R.color.colorCard));
     }
 
-//    public int getFocusedItem() {
-//        return focusedItem;
-//    }
-
-    //    public void setFocusedItem(int focusedItem) {
-//        this.focusedItem = focusedItem;
-//    }
-//
     @Override
     public int getItemCount() {
         return citiesList.size();

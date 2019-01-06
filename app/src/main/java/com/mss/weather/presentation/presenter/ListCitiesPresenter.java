@@ -31,8 +31,8 @@ public class ListCitiesPresenter extends MvpPresenter<ListCitiesView> {
         getViewState().showSelectCity();
     }
 
-    public void onLongClickCity(int i) {
-        getViewState().showSelectCity();
+    public void deleteCity(int position) {
+        weatherInteractor.deleteCity(weatherInteractor.getListCities().get(position));
+        getViewState().updateCity(position);
     }
-
 }

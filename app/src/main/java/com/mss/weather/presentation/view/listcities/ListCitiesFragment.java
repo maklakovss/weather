@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class ListCitiesFragment extends MvpAppCompatFragment implements ListCitiesView {
+public class ListCitiesFragment extends MvpAppCompatFragment implements ListCitiesView, DismissItemTouchHelper {
 
     @Inject
     @InjectPresenter
@@ -95,19 +96,19 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
 
     @Override
     public void updateList(List<City> cities) {
-        final CitiesAdapter citiesAdapter = new CitiesAdapter(cities);
-        citiesAdapter.setOnItemClickListener(new CitiesAdapter.OnItemClickListener() {
+        final Cities citiesAdapter = new Cities(cities);
+
+        ItemTouchHelper.Callback callback = new ItemTouchHelperCallback(this);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(rvCitiesList);
+
+        citiesAdapter.setOnItemClickListener(new Cities.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 listCitiesPresenter.onClickCity(position);
             }
         });
-        citiesAdapter.setOnItemLongClickListener(new CitiesAdapter.OnItemLongClickListener() {
-            @Override
-            public void onItemLongClick(View view, int position) {
-                listCitiesPresenter.onLongClickCity(position);
-            }
-        });
+
         rvCitiesList.setAdapter(citiesAdapter);
     }
 
@@ -127,5 +128,10 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
     public void showSelectCity() {
         if (weatherFragmentsNavigator != null)
             weatherFragmentsNavigator.showAddCity();
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+        listCitiesPresenter.deleteCity(position);
     }
 }

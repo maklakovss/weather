@@ -13,4 +13,6 @@ public interface WeatherRepository {
     List<City> getCities();
 
     void addCity(City city);
+
+    void deleteCity(City city);
 }

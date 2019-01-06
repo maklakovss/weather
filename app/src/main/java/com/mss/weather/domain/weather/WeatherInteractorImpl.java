@@ -112,4 +112,10 @@ public class WeatherInteractorImpl implements WeatherInteractor {
         return weatherRepository.getAutoCompleteCities(searchTemplate);
     }
 
+    @Override
+    public void deleteCity(City city) {
+        cityList.remove(city);
+        weatherRepository.deleteCity(city);
+    }
+
 }

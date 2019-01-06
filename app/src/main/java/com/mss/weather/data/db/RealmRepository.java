@@ -18,15 +18,21 @@ public class RealmRepository {
 
     @NonNull
     public City getCityById(@NonNull String id) {
-        return mapCityDbToCity(Realm.getDefaultInstance()
-                .where(CityDB.class)
+        Realm realm = Realm.getDefaultInstance();
+        realm.where(CityDB.class)
+                .equalTo("id", id)
+                .findFirst();
+        City city = mapCityDbToCity(realm.where(CityDB.class)
                 .equalTo("id", id)
                 .findFirst());
+        realm.close();
+        return city;
     }
 
     @NonNull
     public List<City> getAllCities() {
-        RealmResults<CityDB> results = Realm.getDefaultInstance()
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<CityDB> results = realm
                 .where(CityDB.class)
                 .sort(locationSortFields, locationSortOrders)
                 .findAll();
@@ -35,6 +41,7 @@ public class RealmRepository {
         for (CityDB result : results) {
             cities.add(mapCityDbToCity(result));
         }
+        realm.close();
         return cities;
     }
 
@@ -43,15 +50,18 @@ public class RealmRepository {
         realm.beginTransaction();
         realm.insertOrUpdate(mapCityToCityDb(city));
         realm.commitTransaction();
+        realm.close();
     }
 
     public void deleteCity(@NonNull City city) {
         Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
         realm.where(CityDB.class)
                 .equalTo("id", city.getId())
                 .findFirst()
                 .deleteFromRealm();
         realm.commitTransaction();
+        realm.close();
     }
 
     @NonNull

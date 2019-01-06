@@ -25,6 +25,8 @@ public interface WeatherInteractor {
 
     Maybe<List<City>> getAutoCompleteLocations(String searchTemplate);
 
+    void deleteCity(City city);
+
     public interface OnCurrentCityChanged {
         void onChanged(City currentCity);
     }

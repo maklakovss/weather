@@ -88,4 +88,9 @@ public class WeatherRepositoryImpl implements WeatherRepository {
     public void addCity(City city) {
         realmRepository.insertCity(city);
     }
+
+    @Override
+    public void deleteCity(City city) {
+        realmRepository.deleteCity(city);
+    }
 }
