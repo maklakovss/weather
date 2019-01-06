@@ -19,6 +19,7 @@ public class SelectCityPresenter extends MvpPresenter<SelectCityView> {
 
     @Inject
     WeatherInteractor weatherInteractor;
+
     List<City> autoCompleteCities;
 
     public SelectCityPresenter() {
