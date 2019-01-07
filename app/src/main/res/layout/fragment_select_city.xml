@@ -6,18 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageButton
-        android:id="@+id/btnLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tilSearchTemplate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_mylocation" />
-
     <android.support.design.widget.TextInputLayout
         android:id="@+id/tilSearchTemplate"
         android:layout_width="0dp"
@@ -25,7 +13,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/btnLocation"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -38,6 +26,36 @@
             android:singleLine="true" />
     </android.support.design.widget.TextInputLayout>
 
+    <TextView
+        android:id="@+id/tvPressButtonLocationLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/press_button"
+        app:layout_constraintBottom_toBottomOf="@+id/btnLocation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnLocation" />
+
+    <ImageButton
+        android:id="@+id/btnLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:contentDescription="@string/selectbylocation"
+        app:layout_constraintStart_toEndOf="@+id/tvPressButtonLocationLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tilSearchTemplate"
+        app:srcCompat="@android:drawable/ic_menu_mylocation" />
+
+    <TextView
+        android:id="@+id/tvLocationButtonDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/to_search_near_locations_by_gps"
+        app:layout_constraintBottom_toBottomOf="@+id/btnLocation"
+        app:layout_constraintStart_toEndOf="@+id/btnLocation"
+        app:layout_constraintTop_toTopOf="@+id/btnLocation" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvAutoCompleteList"
         android:layout_width="0dp"
@@ -49,7 +67,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tilSearchTemplate">
+        app:layout_constraintTop_toBottomOf="@+id/btnLocation">
 
     </android.support.v7.widget.RecyclerView>
 
@@ -64,4 +82,5 @@
         app:layout_constraintEnd_toEndOf="@+id/rvAutoCompleteList"
         app:layout_constraintStart_toStartOf="@+id/rvAutoCompleteList"
         app:layout_constraintTop_toTopOf="@+id/rvAutoCompleteList" />
+
 </android.support.constraint.ConstraintLayout>
