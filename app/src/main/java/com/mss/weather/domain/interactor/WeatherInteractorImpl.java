@@ -4,7 +4,8 @@ import android.support.annotation.NonNull;
 
 import com.mss.weather.domain.sensors.SensorsRepository;
 import com.mss.weather.domain.sensors.models.Position;
-import com.mss.weather.domain.weather.WeatherRepository;
+import com.mss.weather.domain.weather.LocalRepository;
+import com.mss.weather.domain.weather.NetworkRepository;
 import com.mss.weather.domain.weather.models.City;
 import com.mss.weather.presentation.view.models.WeatherData;
 
@@ -19,7 +20,8 @@ import io.reactivex.Maybe;
 
 public class WeatherInteractorImpl implements WeatherInteractor {
 
-    WeatherRepository weatherRepository;
+    NetworkRepository networkRepository;
+    LocalRepository localRepository;
     SensorsRepository sensorsRepository;
 
     private List<City> cityList;
@@ -28,8 +30,11 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     private OnCurrentCityChanged onCurrentCityChanged;
 
     @Inject
-    public WeatherInteractorImpl(WeatherRepository weatherRepository, SensorsRepository sensorsRepository) {
-        this.weatherRepository = weatherRepository;
+    public WeatherInteractorImpl(NetworkRepository networkRepository,
+                                 LocalRepository localRepository,
+                                 SensorsRepository sensorsRepository) {
+        this.networkRepository = networkRepository;
+        this.localRepository = localRepository;
         this.sensorsRepository = sensorsRepository;
     }
 
@@ -37,9 +42,9 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     public List<City> getListCities() {
         if (cityList == null) {
             loadCities();
-            String lastCityId = weatherRepository.getLastCityId();
+            String lastCityId = localRepository.getLastCityId();
             if (!lastCityId.equals("")) {
-                currentCity = weatherRepository.getCityById(lastCityId);
+                currentCity = localRepository.getCityById(lastCityId);
             }
         }
         return cityList;
@@ -53,7 +58,7 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     @Override
     public void setCurrentCity(City currentCity) {
         this.currentCity = currentCity;
-        weatherRepository.setLastCityId(currentCity.getId());
+        localRepository.setLastCityId(currentCity.getId());
         if (onCurrentCityChanged != null) {
             onCurrentCityChanged.onChanged(currentCity);
         }
@@ -102,7 +107,7 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     }
 
     private void loadCities() {
-        cityList = weatherRepository.getCities();
+        cityList = localRepository.getCities();
     }
 
     public void setOnCurrentCityChanged(OnCurrentCityChanged onCurrentCityChanged) {
@@ -112,23 +117,23 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     @Override
     public void addCity(City city) {
         cityList.add(city);
-        weatherRepository.addCity(city);
+        localRepository.addCity(city);
     }
 
     @Override
     public Maybe<List<City>> getAutoCompleteLocations(String searchTemplate) {
-        return weatherRepository.getAutoCompleteCities(searchTemplate);
+        return networkRepository.getAutoCompleteCities(searchTemplate);
     }
 
     @Override
     public void deleteCity(City city) {
         cityList.remove(city);
-        weatherRepository.deleteCity(city);
+        localRepository.deleteCity(city);
     }
 
     @Override
     public Maybe<List<City>> getLocationsByPosition(Position position) {
-        return weatherRepository.getCitiesByCoordinate(position);
+        return networkRepository.getCitiesByCoordinate(position);
     }
 
     @Override

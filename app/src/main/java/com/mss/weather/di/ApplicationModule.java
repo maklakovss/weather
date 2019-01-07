@@ -2,12 +2,14 @@ package com.mss.weather.di;
 
 import android.content.Context;
 
-import com.mss.weather.data.repositories.WeatherRepositoryImpl;
+import com.mss.weather.data.db.LocalRepositoryImpl;
+import com.mss.weather.data.repositories.NetworkRepositoryImpl;
 import com.mss.weather.data.sensors.SensorsRepositoryImpl;
 import com.mss.weather.domain.interactor.WeatherInteractor;
 import com.mss.weather.domain.interactor.WeatherInteractorImpl;
 import com.mss.weather.domain.sensors.SensorsRepository;
-import com.mss.weather.domain.weather.WeatherRepository;
+import com.mss.weather.domain.weather.LocalRepository;
+import com.mss.weather.domain.weather.NetworkRepository;
 import com.mss.weather.presentation.presenter.CityWeatherPresenter;
 import com.mss.weather.presentation.presenter.ListCitiesPresenter;
 import com.mss.weather.presentation.presenter.SelectCityPresenter;
@@ -34,8 +36,10 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    public WeatherInteractor provideWeatherInteractor(WeatherRepository weatherRepository, SensorsRepository sensorsRepository) {
-        return new WeatherInteractorImpl(weatherRepository, sensorsRepository);
+    public WeatherInteractor provideWeatherInteractor(NetworkRepository networkRepository,
+                                                      LocalRepository localRepository,
+                                                      SensorsRepository sensorsRepository) {
+        return new WeatherInteractorImpl(networkRepository, localRepository, sensorsRepository);
     }
 
     @Singleton
@@ -58,8 +62,14 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    public WeatherRepository provideWeatherRepository() {
-        return new WeatherRepositoryImpl();
+    public NetworkRepository provideNetworkRepository() {
+        return new NetworkRepositoryImpl();
+    }
+
+    @Singleton
+    @Provides
+    public LocalRepository provideLocalRepository() {
+        return new LocalRepositoryImpl();
     }
 
 }

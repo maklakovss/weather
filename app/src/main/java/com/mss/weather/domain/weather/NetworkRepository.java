@@ -7,21 +7,9 @@ import java.util.List;
 
 import io.reactivex.Maybe;
 
-public interface WeatherRepository {
+public interface NetworkRepository {
 
     Maybe<List<City>> getAutoCompleteCities(String startWith);
 
     Maybe<List<City>> getCitiesByCoordinate(Position position);
-
-    List<City> getCities();
-
-    void addCity(City city);
-
-    void deleteCity(City city);
-
-    City getCityById(String id);
-
-    String getLastCityId();
-
-    void setLastCityId(String lastCityID);
 }

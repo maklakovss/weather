@@ -1,12 +1,11 @@
 package com.mss.weather.data.repositories;
 
 import com.mss.weather.BuildConfig;
-import com.mss.weather.data.db.RealmRepository;
 import com.mss.weather.data.network.WorldWeatherOnline;
 import com.mss.weather.data.network.model.response.CitiesResponse;
 import com.mss.weather.data.network.model.response.Result;
 import com.mss.weather.domain.sensors.models.Position;
-import com.mss.weather.domain.weather.WeatherRepository;
+import com.mss.weather.domain.weather.NetworkRepository;
 import com.mss.weather.domain.weather.models.City;
 
 import java.util.ArrayList;
@@ -19,16 +18,15 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class WeatherRepositoryImpl implements WeatherRepository {
+public class NetworkRepositoryImpl implements NetworkRepository {
 
     private static final String BASE_URL = "http://api.worldweatheronline.com/";
     private static final String FORMAT = "json";
     private static final String KEY = "fcb691d5d4c64b45a8b124513182112";
 
     private WorldWeatherOnline worldWeatherOnline;
-    private RealmRepository realmRepository;
 
-    public WeatherRepositoryImpl() {
+    public NetworkRepositoryImpl() {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(new HttpLoggingInterceptor().setLevel((BuildConfig.DEBUG) ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE))
                 .build();
@@ -40,8 +38,6 @@ public class WeatherRepositoryImpl implements WeatherRepository {
                 .client(okHttpClient)
                 .build()
                 .create(WorldWeatherOnline.class);
-
-        realmRepository = new RealmRepository();
     }
 
     private static List<City> mapCitiesResponseToCity(CitiesResponse citiesResponse) {
@@ -76,7 +72,7 @@ public class WeatherRepositoryImpl implements WeatherRepository {
     @Override
     public Maybe<List<City>> getAutoCompleteCities(String startWith) {
         return worldWeatherOnline.getCities(startWith, KEY, FORMAT)
-                .map(WeatherRepositoryImpl::mapCitiesResponseToCity)
+                .map(NetworkRepositoryImpl::mapCitiesResponseToCity)
                 .firstElement();
     }
 
@@ -84,37 +80,7 @@ public class WeatherRepositoryImpl implements WeatherRepository {
     public Maybe<List<City>> getCitiesByCoordinate(Position position) {
         final String query = String.valueOf(position.getLatitude()) + "," + String.valueOf(position.getLongitude());
         return worldWeatherOnline.getCities(query, KEY, FORMAT)
-                .map(WeatherRepositoryImpl::mapCitiesResponseToCity)
+                .map(NetworkRepositoryImpl::mapCitiesResponseToCity)
                 .firstElement();
-    }
-
-    @Override
-    public List<City> getCities() {
-        return realmRepository.getAllCities();
-    }
-
-    @Override
-    public void addCity(City city) {
-        realmRepository.insertCity(city);
-    }
-
-    @Override
-    public void deleteCity(City city) {
-        realmRepository.deleteCity(city);
-    }
-
-    @Override
-    public City getCityById(String id) {
-        return realmRepository.getCityById(id);
-    }
-
-    @Override
-    public String getLastCityId() {
-        return realmRepository.getLastCityId();
-    }
-
-    @Override
-    public void setLastCityId(String lastCityID) {
-        realmRepository.setLastCityId(lastCityID);
     }
 }

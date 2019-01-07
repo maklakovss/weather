@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.mss.weather.data.db.model.CityDB;
 import com.mss.weather.data.db.model.SettingsDB;
+import com.mss.weather.domain.weather.LocalRepository;
 import com.mss.weather.domain.weather.models.City;
 
 import java.util.ArrayList;
@@ -13,11 +14,12 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
-public class RealmRepository {
+public class LocalRepositoryImpl implements LocalRepository {
 
     private final static String[] locationSortFields = new String[]{"country", "region", "areaName"};
     private final static Sort[] locationSortOrders = new Sort[]{Sort.ASCENDING, Sort.ASCENDING, Sort.ASCENDING};
 
+    @Override
     @NonNull
     public City getCityById(@NonNull String id) {
         Realm realm = Realm.getDefaultInstance();
@@ -31,8 +33,9 @@ public class RealmRepository {
         return city;
     }
 
+    @Override
     @NonNull
-    public List<City> getAllCities() {
+    public List<City> getCities() {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<CityDB> results = realm
                 .where(CityDB.class)
@@ -47,7 +50,8 @@ public class RealmRepository {
         return cities;
     }
 
-    public void insertCity(@NonNull City city) {
+    @Override
+    public void addCity(@NonNull City city) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.insertOrUpdate(mapCityToCityDb(city));
@@ -55,6 +59,7 @@ public class RealmRepository {
         realm.close();
     }
 
+    @Override
     public void deleteCity(@NonNull City city) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
@@ -66,6 +71,7 @@ public class RealmRepository {
         realm.close();
     }
 
+    @Override
     public String getLastCityId() {
         Realm realm = Realm.getDefaultInstance();
         SettingsDB settingsDB = realm.where(SettingsDB.class)
@@ -78,6 +84,7 @@ public class RealmRepository {
         return lastCityId;
     }
 
+    @Override
     public void setLastCityId(String lastCityID) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
