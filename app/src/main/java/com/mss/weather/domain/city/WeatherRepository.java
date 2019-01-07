@@ -1,6 +1,7 @@
 package com.mss.weather.domain.city;
 
 import com.mss.weather.domain.city.models.City;
+import com.mss.weather.domain.sensors.models.Position;
 
 import java.util.List;
 
@@ -16,5 +17,5 @@ public interface WeatherRepository {
 
     void deleteCity(City city);
 
-    Maybe<List<City>> getCitiesByCoordinate(double latitude, double longitude);
+    Maybe<List<City>> getCitiesByCoordinate(Position position);
 }

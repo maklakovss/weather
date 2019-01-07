@@ -1,6 +1,7 @@
 package com.mss.weather.domain.weather;
 
 import com.mss.weather.domain.city.models.City;
+import com.mss.weather.domain.sensors.models.Position;
 import com.mss.weather.presentation.view.models.WeatherData;
 
 import java.util.List;
@@ -27,7 +28,9 @@ public interface WeatherInteractor {
 
     void deleteCity(City city);
 
-    Maybe<List<City>> getLocationsByCoordinate(double latitude, double longitude);
+    Maybe<List<City>> getLocationsByPosition(Position position);
+
+    Maybe<Position> getPosition();
 
     public interface OnCurrentCityChanged {
         void onChanged(City currentCity);

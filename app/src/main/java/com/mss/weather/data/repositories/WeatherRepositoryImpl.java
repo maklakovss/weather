@@ -7,6 +7,7 @@ import com.mss.weather.data.network.model.response.CitiesResponse;
 import com.mss.weather.data.network.model.response.Result;
 import com.mss.weather.domain.city.WeatherRepository;
 import com.mss.weather.domain.city.models.City;
+import com.mss.weather.domain.sensors.models.Position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,9 +96,9 @@ public class WeatherRepositoryImpl implements WeatherRepository {
     }
 
     @Override
-    public Maybe<List<City>> getCitiesByCoordinate(double latitude, double longitude) {
-        final String position = String.valueOf(latitude) + "," + String.valueOf(longitude);
-        return worldWeatherOnline.getCities(position, KEY, FORMAT)
+    public Maybe<List<City>> getCitiesByCoordinate(Position position) {
+        final String query = String.valueOf(position.getLatitude()) + "," + String.valueOf(position.getLongitude());
+        return worldWeatherOnline.getCities(query, KEY, FORMAT)
                 .map(WeatherRepositoryImpl::mapCitiesResponseToCity)
                 .firstElement();
     }

@@ -1,7 +1,11 @@
 package com.mss.weather.di;
 
+import android.content.Context;
+
 import com.mss.weather.data.repositories.WeatherRepositoryImpl;
+import com.mss.weather.data.sensors.SensorsRepositoryImpl;
 import com.mss.weather.domain.city.WeatherRepository;
+import com.mss.weather.domain.sensors.SensorsRepository;
 import com.mss.weather.domain.weather.WeatherInteractor;
 import com.mss.weather.domain.weather.WeatherInteractorImpl;
 import com.mss.weather.presentation.presenter.CityWeatherPresenter;
@@ -16,15 +20,27 @@ import dagger.Provides;
 @Module
 public class ApplicationModule {
 
-    @Singleton
-    @Provides
-    public WeatherInteractor provideWeatherInteractor(WeatherRepository weatherRepository) {
-        return new WeatherInteractorImpl(weatherRepository);
+    final private Context context;
+
+    public ApplicationModule(Context context) {
+        this.context = context;
     }
 
     @Singleton
     @Provides
-    public SelectCityPresenter provideCitySettingsPresenter() {
+    public SensorsRepository provideSensorsRepository() {
+        return new SensorsRepositoryImpl(context);
+    }
+
+    @Singleton
+    @Provides
+    public WeatherInteractor provideWeatherInteractor(WeatherRepository weatherRepository, SensorsRepository sensorsRepository) {
+        return new WeatherInteractorImpl(weatherRepository, sensorsRepository);
+    }
+
+    @Singleton
+    @Provides
+    public SelectCityPresenter provideSelectCityPresenter() {
         return new SelectCityPresenter();
     }
 
@@ -42,7 +58,7 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    public WeatherRepository provideCityRepository() {
+    public WeatherRepository provideWeatherRepository() {
         return new WeatherRepositoryImpl();
     }
 

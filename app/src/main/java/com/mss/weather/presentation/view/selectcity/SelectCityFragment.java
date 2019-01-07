@@ -3,11 +3,8 @@ package com.mss.weather.presentation.view.selectcity;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
@@ -40,8 +37,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-
-import static android.content.Context.LOCATION_SERVICE;
 
 public class SelectCityFragment extends MvpAppCompatFragment implements SelectCityView, TextView.OnEditorActionListener, SelectCityAdapter.OnItemClickListener {
 
@@ -154,7 +149,7 @@ public class SelectCityFragment extends MvpAppCompatFragment implements SelectCi
 
     private void requestLocationPermissions() {
         if (!ActivityCompat.shouldShowRequestPermissionRationale(this.getActivity(), Manifest.permission.CALL_PHONE)) {
-            ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_CODE);
+            ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_CODE);
         }
 
     }
@@ -169,29 +164,9 @@ public class SelectCityFragment extends MvpAppCompatFragment implements SelectCi
         }
     }
 
-
     private void requestLocation() {
-        if (ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        if (ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
             return;
-        locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-        locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                selectCityPresenter.locationClick(location.getLatitude(), location.getLongitude());
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-            }
-        }, Looper.myLooper());
-
+        selectCityPresenter.locationClick();
     }
 }

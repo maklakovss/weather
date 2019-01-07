@@ -4,6 +4,8 @@ import android.support.annotation.NonNull;
 
 import com.mss.weather.domain.city.WeatherRepository;
 import com.mss.weather.domain.city.models.City;
+import com.mss.weather.domain.sensors.SensorsRepository;
+import com.mss.weather.domain.sensors.models.Position;
 import com.mss.weather.presentation.view.models.WeatherData;
 
 import java.util.ArrayList;
@@ -17,8 +19,8 @@ import io.reactivex.Maybe;
 
 public class WeatherInteractorImpl implements WeatherInteractor {
 
-    @Inject
     WeatherRepository weatherRepository;
+    SensorsRepository sensorsRepository;
 
     private List<City> cityList;
 
@@ -26,8 +28,9 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     private OnCurrentCityChanged onCurrentCityChanged;
 
     @Inject
-    public WeatherInteractorImpl(WeatherRepository weatherRepository) {
+    public WeatherInteractorImpl(WeatherRepository weatherRepository, SensorsRepository sensorsRepository) {
         this.weatherRepository = weatherRepository;
+        this.sensorsRepository = sensorsRepository;
     }
 
     @Override
@@ -119,8 +122,13 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     }
 
     @Override
-    public Maybe<List<City>> getLocationsByCoordinate(double latitude, double longitude) {
-        return weatherRepository.getCitiesByCoordinate(latitude, longitude);
+    public Maybe<List<City>> getLocationsByPosition(Position position) {
+        return weatherRepository.getCitiesByCoordinate(position);
+    }
+
+    @Override
+    public Maybe<Position> getPosition() {
+        return sensorsRepository.getPosition();
     }
 
 }

@@ -7,6 +7,7 @@ import com.mss.weather.domain.city.models.City;
 import com.mss.weather.domain.weather.WeatherInteractor;
 import com.mss.weather.presentation.view.selectcity.SelectCityView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -27,20 +28,12 @@ public class SelectCityPresenter extends MvpPresenter<SelectCityView> {
     }
 
     public void searchClicked(String searchTemplate) {
-        getViewState().showProgress(true);
+        clearAndStartProgress();
         weatherInteractor.getAutoCompleteLocations(searchTemplate)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        cities -> {
-                            autoCompleteCities = cities;
-                            getViewState().showCities(cities);
-                            getViewState().showProgress(false);
-                        },
-                        e -> {
-                            autoCompleteCities = null;
-                            getViewState().showProgress(false);
-                        });
+                .subscribe(cities -> onSuccess(cities),
+                        e -> stopProgressOnError());
     }
 
     public void onClickCity(int position) {
@@ -50,20 +43,36 @@ public class SelectCityPresenter extends MvpPresenter<SelectCityView> {
         }
     }
 
-    public void locationClick(double latitude, double longitude) {
-        weatherInteractor.getLocationsByCoordinate(latitude, longitude)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+    public void locationClick() {
+        clearAndStartProgress();
+        weatherInteractor.getPosition()
                 .subscribe(
-                        cities -> {
-                            autoCompleteCities = cities;
-                            getViewState().showCities(cities);
-                            getViewState().showProgress(false);
+                        position -> {
+                            weatherInteractor.getLocationsByPosition(position)
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(cities -> onSuccess(cities)
+                                            , e -> stopProgressOnError());
                         },
                         e -> {
-                            autoCompleteCities = null;
-                            getViewState().showProgress(false);
+                            stopProgressOnError();
                         });
+    }
 
+    private void clearAndStartProgress() {
+        autoCompleteCities = new ArrayList<>();
+        getViewState().showCities(autoCompleteCities);
+        getViewState().showProgress(true);
+    }
+
+    private void onSuccess(List<City> cities) {
+        autoCompleteCities = cities;
+        getViewState().showCities(cities);
+        getViewState().showProgress(false);
+    }
+
+    private void stopProgressOnError() {
+        autoCompleteCities = null;
+        getViewState().showProgress(false);
     }
 }
