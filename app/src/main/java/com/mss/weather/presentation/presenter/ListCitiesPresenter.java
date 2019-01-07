@@ -3,7 +3,7 @@ package com.mss.weather.presentation.presenter;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.mss.weather.MyApplication;
-import com.mss.weather.domain.weather.WeatherInteractor;
+import com.mss.weather.domain.interactor.WeatherInteractor;
 import com.mss.weather.presentation.view.listcities.ListCitiesView;
 
 import javax.inject.Inject;

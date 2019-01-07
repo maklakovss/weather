@@ -2,7 +2,9 @@ package com.mss.weather.data.db;
 
 import android.support.annotation.NonNull;
 
-import com.mss.weather.domain.city.models.City;
+import com.mss.weather.data.db.model.CityDB;
+import com.mss.weather.data.db.model.SettingsDB;
+import com.mss.weather.domain.weather.models.City;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +66,33 @@ public class RealmRepository {
         realm.close();
     }
 
+    public String getLastCityId() {
+        Realm realm = Realm.getDefaultInstance();
+        SettingsDB settingsDB = realm.where(SettingsDB.class)
+                .equalTo("id", 1)
+                .findFirst();
+        String lastCityId = "";
+        if (settingsDB != null)
+            lastCityId = settingsDB.getLasCityId();
+        realm.close();
+        return lastCityId;
+    }
+
+    public void setLastCityId(String lastCityID) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        SettingsDB settingsDB = realm.where(SettingsDB.class)
+                .equalTo("id", 1)
+                .findFirst();
+        if (settingsDB == null) {
+            settingsDB = new SettingsDB();
+        }
+        settingsDB.setLasCityId(lastCityID);
+        realm.insertOrUpdate(settingsDB);
+        realm.commitTransaction();
+        realm.close();
+    }
+
     @NonNull
     private City mapCityDbToCity(@NonNull CityDB cityDB) {
         City city = new City();
@@ -93,5 +122,4 @@ public class RealmRepository {
         cityDB.setLatitude(city.getLatitude());
         return cityDB;
     }
-
 }

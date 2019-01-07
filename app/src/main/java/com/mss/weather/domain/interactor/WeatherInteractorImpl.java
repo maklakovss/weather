@@ -1,11 +1,11 @@
-package com.mss.weather.domain.weather;
+package com.mss.weather.domain.interactor;
 
 import android.support.annotation.NonNull;
 
-import com.mss.weather.domain.city.WeatherRepository;
-import com.mss.weather.domain.city.models.City;
 import com.mss.weather.domain.sensors.SensorsRepository;
 import com.mss.weather.domain.sensors.models.Position;
+import com.mss.weather.domain.weather.WeatherRepository;
+import com.mss.weather.domain.weather.models.City;
 import com.mss.weather.presentation.view.models.WeatherData;
 
 import java.util.ArrayList;
@@ -37,6 +37,10 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     public List<City> getListCities() {
         if (cityList == null) {
             loadCities();
+            String lastCityId = weatherRepository.getLastCityId();
+            if (!lastCityId.equals("")) {
+                currentCity = weatherRepository.getCityById(lastCityId);
+            }
         }
         return cityList;
     }
@@ -49,6 +53,7 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     @Override
     public void setCurrentCity(City currentCity) {
         this.currentCity = currentCity;
+        weatherRepository.setLastCityId(currentCity.getId());
         if (onCurrentCityChanged != null) {
             onCurrentCityChanged.onChanged(currentCity);
         }

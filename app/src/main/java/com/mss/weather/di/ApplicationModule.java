@@ -4,10 +4,10 @@ import android.content.Context;
 
 import com.mss.weather.data.repositories.WeatherRepositoryImpl;
 import com.mss.weather.data.sensors.SensorsRepositoryImpl;
-import com.mss.weather.domain.city.WeatherRepository;
+import com.mss.weather.domain.interactor.WeatherInteractor;
+import com.mss.weather.domain.interactor.WeatherInteractorImpl;
 import com.mss.weather.domain.sensors.SensorsRepository;
-import com.mss.weather.domain.weather.WeatherInteractor;
-import com.mss.weather.domain.weather.WeatherInteractorImpl;
+import com.mss.weather.domain.weather.WeatherRepository;
 import com.mss.weather.presentation.presenter.CityWeatherPresenter;
 import com.mss.weather.presentation.presenter.ListCitiesPresenter;
 import com.mss.weather.presentation.presenter.SelectCityPresenter;

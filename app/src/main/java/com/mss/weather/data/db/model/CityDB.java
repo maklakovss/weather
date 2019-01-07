@@ -1,4 +1,4 @@
-package com.mss.weather.data.db;
+package com.mss.weather.data.db.model;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

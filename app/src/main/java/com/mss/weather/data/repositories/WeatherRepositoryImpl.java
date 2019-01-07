@@ -5,9 +5,9 @@ import com.mss.weather.data.db.RealmRepository;
 import com.mss.weather.data.network.WorldWeatherOnline;
 import com.mss.weather.data.network.model.response.CitiesResponse;
 import com.mss.weather.data.network.model.response.Result;
-import com.mss.weather.domain.city.WeatherRepository;
-import com.mss.weather.domain.city.models.City;
 import com.mss.weather.domain.sensors.models.Position;
+import com.mss.weather.domain.weather.WeatherRepository;
+import com.mss.weather.domain.weather.models.City;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +81,14 @@ public class WeatherRepositoryImpl implements WeatherRepository {
     }
 
     @Override
+    public Maybe<List<City>> getCitiesByCoordinate(Position position) {
+        final String query = String.valueOf(position.getLatitude()) + "," + String.valueOf(position.getLongitude());
+        return worldWeatherOnline.getCities(query, KEY, FORMAT)
+                .map(WeatherRepositoryImpl::mapCitiesResponseToCity)
+                .firstElement();
+    }
+
+    @Override
     public List<City> getCities() {
         return realmRepository.getAllCities();
     }
@@ -96,10 +104,17 @@ public class WeatherRepositoryImpl implements WeatherRepository {
     }
 
     @Override
-    public Maybe<List<City>> getCitiesByCoordinate(Position position) {
-        final String query = String.valueOf(position.getLatitude()) + "," + String.valueOf(position.getLongitude());
-        return worldWeatherOnline.getCities(query, KEY, FORMAT)
-                .map(WeatherRepositoryImpl::mapCitiesResponseToCity)
-                .firstElement();
+    public City getCityById(String id) {
+        return realmRepository.getCityById(id);
+    }
+
+    @Override
+    public String getLastCityId() {
+        return realmRepository.getLastCityId();
+    }
+
+    @Override
+    public void setLastCityId(String lastCityID) {
+        realmRepository.setLastCityId(lastCityID);
     }
 }
