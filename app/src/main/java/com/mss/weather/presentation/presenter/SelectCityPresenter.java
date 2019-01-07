@@ -49,4 +49,21 @@ public class SelectCityPresenter extends MvpPresenter<SelectCityView> {
             getViewState().back();
         }
     }
+
+    public void locationClick(double latitude, double longitude) {
+        weatherInteractor.getLocationsByCoordinate(latitude, longitude)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        cities -> {
+                            autoCompleteCities = cities;
+                            getViewState().showCities(cities);
+                            getViewState().showProgress(false);
+                        },
+                        e -> {
+                            autoCompleteCities = null;
+                            getViewState().showProgress(false);
+                        });
+
+    }
 }

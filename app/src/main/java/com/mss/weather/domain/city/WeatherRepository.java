@@ -15,4 +15,6 @@ public interface WeatherRepository {
     void addCity(City city);
 
     void deleteCity(City city);
+
+    Maybe<List<City>> getCitiesByCoordinate(double latitude, double longitude);
 }

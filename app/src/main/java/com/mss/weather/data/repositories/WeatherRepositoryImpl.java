@@ -93,4 +93,12 @@ public class WeatherRepositoryImpl implements WeatherRepository {
     public void deleteCity(City city) {
         realmRepository.deleteCity(city);
     }
+
+    @Override
+    public Maybe<List<City>> getCitiesByCoordinate(double latitude, double longitude) {
+        final String position = String.valueOf(latitude) + "," + String.valueOf(longitude);
+        return worldWeatherOnline.getCities(position, KEY, FORMAT)
+                .map(WeatherRepositoryImpl::mapCitiesResponseToCity)
+                .firstElement();
+    }
 }

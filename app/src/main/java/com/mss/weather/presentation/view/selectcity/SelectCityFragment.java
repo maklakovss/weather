@@ -1,9 +1,16 @@
 package com.mss.weather.presentation.view.selectcity;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,9 +38,15 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static android.content.Context.LOCATION_SERVICE;
+
 public class SelectCityFragment extends MvpAppCompatFragment implements SelectCityView, TextView.OnEditorActionListener, SelectCityAdapter.OnItemClickListener {
+
+    private static final int PERMISSION_REQUEST_CODE = 10;
+    private LocationManager locationManager;
 
     @Inject
     @InjectPresenter
@@ -127,5 +140,58 @@ public class SelectCityFragment extends MvpAppCompatFragment implements SelectCi
     @Override
     public void onItemClick(View view, int position) {
         selectCityPresenter.onClickCity(position);
+    }
+
+    @OnClick(R.id.btnLocation)
+    public void onViewClicked() {
+        if (ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            requestLocation();
+        } else {
+            requestLocationPermissions();
+        }
+    }
+
+    private void requestLocationPermissions() {
+        if (!ActivityCompat.shouldShowRequestPermissionRationale(this.getActivity(), Manifest.permission.CALL_PHONE)) {
+            ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_CODE);
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.length == 1 &&
+                    (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                requestLocation();
+            }
+        }
+    }
+
+
+    private void requestLocation() {
+        if (ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            return;
+        locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
+        locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                selectCityPresenter.locationClick(location.getLatitude(), location.getLongitude());
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+            }
+        }, Looper.myLooper());
+
     }
 }

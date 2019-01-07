@@ -118,4 +118,9 @@ public class WeatherInteractorImpl implements WeatherInteractor {
         weatherRepository.deleteCity(city);
     }
 
+    @Override
+    public Maybe<List<City>> getLocationsByCoordinate(double latitude, double longitude) {
+        return weatherRepository.getCitiesByCoordinate(latitude, longitude);
+    }
+
 }

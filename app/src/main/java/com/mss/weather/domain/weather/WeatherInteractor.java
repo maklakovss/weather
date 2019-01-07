@@ -27,6 +27,8 @@ public interface WeatherInteractor {
 
     void deleteCity(City city);
 
+    Maybe<List<City>> getLocationsByCoordinate(double latitude, double longitude);
+
     public interface OnCurrentCityChanged {
         void onChanged(City currentCity);
     }
