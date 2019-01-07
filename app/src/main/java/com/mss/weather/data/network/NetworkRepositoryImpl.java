@@ -1,7 +1,6 @@
-package com.mss.weather.data.repositories;
+package com.mss.weather.data.network;
 
 import com.mss.weather.BuildConfig;
-import com.mss.weather.data.network.WorldWeatherOnline;
 import com.mss.weather.data.network.model.response.CitiesResponse;
 import com.mss.weather.data.network.model.response.Result;
 import com.mss.weather.domain.sensors.models.Position;

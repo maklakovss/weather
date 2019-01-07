@@ -96,20 +96,20 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
 
     @Override
     public void updateList(List<City> cities) {
-        final Cities citiesAdapter = new Cities(cities);
+        final CitiesAdapter citiesAdapterAdapter = new CitiesAdapter(cities);
 
         ItemTouchHelper.Callback callback = new ItemTouchHelperCallback(this);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(rvCitiesList);
 
-        citiesAdapter.setOnItemClickListener(new Cities.OnItemClickListener() {
+        citiesAdapterAdapter.setOnItemClickListener(new CitiesAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 listCitiesPresenter.onClickCity(position);
             }
         });
 
-        rvCitiesList.setAdapter(citiesAdapter);
+        rvCitiesList.setAdapter(citiesAdapterAdapter);
     }
 
     @Override

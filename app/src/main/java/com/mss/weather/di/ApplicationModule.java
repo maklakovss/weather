@@ -3,7 +3,7 @@ package com.mss.weather.di;
 import android.content.Context;
 
 import com.mss.weather.data.db.LocalRepositoryImpl;
-import com.mss.weather.data.repositories.NetworkRepositoryImpl;
+import com.mss.weather.data.network.NetworkRepositoryImpl;
 import com.mss.weather.data.sensors.SensorsRepositoryImpl;
 import com.mss.weather.domain.interactor.WeatherInteractor;
 import com.mss.weather.domain.interactor.WeatherInteractorImpl;
