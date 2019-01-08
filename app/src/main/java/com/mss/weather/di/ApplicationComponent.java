@@ -1,10 +1,10 @@
 package com.mss.weather.di;
 
-import com.mss.weather.presentation.presenter.CityWeatherPresenter;
+import com.mss.weather.presentation.presenter.CurrentWeatherPresenter;
 import com.mss.weather.presentation.presenter.ListCitiesPresenter;
 import com.mss.weather.presentation.presenter.MainPresenter;
 import com.mss.weather.presentation.presenter.SelectCityPresenter;
-import com.mss.weather.presentation.view.cityweather.CityWeatherFragment;
+import com.mss.weather.presentation.view.currentweather.CurrentWeatherFragment;
 import com.mss.weather.presentation.view.listcities.ListCitiesFragment;
 import com.mss.weather.presentation.view.selectcity.SelectCityFragment;
 
@@ -20,7 +20,7 @@ public interface ApplicationComponent {
 
     void inject(ListCitiesPresenter settingsPresenter);
 
-    void inject(CityWeatherPresenter cityWeatherPresenter);
+    void inject(CurrentWeatherPresenter currentWeatherPresenter);
 
     void inject(SelectCityPresenter selectCityPresenter);
 
@@ -31,7 +31,7 @@ public interface ApplicationComponent {
 
     void inject(SelectCityFragment addCityFragment);
 
-    void inject(CityWeatherFragment cityWeatherFragment);
+    void inject(CurrentWeatherFragment currentWeatherFragment);
 
     void inject(ListCitiesFragment listCitiesFragment);
 }

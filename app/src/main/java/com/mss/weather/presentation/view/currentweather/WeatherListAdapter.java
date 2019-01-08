@@ -1,4 +1,4 @@
-package com.mss.weather.presentation.view.main;
+package com.mss.weather.presentation.view.currentweather;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mss.weather.R;
-import com.mss.weather.domain.models.WeatherData;
+import com.mss.weather.domain.models.WeatherDay;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -20,9 +20,9 @@ import butterknife.ButterKnife;
 public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.ViewHolder> {
 
     final SimpleDateFormat formatterDate = new SimpleDateFormat("dd.MM.YYYY", Locale.getDefault());
-    private List<WeatherData> weatherDataList;
+    private List<WeatherDay> weatherDataList;
 
-    public WeatherListAdapter(List<WeatherData> weatherDataList) {
+    public WeatherListAdapter(List<WeatherDay> weatherDataList) {
         this.weatherDataList = weatherDataList;
     }
 
@@ -37,10 +37,10 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        WeatherData weatherData = weatherDataList.get(i);
-        viewHolder.tvPeriod.setText(formatterDate.format(weatherData.getWeatherDate()));
-        viewHolder.tvTempMin.setText(String.valueOf(weatherData.getTempMin()));
-        viewHolder.tvTempMax.setText(String.valueOf(weatherData.getTempMax()));
+        WeatherDay weatherDay = weatherDataList.get(i);
+        viewHolder.tvPeriod.setText(formatterDate.format(weatherDay.getDate()));
+        viewHolder.tvTempMin.setText(String.valueOf(weatherDay.getMintempC()));
+        viewHolder.tvTempMax.setText(String.valueOf(weatherDay.getMaxtempC()));
 
     }
 

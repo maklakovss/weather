@@ -16,7 +16,7 @@ import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.mss.weather.R;
 import com.mss.weather.presentation.presenter.MainPresenter;
-import com.mss.weather.presentation.view.cityweather.CityWeatherFragment;
+import com.mss.weather.presentation.view.currentweather.CurrentWeatherFragment;
 import com.mss.weather.presentation.view.listcities.ListCitiesFragment;
 import com.mss.weather.presentation.view.selectcity.SelectCityFragment;
 
@@ -84,9 +84,9 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Weat
 
     @Override
     public void showWeather() {
-        CityWeatherFragment cityWeatherFragment = getCityWeatherFragment();
-        if (cityWeatherFragment == null)
-            cityWeatherFragment = createCityWeatherFragment();
+        CurrentWeatherFragment currentWeatherFragment = getCityWeatherFragment();
+        if (currentWeatherFragment == null)
+            currentWeatherFragment = createCityWeatherFragment();
     }
 
     @Override
@@ -105,20 +105,20 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Weat
         fragmentTransaction.commit();
     }
 
-    private CityWeatherFragment getCityWeatherFragment() {
-        return (CityWeatherFragment) getSupportFragmentManager()
+    private CurrentWeatherFragment getCityWeatherFragment() {
+        return (CurrentWeatherFragment) getSupportFragmentManager()
                 .findFragmentByTag(WEATHER_TAG);
     }
 
     @NonNull
-    private CityWeatherFragment createCityWeatherFragment() {
-        final CityWeatherFragment cityWeatherFragment = CityWeatherFragment.newInstance();
+    private CurrentWeatherFragment createCityWeatherFragment() {
+        final CurrentWeatherFragment currentWeatherFragment = CurrentWeatherFragment.newInstance();
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.flMain, cityWeatherFragment);
+        ft.replace(R.id.flMain, currentWeatherFragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.addToBackStack("");
         ft.commit();
-        return cityWeatherFragment;
+        return currentWeatherFragment;
     }
 
     private SelectCityFragment getAddCityFragment() {

@@ -1,17 +1,12 @@
 package com.mss.weather.domain.interactor;
 
-import android.support.annotation.NonNull;
-
 import com.mss.weather.domain.LocalRepository;
 import com.mss.weather.domain.NetworkRepository;
 import com.mss.weather.domain.SensorsRepository;
 import com.mss.weather.domain.models.City;
 import com.mss.weather.domain.models.Position;
-import com.mss.weather.domain.models.WeatherData;
+import com.mss.weather.domain.models.WeatherInfo;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -64,48 +59,6 @@ public class WeatherInteractorImpl implements WeatherInteractor {
         }
     }
 
-    @Override
-    public WeatherData getWeatherByCity(City city) {
-        WeatherData weatherData = getWeatherData(city, new Date());
-        return weatherData;
-    }
-
-    @NonNull
-    private WeatherData getWeatherData(City city, Date date) {
-        WeatherData weatherData = new WeatherData();
-        weatherData.setCityName(city.getAreaName());
-        weatherData.setWeatherDate(date);
-        weatherData.getSunrise().setHours(6);
-        weatherData.getSunrise().setMinutes(0);
-        weatherData.getSunrise().setSeconds(0);
-        weatherData.getSunset().setHours(23);
-        weatherData.getSunset().setMinutes(0);
-        weatherData.getSunset().setSeconds(0);
-        weatherData.setCloudsPercent(30);
-        weatherData.setCloudsDescription("переменная облачность");
-        weatherData.setTemp(25);
-        weatherData.setTempMin(23);
-        weatherData.setTempMax(27);
-        weatherData.setPressure(760);
-        weatherData.setHumidity(30);
-        weatherData.setWindSpeed(5);
-        weatherData.setWindDeg(90);
-        weatherData.setSnow(10);
-        weatherData.setRain(0);
-        return weatherData;
-    }
-
-    @Override
-    public List<WeatherData> getWeatherList(City city) {
-        List<WeatherData> weatherDataList = new ArrayList<>();
-        Calendar calendar = Calendar.getInstance();
-        for (int i = 0; i < 10; i++) {
-            calendar.add(Calendar.DATE, 1);
-            weatherDataList.add(getWeatherData(city, calendar.getTime()));
-        }
-        return weatherDataList;
-    }
-
     private void loadCities() {
         cityList = localRepository.getCities();
     }
@@ -139,6 +92,11 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     @Override
     public Maybe<Position> getPosition() {
         return sensorsRepository.getPosition();
+    }
+
+    @Override
+    public Maybe<WeatherInfo> getWeatherInfo(City city) {
+        return networkRepository.getWeatherInfo(city);
     }
 
 }

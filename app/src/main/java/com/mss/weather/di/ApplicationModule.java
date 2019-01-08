@@ -10,7 +10,7 @@ import com.mss.weather.domain.NetworkRepository;
 import com.mss.weather.domain.SensorsRepository;
 import com.mss.weather.domain.interactor.WeatherInteractor;
 import com.mss.weather.domain.interactor.WeatherInteractorImpl;
-import com.mss.weather.presentation.presenter.CityWeatherPresenter;
+import com.mss.weather.presentation.presenter.CurrentWeatherPresenter;
 import com.mss.weather.presentation.presenter.ListCitiesPresenter;
 import com.mss.weather.presentation.presenter.SelectCityPresenter;
 
@@ -50,8 +50,8 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    public CityWeatherPresenter provideCityWeatherPresenter() {
-        return new CityWeatherPresenter();
+    public CurrentWeatherPresenter provideCityWeatherPresenter() {
+        return new CurrentWeatherPresenter();
     }
 
     @Singleton

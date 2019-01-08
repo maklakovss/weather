@@ -16,13 +16,13 @@ public class CurrentCondition {
     private String observationTime;
     @SerializedName("temp_C")
     @Expose
-    private String tempC;
+    private int tempC;
     @SerializedName("temp_F")
     @Expose
-    private String tempF;
+    private int tempF;
     @SerializedName("weatherCode")
     @Expose
-    private String weatherCode;
+    private int weatherCode;
     @SerializedName("weatherIconUrl")
     @Expose
     private List<WeatherIconUrl> weatherIconUrl = null;
@@ -34,36 +34,36 @@ public class CurrentCondition {
     private List<LangRu> langRu = null;
     @SerializedName("windspeedMiles")
     @Expose
-    private String windspeedMiles;
+    private int windspeedMiles;
     @SerializedName("windspeedKmph")
     @Expose
-    private String windspeedKmph;
+    private int windspeedKmph;
     @SerializedName("winddirDegree")
     @Expose
-    private String winddirDegree;
+    private int winddirDegree;
     @SerializedName("winddir16Point")
     @Expose
     private String winddir16Point;
     @SerializedName("precipMM")
     @Expose
-    private String precipMM;
+    private int precipMM;
     @SerializedName("humidity")
     @Expose
-    private String humidity;
+    private float humidity;
     @SerializedName("visibility")
     @Expose
-    private String visibility;
+    private int visibility;
     @SerializedName("pressure")
     @Expose
-    private String pressure;
+    private int pressure;
     @SerializedName("cloudcover")
     @Expose
-    private String cloudcover;
+    private int cloudcover;
     @SerializedName("FeelsLikeC")
     @Expose
-    private String feelsLikeC;
+    private int feelsLikeC;
     @SerializedName("FeelsLikeF")
     @Expose
-    private String feelsLikeF;
+    private int feelsLikeF;
 
 }
