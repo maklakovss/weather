@@ -1,4 +1,4 @@
-package com.mss.weather.presentation.view.models;
+package com.mss.weather.domain.models;
 
 import java.util.Date;
 

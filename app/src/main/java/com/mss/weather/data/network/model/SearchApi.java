@@ -1,5 +1,5 @@
 
-package com.mss.weather.data.network.model.response;
+package com.mss.weather.data.network.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -13,6 +13,6 @@ public class SearchApi {
 
     @SerializedName("result")
     @Expose
-    public List<Result> result = null;
+    private List<Result> result = null;
 
 }

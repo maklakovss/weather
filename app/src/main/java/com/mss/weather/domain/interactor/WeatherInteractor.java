@@ -1,8 +1,8 @@
 package com.mss.weather.domain.interactor;
 
-import com.mss.weather.domain.sensors.models.Position;
-import com.mss.weather.domain.weather.models.City;
-import com.mss.weather.presentation.view.models.WeatherData;
+import com.mss.weather.domain.models.City;
+import com.mss.weather.domain.models.Position;
+import com.mss.weather.domain.models.WeatherData;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
-package com.mss.weather.domain.sensors;
+package com.mss.weather.domain;
 
-import com.mss.weather.domain.sensors.models.Position;
+import com.mss.weather.domain.models.Position;
 
 import io.reactivex.Maybe;
 

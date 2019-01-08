@@ -4,8 +4,8 @@ import android.support.annotation.NonNull;
 
 import com.mss.weather.data.db.model.CityDB;
 import com.mss.weather.data.db.model.SettingsDB;
-import com.mss.weather.domain.weather.LocalRepository;
-import com.mss.weather.domain.weather.models.City;
+import com.mss.weather.domain.LocalRepository;
+import com.mss.weather.domain.models.City;
 
 import java.util.ArrayList;
 import java.util.List;

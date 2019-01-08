@@ -15,9 +15,9 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.mss.weather.MyApplication;
 import com.mss.weather.R;
+import com.mss.weather.domain.models.WeatherData;
 import com.mss.weather.presentation.presenter.CityWeatherPresenter;
 import com.mss.weather.presentation.view.main.WeatherListAdapter;
-import com.mss.weather.presentation.view.models.WeatherData;
 
 import java.text.SimpleDateFormat;
 import java.util.List;

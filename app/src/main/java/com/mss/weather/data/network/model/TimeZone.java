@@ -1,5 +1,5 @@
 
-package com.mss.weather.data.network.model.response;
+package com.mss.weather.data.network.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -7,13 +7,13 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 @Data
-public class Timezone {
+public class TimeZone {
 
     @SerializedName("offset")
     @Expose
-    public float offset;
+    private float offset;
     @SerializedName("zone")
     @Expose
-    public String zone;
+    private String zone;
 
 }

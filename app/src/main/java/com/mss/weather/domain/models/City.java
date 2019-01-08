@@ -1,4 +1,4 @@
-package com.mss.weather.domain.weather.models;
+package com.mss.weather.domain.models;
 
 import lombok.Data;
 

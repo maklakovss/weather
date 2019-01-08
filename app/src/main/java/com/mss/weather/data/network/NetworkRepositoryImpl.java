@@ -1,11 +1,11 @@
 package com.mss.weather.data.network;
 
 import com.mss.weather.BuildConfig;
-import com.mss.weather.data.network.model.response.CitiesResponse;
-import com.mss.weather.data.network.model.response.Result;
-import com.mss.weather.domain.sensors.models.Position;
-import com.mss.weather.domain.weather.NetworkRepository;
-import com.mss.weather.domain.weather.models.City;
+import com.mss.weather.data.network.model.CitiesResponse;
+import com.mss.weather.data.network.model.Result;
+import com.mss.weather.domain.NetworkRepository;
+import com.mss.weather.domain.models.City;
+import com.mss.weather.domain.models.Position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +70,7 @@ public class NetworkRepositoryImpl implements NetworkRepository {
 
     @Override
     public Maybe<List<City>> getAutoCompleteCities(String startWith) {
-        return worldWeatherOnline.getCities(startWith, KEY, FORMAT)
+        return worldWeatherOnline.getCities(startWith, 200, KEY, FORMAT)
                 .map(NetworkRepositoryImpl::mapCitiesResponseToCity)
                 .firstElement();
     }
@@ -78,7 +78,7 @@ public class NetworkRepositoryImpl implements NetworkRepository {
     @Override
     public Maybe<List<City>> getCitiesByCoordinate(Position position) {
         final String query = String.valueOf(position.getLatitude()) + "," + String.valueOf(position.getLongitude());
-        return worldWeatherOnline.getCities(query, KEY, FORMAT)
+        return worldWeatherOnline.getCities(query, 200, KEY, FORMAT)
                 .map(NetworkRepositoryImpl::mapCitiesResponseToCity)
                 .firstElement();
     }

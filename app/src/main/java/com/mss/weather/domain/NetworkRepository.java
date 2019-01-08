@@ -1,7 +1,7 @@
-package com.mss.weather.domain.weather;
+package com.mss.weather.domain;
 
-import com.mss.weather.domain.sensors.models.Position;
-import com.mss.weather.domain.weather.models.City;
+import com.mss.weather.domain.models.City;
+import com.mss.weather.domain.models.Position;
 
 import java.util.List;
 

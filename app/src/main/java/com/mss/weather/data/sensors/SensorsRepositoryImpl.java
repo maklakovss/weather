@@ -7,8 +7,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
-import com.mss.weather.domain.sensors.SensorsRepository;
-import com.mss.weather.domain.sensors.models.Position;
+import com.mss.weather.domain.SensorsRepository;
+import com.mss.weather.domain.models.Position;
 
 import java.security.NoSuchProviderException;
 

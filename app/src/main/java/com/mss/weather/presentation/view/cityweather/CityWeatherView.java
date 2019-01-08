@@ -3,7 +3,7 @@ package com.mss.weather.presentation.view.cityweather;
 import android.support.annotation.NonNull;
 
 import com.arellomobile.mvp.MvpView;
-import com.mss.weather.presentation.view.models.WeatherData;
+import com.mss.weather.domain.models.WeatherData;
 
 import java.util.List;
 

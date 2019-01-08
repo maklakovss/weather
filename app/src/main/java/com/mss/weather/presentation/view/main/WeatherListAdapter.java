@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mss.weather.R;
-import com.mss.weather.presentation.view.models.WeatherData;
+import com.mss.weather.domain.models.WeatherData;
 
 import java.text.SimpleDateFormat;
 import java.util.List;

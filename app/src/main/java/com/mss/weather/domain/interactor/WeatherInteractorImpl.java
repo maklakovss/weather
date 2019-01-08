@@ -2,12 +2,12 @@ package com.mss.weather.domain.interactor;
 
 import android.support.annotation.NonNull;
 
-import com.mss.weather.domain.sensors.SensorsRepository;
-import com.mss.weather.domain.sensors.models.Position;
-import com.mss.weather.domain.weather.LocalRepository;
-import com.mss.weather.domain.weather.NetworkRepository;
-import com.mss.weather.domain.weather.models.City;
-import com.mss.weather.presentation.view.models.WeatherData;
+import com.mss.weather.domain.LocalRepository;
+import com.mss.weather.domain.NetworkRepository;
+import com.mss.weather.domain.SensorsRepository;
+import com.mss.weather.domain.models.City;
+import com.mss.weather.domain.models.Position;
+import com.mss.weather.domain.models.WeatherData;
 
 import java.util.ArrayList;
 import java.util.Calendar;

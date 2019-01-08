@@ -4,7 +4,7 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.mss.weather.MyApplication;
 import com.mss.weather.domain.interactor.WeatherInteractor;
-import com.mss.weather.domain.weather.models.City;
+import com.mss.weather.domain.models.City;
 import com.mss.weather.presentation.view.selectcity.SelectCityView;
 
 import java.util.ArrayList;

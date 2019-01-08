@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mss.weather.R;
-import com.mss.weather.domain.weather.models.City;
+import com.mss.weather.domain.models.City;
 
 import java.util.List;
 

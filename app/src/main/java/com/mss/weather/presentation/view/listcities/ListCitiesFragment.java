@@ -16,7 +16,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.mss.weather.MyApplication;
 import com.mss.weather.R;
-import com.mss.weather.domain.weather.models.City;
+import com.mss.weather.domain.models.City;
 import com.mss.weather.presentation.presenter.ListCitiesPresenter;
 import com.mss.weather.presentation.view.main.WeatherFragmentsNavigator;
 

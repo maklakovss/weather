@@ -1,5 +1,5 @@
 
-package com.mss.weather.data.network.model.response;
+package com.mss.weather.data.network.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -13,27 +13,27 @@ public class Result {
 
     @SerializedName("areaName")
     @Expose
-    public List<AreaName> areaName = null;
+    private List<AreaName> areaName = null;
     @SerializedName("country")
     @Expose
-    public List<Country> country = null;
+    private List<Country> country = null;
     @SerializedName("region")
     @Expose
-    public List<Region> region = null;
+    private List<Region> region = null;
     @SerializedName("latitude")
     @Expose
-    public float latitude;
+    private float latitude;
     @SerializedName("longitude")
     @Expose
-    public float longitude;
+    private float longitude;
     @SerializedName("population")
     @Expose
-    public long population;
+    private long population;
     @SerializedName("weatherUrl")
     @Expose
-    public List<WeatherUrl> weatherUrl = null;
+    private List<WeatherUrl> weatherUrl = null;
     @SerializedName("timezone")
     @Expose
-    public Timezone timezone;
+    private TimeZone timezone;
 
 }
