@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import com.mss.weather.domain.models.City;
 import com.mss.weather.domain.models.CurrentWeather;
 import com.mss.weather.domain.models.DayWeather;
 import com.mss.weather.presentation.presenter.CurrentWeatherPresenter;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -81,6 +83,8 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
     RecyclerView rvWeatherList;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
+    @BindView(R.id.ivWeatherIcon)
+    ImageView ivWeatherIcon;
 
     private Unbinder binder;
 
@@ -140,6 +144,14 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
             tvTempMin.setText(String.valueOf((int) dayWeather.getMinTempC()));
             tvTempMax.setText(String.valueOf((int) dayWeather.getMaxTempC()));
         }
+        if (currentWeather.getWeatherIconUrl() != null) {
+            Picasso.with(this.getContext())
+                    .load(currentWeather.getWeatherIconUrl())
+                    .into(ivWeatherIcon);
+        } else {
+            ivWeatherIcon.setImageURI(null);
+        }
+
     }
 
     @Override
