@@ -21,7 +21,7 @@ public class CurrentWeather {
     private int winddirDegree;
     private String winddir16Point;
     private float precipMM;
-    private float humidity;
+    private int humidity;
     private int visibility;
     private int pressure;
     private int cloudcover;

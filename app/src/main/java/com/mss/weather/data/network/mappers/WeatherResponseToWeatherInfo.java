@@ -164,7 +164,7 @@ public class WeatherResponseToWeatherInfo {
         currentWeather.setWinddirDegree(currentCondition.getWinddirDegree());
         currentWeather.setWinddir16Point(currentCondition.getWinddir16Point());
         currentWeather.setPrecipMM(currentCondition.getPrecipMM());
-        currentWeather.setHumidity(currentCondition.getHumidity());
+        currentWeather.setHumidity((int) currentCondition.getHumidity());
         currentWeather.setVisibility(currentCondition.getVisibility());
         currentWeather.setPressure(currentCondition.getPressure());
         currentWeather.setCloudcover(currentCondition.getCloudcover());
