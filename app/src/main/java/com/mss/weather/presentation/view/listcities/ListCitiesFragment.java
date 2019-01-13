@@ -49,6 +49,12 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        MyApplication.getApplicationComponent().inject(this);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -67,8 +73,6 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
 
     @ProvidePresenter
     public ListCitiesPresenter providePresenter() {
-        if (listCitiesPresenter == null)
-            MyApplication.getApplicationComponent().inject(this);
         return listCitiesPresenter;
     }
 

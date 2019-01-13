@@ -84,6 +84,12 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
 
     private Unbinder binder;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        MyApplication.getApplicationComponent().inject(this);
+        super.onCreate(savedInstanceState);
+    }
+
     public static CurrentWeatherFragment newInstance() {
         return new CurrentWeatherFragment();
     }
@@ -155,8 +161,6 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
 
     @ProvidePresenter
     public CurrentWeatherPresenter providePresenter() {
-        if (currentWeatherPresenter == null)
-            MyApplication.getApplicationComponent().inject(this);
         return currentWeatherPresenter;
     }
 }

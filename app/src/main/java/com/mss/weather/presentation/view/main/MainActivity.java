@@ -50,6 +50,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Weat
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        MyApplication.getApplicationComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation);
         ButterKnife.bind(this);
@@ -65,8 +66,6 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Weat
 
     @ProvidePresenter
     public MainPresenter providePresenter() {
-        if (mainPresenter == null)
-            MyApplication.getApplicationComponent().inject(this);
         return mainPresenter;
     }
 
