@@ -40,13 +40,19 @@ public class WeatherResponseToWeatherInfo {
         CurrentWeather currentWeather = new CurrentWeather();
         currentWeather.setCityID(city.getId());
         currentWeather.setDate(new Date());
-        //currentWeather.setObservationTime(currentCondition.getObservationTime());
+        currentWeather.setObservationTime(TimeStringToDate.parseTimeString(currentCondition.getObservationTime()));
         currentWeather.setTempC(currentCondition.getTempC());
         currentWeather.setTempF(currentCondition.getTempF());
         currentWeather.setWeatherCode(currentCondition.getWeatherCode());
-        //currentWeather.setWeatherIconUrl(currentCondition.getWeatherIconUrl());
-        //currentWeather.setWeatherDesc(currentCondition.getWeatherDesc());
-        //currentWeather.setWeatherDescLocalLanguage(currentCondition.getLangRu());
+        if (currentCondition.getWeatherIconUrl() != null
+                && currentCondition.getWeatherIconUrl().size() > 0)
+            currentWeather.setWeatherIconUrl(currentCondition.getWeatherIconUrl().get(0).getValue());
+        if (currentCondition.getWeatherDesc() != null
+                && currentCondition.getWeatherDesc().size() > 0)
+            currentWeather.setWeatherDesc(currentCondition.getWeatherDesc().get(0).getValue());
+        if (currentCondition.getLangRu() != null
+                && currentCondition.getLangRu().size() > 0)
+            currentWeather.setWeatherDescLocalLanguage(currentCondition.getLangRu().get(0).getValue());
         currentWeather.setWindspeedMiles(currentCondition.getWindspeedMiles());
         currentWeather.setWindspeedKmph(currentCondition.getWindspeedKmph());
         currentWeather.setWinddirDegree(currentCondition.getWinddirDegree());
