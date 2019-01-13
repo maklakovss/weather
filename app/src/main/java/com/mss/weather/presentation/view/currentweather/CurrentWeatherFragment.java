@@ -114,7 +114,7 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
         tvCloudPercent.setText(String.valueOf(currentWeather.getCloudcover()));
         tvCloudDescription.setText(currentWeather.getWeatherDescLocalLanguage());
         tvHumidity.setText(String.valueOf(currentWeather.getHumidity()));
-        tvPressure.setText(String.valueOf(currentWeather.getPressure()));
+        tvPressure.setText(String.valueOf(Math.round(currentWeather.getPressure() / 1.333)));
         tvWind.setText(String.valueOf(currentWeather.getWindspeedKmph()));
         tvWindDeg.setText(String.valueOf(currentWeather.getWinddir16Point()));
         if (currentWeather.getWeatherIconUrl() != null) {

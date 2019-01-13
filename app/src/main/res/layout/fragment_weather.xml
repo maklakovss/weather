@@ -66,12 +66,14 @@
 
             <ImageView
                 android:id="@+id/ivWeatherIcon"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:contentDescription="@string/weathericon"
+                android:scaleType="fitXY"
                 app:layout_constraintBottom_toBottomOf="@+id/tvTemp"
+                app:layout_constraintDimensionRatio="1"
                 app:layout_constraintEnd_toStartOf="@+id/tvTemp"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="packed"
@@ -117,7 +119,7 @@
                 android:id="@+id/tvCloudLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/cloud_label"
                 app:layout_constraintEnd_toStartOf="@+id/tvCloudPercent"
@@ -140,7 +142,7 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="16dp"
                 android:text="%"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -152,43 +154,39 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/feelslikec_label"
-                app:layout_constraintEnd_toEndOf="@+id/tvDegreeCelsus"
                 app:layout_constraintStart_toStartOf="@+id/ivWeatherIcon"
-                app:layout_constraintTop_toTopOf="@+id/tvPressureLabel" />
+                app:layout_constraintTop_toTopOf="@+id/tvWindLabel" />
 
             <TextView
                 android:id="@+id/tvFeelsLikesDegreeLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="6dp"
                 android:text="@string/degreeLabel"
                 android:textAppearance="@android:style/TextAppearance.Material.Notification.Info"
                 app:layout_constraintEnd_toStartOf="@+id/tvFeelsLikesCelsusLabel"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/tvFeelsLikeC"
-                app:layout_constraintTop_toBottomOf="@+id/tvFeelsLikeCLabel" />
+                app:layout_constraintTop_toBottomOf="@+id/tvPressureLabel" />
 
             <TextView
                 android:id="@+id/tvFeelsLikesCelsusLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:layout_marginEnd="8dp"
                 android:text="@string/temp_label"
-                app:layout_constraintEnd_toEndOf="@+id/tvFeelsLikeCLabel"
+                app:layout_constraintEnd_toEndOf="@+id/tvDegreeCelsus"
                 app:layout_constraintStart_toEndOf="@+id/tvFeelsLikesDegreeLabel"
-                app:layout_constraintTop_toBottomOf="@+id/tvFeelsLikeCLabel" />
+                app:layout_constraintTop_toTopOf="@+id/tvWindLabel" />
 
             <TextView
                 android:id="@+id/tvFeelsLikeC"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toStartOf="@+id/tvFeelsLikesDegreeLabel"
                 app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="@+id/tvFeelsLikeCLabel"
-                app:layout_constraintTop_toBottomOf="@+id/tvFeelsLikeCLabel"
+                app:layout_constraintStart_toEndOf="@+id/tvFeelsLikeCLabel"
+                app:layout_constraintTop_toTopOf="@+id/tvWindLabel"
                 tools:text="20" />
 
             <TextView
