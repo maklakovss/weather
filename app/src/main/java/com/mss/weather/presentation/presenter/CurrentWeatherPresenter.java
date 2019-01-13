@@ -36,14 +36,14 @@ public class CurrentWeatherPresenter extends MvpPresenter<CurrentWeatherView> {
         weatherInteractor.getWeatherInfo(weatherInteractor.getCurrentCity())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(weatherInfo -> onSuccess(weatherInfo), e -> stopProgressOnError());
+                .subscribe(weatherInfo -> onSuccess(weatherInfo), e -> stopProgressOnError(e));
     }
 
     private void startProgress() {
         getViewState().showProgress(true);
     }
 
-    private void stopProgressOnError() {
+    private void stopProgressOnError(Throwable e) {
         getViewState().showProgress(false);
     }
 

@@ -13,28 +13,28 @@ public class Hourly {
 
     @SerializedName("time")
     @Expose
-    private String time;
+    private int time;
     @SerializedName("tempC")
     @Expose
-    private String tempC;
+    private int tempC;
     @SerializedName("tempF")
     @Expose
-    private String tempF;
+    private int tempF;
     @SerializedName("windspeedMiles")
     @Expose
-    private String windspeedMiles;
+    private int windspeedMiles;
     @SerializedName("windspeedKmph")
     @Expose
-    private String windspeedKmph;
+    private int windspeedKmph;
     @SerializedName("winddirDegree")
     @Expose
-    private String winddirDegree;
+    private int winddirDegree;
     @SerializedName("winddir16Point")
     @Expose
     private String winddir16Point;
     @SerializedName("weatherCode")
     @Expose
-    private String weatherCode;
+    private int weatherCode;
     @SerializedName("weatherIconUrl")
     @Expose
     private List<WeatherIconUrl> weatherIconUrl = null;
@@ -46,78 +46,78 @@ public class Hourly {
     private List<LangRu> langRu = null;
     @SerializedName("precipMM")
     @Expose
-    private String precipMM;
+    private float precipMM;
     @SerializedName("humidity")
     @Expose
-    private String humidity;
+    private int humidity;
     @SerializedName("visibility")
     @Expose
-    private String visibility;
+    private int visibility;
     @SerializedName("pressure")
     @Expose
-    private String pressure;
+    private int pressure;
     @SerializedName("cloudcover")
     @Expose
-    private String cloudcover;
+    private int cloudcover;
     @SerializedName("HeatIndexC")
     @Expose
-    private String heatIndexC;
+    private int heatIndexC;
     @SerializedName("HeatIndexF")
     @Expose
-    private String heatIndexF;
+    private int heatIndexF;
     @SerializedName("DewPointC")
     @Expose
-    private String dewPointC;
+    private int dewPointC;
     @SerializedName("DewPointF")
     @Expose
-    private String dewPointF;
+    private int dewPointF;
     @SerializedName("WindChillC")
     @Expose
-    private String windChillC;
+    private int windChillC;
     @SerializedName("WindChillF")
     @Expose
-    private String windChillF;
+    private int windChillF;
     @SerializedName("WindGustMiles")
     @Expose
-    private String windGustMiles;
+    private int windGustMiles;
     @SerializedName("WindGustKmph")
     @Expose
-    private String windGustKmph;
+    private int windGustKmph;
     @SerializedName("FeelsLikeC")
     @Expose
-    private String feelsLikeC;
+    private int feelsLikeC;
     @SerializedName("FeelsLikeF")
     @Expose
-    private String feelsLikeF;
+    private int feelsLikeF;
     @SerializedName("chanceofrain")
     @Expose
-    private String chanceofrain;
+    private int chanceofrain;
     @SerializedName("chanceofremdry")
     @Expose
-    private String chanceofremdry;
+    private int chanceofremdry;
     @SerializedName("chanceofwindy")
     @Expose
-    private String chanceofwindy;
+    private int chanceofwindy;
     @SerializedName("chanceofovercast")
     @Expose
-    private String chanceofovercast;
+    private int chanceofovercast;
     @SerializedName("chanceofsunshine")
     @Expose
-    private String chanceofsunshine;
+    private int chanceofsunshine;
     @SerializedName("chanceoffrost")
     @Expose
-    private String chanceoffrost;
+    private int chanceoffrost;
     @SerializedName("chanceofhightemp")
     @Expose
-    private String chanceofhightemp;
+    private int chanceofhightemp;
     @SerializedName("chanceoffog")
     @Expose
-    private String chanceoffog;
+    private int chanceoffog;
     @SerializedName("chanceofsnow")
     @Expose
-    private String chanceofsnow;
+    private int chanceofsnow;
     @SerializedName("chanceofthunder")
     @Expose
-    private String chanceofthunder;
+    private int chanceofthunder;
 
 }

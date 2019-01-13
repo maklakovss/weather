@@ -19,25 +19,25 @@ public class Weather {
     private List<Astronomy> astronomy = null;
     @SerializedName("maxtempC")
     @Expose
-    private String maxTempC;
+    private int maxTempC;
     @SerializedName("maxtempF")
     @Expose
-    private String maxTempF;
+    private int maxTempF;
     @SerializedName("mintempC")
     @Expose
-    private String minTempC;
+    private int minTempC;
     @SerializedName("mintempF")
     @Expose
-    private String minTempF;
+    private int minTempF;
     @SerializedName("totalSnow_cm")
     @Expose
-    private String totalSnowCm;
+    private float totalSnowCm;
     @SerializedName("sunHour")
     @Expose
-    private String sunHour;
+    private float sunHour;
     @SerializedName("uvIndex")
     @Expose
-    private String uvIndex;
+    private int uvIndex;
     @SerializedName("hourly")
     @Expose
     private List<Hourly> hourly = null;

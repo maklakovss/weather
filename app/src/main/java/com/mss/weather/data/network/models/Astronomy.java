@@ -26,6 +26,6 @@ public class Astronomy {
     private String moonPhase;
     @SerializedName("moon_illumination")
     @Expose
-    private String moonIllumination;
+    private int moonIllumination;
 
 }
