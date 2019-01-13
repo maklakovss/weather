@@ -52,6 +52,7 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        setRetainInstance(true);
         View layout = inflater.inflate(R.layout.fragment_list_cities, container, false);
         binder = ButterKnife.bind(this, layout);
 

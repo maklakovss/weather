@@ -20,7 +20,7 @@ public class WeatherCurrent {
     private int windspeedKmph;
     private int winddirDegree;
     private String winddir16Point;
-    private int precipMM;
+    private float precipMM;
     private float humidity;
     private int visibility;
     private int pressure;

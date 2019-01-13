@@ -22,7 +22,9 @@ public class MainPresenter extends MvpPresenter<MainView> {
         getViewState().closeDrawer();
     }
 
-    public void onStart() {
+    @Override
+    protected void onFirstViewAttach() {
+        super.onFirstViewAttach();
         getViewState().showCityList();
         if (weatherInteractor.getListCities().size() == 0) {
             getViewState().showAddCity();
@@ -32,6 +34,9 @@ public class MainPresenter extends MvpPresenter<MainView> {
                 getViewState().showWeather();
             }
         }
+    }
+
+    public void onStart() {
     }
 
     public void onStop() {

@@ -89,6 +89,7 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        setRetainInstance(true);
         View layout = inflater.inflate(R.layout.fragment_weather, container, false);
         binder = ButterKnife.bind(this, layout);
         rvWeatherList.setHasFixedSize(true);

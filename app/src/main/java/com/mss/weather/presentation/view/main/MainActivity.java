@@ -115,7 +115,6 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Weat
         final CurrentWeatherFragment currentWeatherFragment = CurrentWeatherFragment.newInstance();
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flMain, currentWeatherFragment);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.addToBackStack("");
         ft.commit();
         return currentWeatherFragment;

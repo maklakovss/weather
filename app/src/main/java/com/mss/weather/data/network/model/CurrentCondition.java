@@ -46,7 +46,7 @@ public class CurrentCondition {
     private String winddir16Point;
     @SerializedName("precipMM")
     @Expose
-    private int precipMM;
+    private float precipMM;
     @SerializedName("humidity")
     @Expose
     private float humidity;

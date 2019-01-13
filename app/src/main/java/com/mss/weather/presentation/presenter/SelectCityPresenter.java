@@ -75,4 +75,5 @@ public class SelectCityPresenter extends MvpPresenter<SelectCityView> {
         autoCompleteCities = null;
         getViewState().showProgress(false);
     }
+
 }

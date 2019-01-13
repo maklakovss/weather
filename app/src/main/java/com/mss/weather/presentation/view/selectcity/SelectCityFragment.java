@@ -3,10 +3,8 @@ package com.mss.weather.presentation.view.selectcity;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -17,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -41,15 +40,14 @@ import butterknife.Unbinder;
 public class SelectCityFragment extends MvpAppCompatFragment implements SelectCityView, TextView.OnEditorActionListener, SelectCityAdapter.OnItemClickListener {
 
     private static final int PERMISSION_REQUEST_CODE = 10;
-    private LocationManager locationManager;
 
     @Inject
     @InjectPresenter
     SelectCityPresenter selectCityPresenter;
 
     Unbinder binder;
-    @BindView(R.id.tilSearchTemplate)
-    TextInputLayout tilSearchTemplate;
+    @BindView(R.id.etLocationTemplate)
+    EditText etLocationTemplate;
     @BindView(R.id.rvAutoCompleteList)
     RecyclerView rvAutoCompleteList;
     @BindView(R.id.progressBar)
@@ -73,7 +71,7 @@ public class SelectCityFragment extends MvpAppCompatFragment implements SelectCi
         rvAutoCompleteList.setLayoutManager(new LinearLayoutManager(getContext()));
         rvAutoCompleteList.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
-        tilSearchTemplate.getEditText().setOnEditorActionListener(this);
+        etLocationTemplate.setOnEditorActionListener(this);
 
         return layout;
     }
