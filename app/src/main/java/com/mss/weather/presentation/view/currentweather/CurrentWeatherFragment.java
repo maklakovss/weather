@@ -33,6 +33,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class CurrentWeatherFragment extends MvpAppCompatFragment implements CurrentWeatherView {
+    private static final SimpleDateFormat formatterDate = new SimpleDateFormat("dd.MM.YYYY", Locale.getDefault());
+    private static final SimpleDateFormat formatterTime = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
     @Inject
     @InjectPresenter
@@ -102,10 +104,10 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
     @Override
     public void showCurrentWeather(@NonNull final CurrentWeather currentWeather) {
 
-        final SimpleDateFormat formatterDate = new SimpleDateFormat("dd.MM.YYYY", Locale.getDefault());
-        tvDate.setText(formatterDate.format(currentWeather.getDate()));
-        final SimpleDateFormat formatterTime = new SimpleDateFormat("HH:mm", Locale.getDefault());
-        tvTime.setText(formatterTime.format(currentWeather.getObservationTime()));
+        if (currentWeather.getDate() != null)
+            tvDate.setText(formatterDate.format(currentWeather.getDate()));
+        if (currentWeather.getObservationTime() != null)
+            tvTime.setText(formatterTime.format(currentWeather.getObservationTime()));
 
         tvTemp.setText(String.valueOf((int) currentWeather.getTempC()));
         tvFeelsLikeC.setText(String.valueOf((int) currentWeather.getFeelsLikeC()));
