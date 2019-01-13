@@ -2,24 +2,30 @@ package com.mss.weather.presentation.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.mss.weather.MyApplication;
 import com.mss.weather.domain.interactor.WeatherInteractor;
+import com.mss.weather.domain.models.City;
 import com.mss.weather.presentation.view.listcities.ListCitiesView;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 @InjectViewState
 public class ListCitiesPresenter extends MvpPresenter<ListCitiesView> {
 
-    @Inject
-    WeatherInteractor weatherInteractor;
+    private WeatherInteractor weatherInteractor;
 
-    public ListCitiesPresenter() {
-        MyApplication.getApplicationComponent().inject(this);
+    private List<City> cities;
+
+    @Inject
+    public ListCitiesPresenter(WeatherInteractor weatherInteractor) {
+        this.weatherInteractor = weatherInteractor;
     }
 
     public void needCities() {
-        getViewState().updateList(weatherInteractor.getListCities());
+        if (cities == null)
+            cities = weatherInteractor.getListCities();
+        getViewState().updateList(cities);
     }
 
     public void onClickCity(int checkedCity) {

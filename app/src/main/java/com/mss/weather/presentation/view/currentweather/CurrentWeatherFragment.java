@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
@@ -78,6 +79,8 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
     TextView tvDate;
     @BindView(R.id.rvWeatherList)
     RecyclerView rvWeatherList;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
 
     private Unbinder binder;
 
@@ -96,7 +99,7 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         rvWeatherList.setLayoutManager(linearLayoutManager);
-        currentWeatherPresenter.needData();
+        currentWeatherPresenter.onCreate();
         return layout;
     }
 
@@ -134,6 +137,14 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
     @Override
     public void showWeatherList(List<WeatherDay> weatherDays) {
         rvWeatherList.setAdapter(new WeatherListAdapter(weatherDays));
+    }
+
+    @Override
+    public void showProgress(boolean visible) {
+        if (visible)
+            progressBar.setVisibility(View.VISIBLE);
+        else
+            progressBar.setVisibility(View.GONE);
     }
 
     @Override

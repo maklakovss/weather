@@ -22,7 +22,6 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     private List<City> cityList;
 
     private City currentCity;
-    private OnCurrentCityChanged onCurrentCityChanged;
 
     @Inject
     public WeatherInteractorImpl(NetworkRepository networkRepository,
@@ -54,17 +53,10 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     public void setCurrentCity(City currentCity) {
         this.currentCity = currentCity;
         localRepository.setLastCityId(currentCity.getId());
-        if (onCurrentCityChanged != null) {
-            onCurrentCityChanged.onChanged(currentCity);
-        }
     }
 
     private void loadCities() {
         cityList = localRepository.getCities();
-    }
-
-    public void setOnCurrentCityChanged(OnCurrentCityChanged onCurrentCityChanged) {
-        this.onCurrentCityChanged = onCurrentCityChanged;
     }
 
     @Override

@@ -21,4 +21,8 @@ public interface CurrentWeatherView extends MvpView {
 
     @StateStrategyType(AddToEndSingleStrategy.class)
     void showWeatherList(@NonNull List<WeatherDay> weatherDays);
+
+    @StateStrategyType(AddToEndSingleStrategy.class)
+    void showProgress(boolean visible);
+
 }

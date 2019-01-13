@@ -2,7 +2,6 @@ package com.mss.weather.presentation.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.mss.weather.MyApplication;
 import com.mss.weather.domain.interactor.WeatherInteractor;
 import com.mss.weather.domain.models.City;
 import com.mss.weather.presentation.view.selectcity.SelectCityView;
@@ -18,13 +17,13 @@ import io.reactivex.schedulers.Schedulers;
 @InjectViewState
 public class SelectCityPresenter extends MvpPresenter<SelectCityView> {
 
+    private WeatherInteractor weatherInteractor;
+
+    private List<City> autoCompleteCities;
+
     @Inject
-    WeatherInteractor weatherInteractor;
-
-    List<City> autoCompleteCities;
-
-    public SelectCityPresenter() {
-        MyApplication.getApplicationComponent().inject(this);
+    public SelectCityPresenter(WeatherInteractor weatherInteractor) {
+        this.weatherInteractor = weatherInteractor;
     }
 
     public void searchClicked(String searchTemplate) {

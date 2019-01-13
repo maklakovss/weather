@@ -14,11 +14,15 @@ import android.widget.FrameLayout;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
+import com.mss.weather.MyApplication;
 import com.mss.weather.R;
 import com.mss.weather.presentation.presenter.MainPresenter;
 import com.mss.weather.presentation.view.currentweather.CurrentWeatherFragment;
 import com.mss.weather.presentation.view.listcities.ListCitiesFragment;
 import com.mss.weather.presentation.view.selectcity.SelectCityFragment;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +33,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Weat
     private static final String WEATHER_TAG = "WEATHER_TAG";
     private static final String SETTINGS_TAG = "SETTINGS_TAG";
 
+    @Inject
     @InjectPresenter
     MainPresenter mainPresenter;
 
@@ -56,6 +61,13 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Weat
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @ProvidePresenter
+    public MainPresenter providePresenter() {
+        if (mainPresenter == null)
+            MyApplication.getApplicationComponent().inject(this);
+        return mainPresenter;
     }
 
     @Override

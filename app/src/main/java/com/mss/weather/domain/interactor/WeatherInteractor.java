@@ -16,8 +16,6 @@ public interface WeatherInteractor {
 
     void setCurrentCity(City currentCity);
 
-    void setOnCurrentCityChanged(OnCurrentCityChanged onCurrentCityChanged);
-
     void addCity(City city);
 
     void deleteCity(City city);
@@ -30,7 +28,4 @@ public interface WeatherInteractor {
 
     Maybe<WeatherInfo> getWeatherInfo(City city);
 
-    public interface OnCurrentCityChanged {
-        void onChanged(City currentCity);
-    }
 }

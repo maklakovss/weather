@@ -44,20 +44,20 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    public SelectCityPresenter provideSelectCityPresenter() {
-        return new SelectCityPresenter();
+    public SelectCityPresenter provideSelectCityPresenter(WeatherInteractor weatherInteractor) {
+        return new SelectCityPresenter(weatherInteractor);
     }
 
     @Singleton
     @Provides
-    public CurrentWeatherPresenter provideCityWeatherPresenter() {
-        return new CurrentWeatherPresenter();
+    public CurrentWeatherPresenter provideCityWeatherPresenter(WeatherInteractor weatherInteractor) {
+        return new CurrentWeatherPresenter(weatherInteractor);
     }
 
     @Singleton
     @Provides
-    public ListCitiesPresenter provideListCitiesPresenter() {
-        return new ListCitiesPresenter();
+    public ListCitiesPresenter provideListCitiesPresenter(WeatherInteractor weatherInteractor) {
+        return new ListCitiesPresenter(weatherInteractor);
     }
 
     @Singleton
