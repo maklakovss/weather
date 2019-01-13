@@ -52,6 +52,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tvTemp"
                 app:layout_constraintVertical_bias="0.0"
+                android:contentDescription="@string/weathericon"
                 app:srcCompat="@color/colorCard" />
 
             <TextView
@@ -72,7 +73,7 @@
                 android:layout_height="22dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="o"
+                android:text="@string/degreeLabel"
                 app:layout_constraintEnd_toStartOf="@+id/textView"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/tvTemp"
@@ -181,6 +182,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/tvSunset"
                 app:layout_constraintStart_toStartOf="@+id/tvSunset"
                 app:layout_constraintTop_toBottomOf="@+id/tvSunset"
+                android:contentDescription="@string/sunseticon"
                 app:srcCompat="@drawable/ic_weather_sunset_down" />
 
             <ImageView
@@ -190,6 +192,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/tvSunrise"
                 app:layout_constraintStart_toStartOf="@+id/tvSunrise"
                 app:layout_constraintTop_toBottomOf="@+id/tvSunrise"
+                android:contentDescription="@string/sunriseicon"
                 app:srcCompat="@drawable/weather_sunset_up" />
 
             <ProgressBar

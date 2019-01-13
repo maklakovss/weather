@@ -31,4 +31,8 @@
     <string name="selectbylocation">Поиск по GPS</string>
     <string name="press_button">Или нажмите кнопку</string>
     <string name="to_search_near_locations_by_gps">для поиска по GPS</string>
+    <string name="weathericon">WeatherIcon</string>
+    <string name="sunseticon">SunsetIcon</string>
+    <string name="degreeLabel">o</string>
+    <string name="sunriseicon">SunriseIcon</string>
 </resources>

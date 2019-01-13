@@ -34,5 +34,9 @@
     <string name="selectbylocation">Search by GPS</string>
     <string name="press_button">Or press button</string>
     <string name="to_search_near_locations_by_gps">to search by GPS</string>
+    <string name="weathericon">WeatherIcon</string>
+    <string name="sunseticon">SunsetIcon</string>
+    <string name="degreeLabel">o</string>
+    <string name="sunriseicon">SunriseIcon</string>
 
 </resources>
