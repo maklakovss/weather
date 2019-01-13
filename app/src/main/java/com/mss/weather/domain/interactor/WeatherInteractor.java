@@ -1,8 +1,8 @@
 package com.mss.weather.domain.interactor;
 
 import com.mss.weather.domain.models.City;
+import com.mss.weather.domain.models.InfoWeather;
 import com.mss.weather.domain.models.Position;
-import com.mss.weather.domain.models.WeatherInfo;
 
 import java.util.List;
 
@@ -26,6 +26,6 @@ public interface WeatherInteractor {
 
     Maybe<Position> getPosition();
 
-    Maybe<WeatherInfo> getWeatherInfo(City city);
+    Maybe<InfoWeather> getWeatherInfo(City city);
 
 }

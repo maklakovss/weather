@@ -17,8 +17,8 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.mss.weather.MyApplication;
 import com.mss.weather.R;
 import com.mss.weather.domain.models.City;
-import com.mss.weather.domain.models.WeatherCurrent;
-import com.mss.weather.domain.models.WeatherDay;
+import com.mss.weather.domain.models.CurrentWeather;
+import com.mss.weather.domain.models.DayWeather;
 import com.mss.weather.presentation.presenter.CurrentWeatherPresenter;
 
 import java.text.SimpleDateFormat;
@@ -115,34 +115,36 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
     }
 
     @Override
-    public void showCurrentWeather(@NonNull final WeatherCurrent weatherCurrent) {
+    public void showCurrentWeather(@NonNull final CurrentWeather currentWeather, final DayWeather dayWeather) {
 
         final SimpleDateFormat formatterDateTime = new SimpleDateFormat("dd.MM.YYYY HH:mm", Locale.getDefault());
-        tvDate.setText(formatterDateTime.format(weatherCurrent.getDate()));
+        tvDate.setText(formatterDateTime.format(currentWeather.getDate()));
 
         final SimpleDateFormat formatterTime = new SimpleDateFormat("HH:mm", Locale.getDefault());
-//        tvSunrise.setText(formatterTime.format(weatherCurrent.getSunrise()));
-//        tvSunset.setText(formatterTime.format(weatherCurrent.getSunset()));
 
-        tvTemp.setText(String.valueOf((int) weatherCurrent.getTempC()));
-//        tvTempMin.setText(String.valueOf((int) weatherCurrent.getTempMin()));
-//        tvTempMax.setText(String.valueOf((int) weatherCurrent.getTempMax()));
-        tvCloudPercent.setText(String.valueOf(weatherCurrent.getCloudcover()));
-        tvCloudDescription.setText(weatherCurrent.getWeatherDescLocalLanguage());
-        tvHumidity.setText(String.valueOf(weatherCurrent.getHumidity()));
-        tvPressure.setText(String.valueOf(weatherCurrent.getPressure()));
-        tvWind.setText(String.valueOf(weatherCurrent.getWindspeedKmph()));
-        tvWindDeg.setText(String.valueOf(weatherCurrent.getWinddirDegree()));
-//        if (weatherCurrent.getSnow() > 0) {
-//            tvRainfall.setText(String.valueOf(weatherCurrent.getSnow()));
-//        } else if (weatherCurrent.getRain() > 0) {
-//            tvRainfall.setText(String.valueOf(weatherCurrent.getRain()));
+        tvTemp.setText(String.valueOf((int) currentWeather.getTempC()));
+        tvCloudPercent.setText(String.valueOf(currentWeather.getCloudcover()));
+        tvCloudDescription.setText(currentWeather.getWeatherDescLocalLanguage());
+        tvHumidity.setText(String.valueOf(currentWeather.getHumidity()));
+        tvPressure.setText(String.valueOf(currentWeather.getPressure()));
+        tvWind.setText(String.valueOf(currentWeather.getWindspeedKmph()));
+        tvWindDeg.setText(String.valueOf(currentWeather.getWinddirDegree()));
+//        if (currentWeather.getSnow() > 0) {
+//            tvRainfall.setText(String.valueOf(currentWeather.getSnow()));
+//        } else if (currentWeather.getRain() > 0) {
+//            tvRainfall.setText(String.valueOf(currentWeather.getRain()));
 //        }
+        if (dayWeather != null) {
+            tvSunrise.setText(formatterTime.format(dayWeather.getSunrise()));
+            tvSunset.setText(formatterTime.format(dayWeather.getSunset()));
+            tvTempMin.setText(String.valueOf((int) dayWeather.getMinTempC()));
+            tvTempMax.setText(String.valueOf((int) dayWeather.getMaxTempC()));
+        }
     }
 
     @Override
-    public void showWeatherList(List<WeatherDay> weatherDays) {
-        rvWeatherList.setAdapter(new WeatherListAdapter(weatherDays));
+    public void showWeatherList(List<DayWeather> dayWeathers) {
+        rvWeatherList.setAdapter(new WeatherListAdapter(dayWeathers));
     }
 
     @Override

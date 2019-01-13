@@ -6,7 +6,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class WeatherDay {
+public class DayWeather {
     private String cityID;
     private Date date;
 
@@ -16,12 +16,12 @@ public class WeatherDay {
     private Date moonset;
     private String moonPhase;
     private int moonIllumination;
-    private int maxtempC;
-    private int maxtempF;
-    private int mintempC;
-    private int mintempF;
+    private int maxTempC;
+    private int maxTempF;
+    private int minTempC;
+    private int minTempF;
     private float totalSnowCm;
     private float sunHour;
     private int uvIndex;
-    private List<WeatherHour> hourly;
+    private List<HourWeather> hourly;
 }

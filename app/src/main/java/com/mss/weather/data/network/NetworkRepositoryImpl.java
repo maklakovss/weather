@@ -1,17 +1,17 @@
 package com.mss.weather.data.network;
 
 import com.mss.weather.BuildConfig;
-import com.mss.weather.data.network.model.CitiesResponse;
-import com.mss.weather.data.network.model.CurrentCondition;
-import com.mss.weather.data.network.model.Result;
-import com.mss.weather.data.network.model.Weather;
-import com.mss.weather.data.network.model.WeatherResponse;
+import com.mss.weather.data.network.models.CitiesResponse;
+import com.mss.weather.data.network.models.CurrentCondition;
+import com.mss.weather.data.network.models.Result;
+import com.mss.weather.data.network.models.Weather;
+import com.mss.weather.data.network.models.WeatherResponse;
 import com.mss.weather.domain.NetworkRepository;
 import com.mss.weather.domain.models.City;
+import com.mss.weather.domain.models.CurrentWeather;
+import com.mss.weather.domain.models.DayWeather;
+import com.mss.weather.domain.models.InfoWeather;
 import com.mss.weather.domain.models.Position;
-import com.mss.weather.domain.models.WeatherCurrent;
-import com.mss.weather.domain.models.WeatherDay;
-import com.mss.weather.domain.models.WeatherInfo;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -75,52 +75,52 @@ public class NetworkRepositoryImpl implements NetworkRepository {
         return url.substring(url.indexOf("=") + 1);
     }
 
-    private static WeatherInfo mapWeatherResponseToWeatherInfo(WeatherResponse weatherResponse, City city) {
-        WeatherInfo weatherInfo = new WeatherInfo();
-        weatherInfo.setCityID(city.getId());
-        weatherInfo.setDateState(new Date());
+    private static InfoWeather mapWeatherResponseToWeatherInfo(WeatherResponse weatherResponse, City city) {
+        InfoWeather infoWeather = new InfoWeather();
+        infoWeather.setCityID(city.getId());
+        infoWeather.setDateState(new Date());
         if (weatherResponse.getData() != null
                 && weatherResponse.getData().getWeather() != null
                 && weatherResponse.getData().getWeather().size() > 0) {
-            weatherInfo.setDays(mapWeathersToWeatherDays(weatherResponse.getData().getWeather(), city));
+            infoWeather.setDays(mapWeathersToWeatherDays(weatherResponse.getData().getWeather(), city));
         }
         if (weatherResponse.getData() != null
                 && weatherResponse.getData().getCurrentCondition() != null
                 && weatherResponse.getData().getCurrentCondition().size() > 0) {
-            weatherInfo.setWeatherCurrent(mapCurrentConditionalToWeatherCurrent(weatherResponse.getData().getCurrentCondition().get(0), city));
+            infoWeather.setCurrentWeather(mapCurrentConditionalToWeatherCurrent(weatherResponse.getData().getCurrentCondition().get(0), city));
         }
-        return weatherInfo;
+        return infoWeather;
     }
 
-    private static List<WeatherDay> mapWeathersToWeatherDays(List<Weather> weathers, City city) {
-        List<WeatherDay> weatherDays = new ArrayList<>();
-        return weatherDays;
+    private static List<DayWeather> mapWeathersToWeatherDays(List<Weather> weathers, City city) {
+        List<DayWeather> dayWeathers = new ArrayList<>();
+        return dayWeathers;
     }
 
-    private static WeatherCurrent mapCurrentConditionalToWeatherCurrent(CurrentCondition currentCondition, City city) {
-        WeatherCurrent weatherCurrent = new WeatherCurrent();
-        weatherCurrent.setCityID(city.getId());
-        weatherCurrent.setDate(new Date());
-        //weatherCurrent.setObservationTime(currentCondition.getObservationTime());
-        weatherCurrent.setTempC(currentCondition.getTempC());
-        weatherCurrent.setTempF(currentCondition.getTempF());
-        weatherCurrent.setWeatherCode(currentCondition.getWeatherCode());
-        //weatherCurrent.setWeatherIconUrl(currentCondition.getWeatherIconUrl());
-        //weatherCurrent.setWeatherDesc(currentCondition.getWeatherDesc());
-        //weatherCurrent.setWeatherDescLocalLanguage(currentCondition.getLangRu());
-        weatherCurrent.setWindspeedMiles(currentCondition.getWindspeedMiles());
-        weatherCurrent.setWindspeedKmph(currentCondition.getWindspeedKmph());
-        weatherCurrent.setWinddirDegree(currentCondition.getWinddirDegree());
-        weatherCurrent.setWinddir16Point(currentCondition.getWinddir16Point());
-        weatherCurrent.setPrecipMM(currentCondition.getPrecipMM());
-        weatherCurrent.setHumidity(currentCondition.getHumidity());
-        weatherCurrent.setVisibility(currentCondition.getVisibility());
-        weatherCurrent.setPressure(currentCondition.getPressure());
-        weatherCurrent.setCloudcover(currentCondition.getCloudcover());
-        weatherCurrent.setFeelsLikeC(currentCondition.getFeelsLikeC());
-        weatherCurrent.setFeelsLikeF(currentCondition.getFeelsLikeF());
+    private static CurrentWeather mapCurrentConditionalToWeatherCurrent(CurrentCondition currentCondition, City city) {
+        CurrentWeather currentWeather = new CurrentWeather();
+        currentWeather.setCityID(city.getId());
+        currentWeather.setDate(new Date());
+        //currentWeather.setObservationTime(currentCondition.getObservationTime());
+        currentWeather.setTempC(currentCondition.getTempC());
+        currentWeather.setTempF(currentCondition.getTempF());
+        currentWeather.setWeatherCode(currentCondition.getWeatherCode());
+        //currentWeather.setWeatherIconUrl(currentCondition.getWeatherIconUrl());
+        //currentWeather.setWeatherDesc(currentCondition.getWeatherDesc());
+        //currentWeather.setWeatherDescLocalLanguage(currentCondition.getLangRu());
+        currentWeather.setWindspeedMiles(currentCondition.getWindspeedMiles());
+        currentWeather.setWindspeedKmph(currentCondition.getWindspeedKmph());
+        currentWeather.setWinddirDegree(currentCondition.getWinddirDegree());
+        currentWeather.setWinddir16Point(currentCondition.getWinddir16Point());
+        currentWeather.setPrecipMM(currentCondition.getPrecipMM());
+        currentWeather.setHumidity(currentCondition.getHumidity());
+        currentWeather.setVisibility(currentCondition.getVisibility());
+        currentWeather.setPressure(currentCondition.getPressure());
+        currentWeather.setCloudcover(currentCondition.getCloudcover());
+        currentWeather.setFeelsLikeC(currentCondition.getFeelsLikeC());
+        currentWeather.setFeelsLikeF(currentCondition.getFeelsLikeF());
 
-        return weatherCurrent;
+        return currentWeather;
     }
 
     @Override
@@ -139,7 +139,7 @@ public class NetworkRepositoryImpl implements NetworkRepository {
     }
 
     @Override
-    public Maybe<WeatherInfo> getWeatherInfo(City city) {
+    public Maybe<InfoWeather> getWeatherInfo(City city) {
         return worldWeatherOnline.getWeather(city.getId(),
                 KEY,
                 FORMAT,

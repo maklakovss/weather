@@ -1,5 +1,5 @@
 
-package com.mss.weather.data.network.model;
+package com.mss.weather.data.network.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -19,16 +19,16 @@ public class Weather {
     private List<Astronomy> astronomy = null;
     @SerializedName("maxtempC")
     @Expose
-    private String maxtempC;
+    private String maxTempC;
     @SerializedName("maxtempF")
     @Expose
-    private String maxtempF;
+    private String maxTempF;
     @SerializedName("mintempC")
     @Expose
-    private String mintempC;
+    private String minTempC;
     @SerializedName("mintempF")
     @Expose
-    private String mintempF;
+    private String minTempF;
     @SerializedName("totalSnow_cm")
     @Expose
     private String totalSnowCm;

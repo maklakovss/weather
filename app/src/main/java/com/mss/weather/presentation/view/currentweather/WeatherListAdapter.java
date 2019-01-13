@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mss.weather.R;
-import com.mss.weather.domain.models.WeatherDay;
+import com.mss.weather.domain.models.DayWeather;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -20,9 +20,9 @@ import butterknife.ButterKnife;
 public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.ViewHolder> {
 
     final SimpleDateFormat formatterDate = new SimpleDateFormat("dd.MM.YYYY", Locale.getDefault());
-    private List<WeatherDay> weatherDataList;
+    private List<DayWeather> weatherDataList;
 
-    public WeatherListAdapter(List<WeatherDay> weatherDataList) {
+    public WeatherListAdapter(List<DayWeather> weatherDataList) {
         this.weatherDataList = weatherDataList;
     }
 
@@ -37,10 +37,10 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        WeatherDay weatherDay = weatherDataList.get(i);
-        viewHolder.tvPeriod.setText(formatterDate.format(weatherDay.getDate()));
-        viewHolder.tvTempMin.setText(String.valueOf(weatherDay.getMintempC()));
-        viewHolder.tvTempMax.setText(String.valueOf(weatherDay.getMaxtempC()));
+        DayWeather dayWeather = weatherDataList.get(i);
+        viewHolder.tvPeriod.setText(formatterDate.format(dayWeather.getDate()));
+        viewHolder.tvTempMin.setText(String.valueOf(dayWeather.getMinTempC()));
+        viewHolder.tvTempMax.setText(String.valueOf(dayWeather.getMaxTempC()));
 
     }
 

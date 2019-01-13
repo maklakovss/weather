@@ -5,7 +5,7 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class WeatherChance {
+public class ChanceWeather {
     private String cityID;
     private Date date;
 

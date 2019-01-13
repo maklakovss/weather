@@ -6,10 +6,10 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class WeatherInfo {
+public class InfoWeather {
     private Date dateState;
     private String cityID;
 
-    private List<WeatherDay> days;
-    private WeatherCurrent weatherCurrent;
+    private List<DayWeather> days;
+    private CurrentWeather currentWeather;
 }

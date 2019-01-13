@@ -2,8 +2,8 @@ package com.mss.weather.data.db;
 
 import android.support.annotation.NonNull;
 
-import com.mss.weather.data.db.model.CityDB;
-import com.mss.weather.data.db.model.SettingsDB;
+import com.mss.weather.data.db.models.CityDB;
+import com.mss.weather.data.db.models.SettingsDB;
 import com.mss.weather.domain.LocalRepository;
 import com.mss.weather.domain.models.City;
 

@@ -4,8 +4,8 @@ import com.mss.weather.domain.LocalRepository;
 import com.mss.weather.domain.NetworkRepository;
 import com.mss.weather.domain.SensorsRepository;
 import com.mss.weather.domain.models.City;
+import com.mss.weather.domain.models.InfoWeather;
 import com.mss.weather.domain.models.Position;
-import com.mss.weather.domain.models.WeatherInfo;
 
 import java.util.List;
 
@@ -87,7 +87,7 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     }
 
     @Override
-    public Maybe<WeatherInfo> getWeatherInfo(City city) {
+    public Maybe<InfoWeather> getWeatherInfo(City city) {
         return networkRepository.getWeatherInfo(city);
     }
 

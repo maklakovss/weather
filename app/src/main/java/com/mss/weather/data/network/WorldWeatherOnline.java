@@ -1,7 +1,7 @@
 package com.mss.weather.data.network;
 
-import com.mss.weather.data.network.model.CitiesResponse;
-import com.mss.weather.data.network.model.WeatherResponse;
+import com.mss.weather.data.network.models.CitiesResponse;
+import com.mss.weather.data.network.models.WeatherResponse;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
