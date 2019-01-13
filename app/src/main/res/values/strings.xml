@@ -11,7 +11,7 @@
     <string name="pressure_label">Pressure</string>
     <string name="wind_label">Wind</string>
     <string name="snow_label">Snow</string>
-    <string name="rainfall_label">Rainfall</string>
+    <string name="feelslikec_label">Feels like</string>
     <string name="city_label">City</string>
     <string name="extended_settings_label">Settings showing</string>
     <string name="show_temp_label">Temperature</string>

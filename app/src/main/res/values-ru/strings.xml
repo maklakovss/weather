@@ -12,7 +12,7 @@
     <string name="pressure_label">Давление</string>
     <string name="wind_label">Ветер</string>
     <string name="snow_label">Снег</string>
-    <string name="rainfall_label">Осадки</string>
+    <string name="feelslikec_label">по ощущениям</string>
     <string name="city_label">Город</string>
     <string name="extended_settings_label">Настройка показа погоды</string>
     <string name="show_temp_label">Температура</string>

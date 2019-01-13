@@ -1,7 +1,6 @@
 package com.mss.weather.presentation.view.currentweather;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
@@ -18,7 +17,7 @@ public interface CurrentWeatherView extends MvpView {
     void showCity(@NonNull final City city);
 
     @StateStrategyType(AddToEndSingleStrategy.class)
-    void showCurrentWeather(@NonNull final CurrentWeather currentWeather, @Nullable final DayWeather dayWeather);
+    void showCurrentWeather(@NonNull final CurrentWeather currentWeather);
 
     @StateStrategyType(AddToEndSingleStrategy.class)
     void showWeatherList(@NonNull List<DayWeather> dayWeathers);

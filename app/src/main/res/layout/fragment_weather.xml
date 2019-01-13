@@ -31,12 +31,38 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="4dp"
+                app:layout_constraintEnd_toStartOf="@+id/tvTime"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvCityName"
-                tools:text="11.12.2018 23:00" />
+                tools:text="11.12.2018" />
+
+            <TextView
+                android:id="@+id/tvTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tvDate"
+                app:layout_constraintTop_toBottomOf="@+id/tvCityName"
+                tools:text="23:00" />
+
+            <TextView
+                android:id="@+id/tvCloudDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDate"
+                tools:text="Ясно" />
 
             <ImageView
                 android:id="@+id/ivWeatherIcon"
@@ -44,15 +70,14 @@
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
+                android:contentDescription="@string/weathericon"
                 app:layout_constraintBottom_toBottomOf="@+id/tvTemp"
                 app:layout_constraintEnd_toStartOf="@+id/tvTemp"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toEndOf="@+id/textView2"
+                app:layout_constraintStart_toEndOf="@+id/tvFeelsLikeCLabel"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tvTemp"
-                app:layout_constraintVertical_bias="0.0"
-                android:contentDescription="@string/weathericon"
                 app:srcCompat="@color/colorCard" />
 
             <TextView
@@ -61,139 +86,177 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
-                app:layout_constraintEnd_toStartOf="@+id/textView4"
+                app:layout_constraintEnd_toStartOf="@+id/tvDegreeLabel"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/ivWeatherIcon"
-                app:layout_constraintTop_toBottomOf="@id/tvDate"
+                app:layout_constraintTop_toBottomOf="@+id/tvCloudDescription"
                 tools:text="25" />
+
+            <TextView
+                android:id="@+id/tvDegreeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/degreeLabel"
+                app:layout_constraintEnd_toStartOf="@+id/tvDegreeCelsus"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tvTemp"
+                app:layout_constraintTop_toTopOf="@+id/tvTemp" />
+
+            <TextView
+                android:id="@+id/tvDegreeCelsus"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="2dp"
+                android:text="@string/temp_label"
+                app:layout_constraintEnd_toStartOf="@+id/tvCloudLabel"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tvDegreeLabel"
+                app:layout_constraintTop_toTopOf="@+id/tvDegreeLabel" />
+
+            <TextView
+                android:id="@+id/tvCloudLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/cloud_label"
+                app:layout_constraintEnd_toStartOf="@+id/tvCloudPercent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tvDegreeCelsus"
+                app:layout_constraintTop_toBottomOf="@+id/tvCloudDescription" />
+
+            <TextView
+                android:id="@+id/tvCloudPercent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/textView4"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tvCloudLabel"
+                app:layout_constraintTop_toTopOf="@+id/tvCloudLabel"
+                tools:text="0" />
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
-                android:layout_height="22dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/degreeLabel"
-                app:layout_constraintEnd_toStartOf="@+id/textView"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="%"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/tvTemp"
-                app:layout_constraintTop_toTopOf="@+id/tvTemp" />
+                app:layout_constraintStart_toEndOf="@+id/tvCloudPercent"
+                app:layout_constraintTop_toTopOf="@+id/tvCloudLabel" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/tvFeelsLikeCLabel"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/feelslikec_label"
+                app:layout_constraintEnd_toEndOf="@+id/tvDegreeCelsus"
+                app:layout_constraintStart_toStartOf="@+id/tvTemp"
+                app:layout_constraintTop_toTopOf="@+id/tvPressureLabel" />
+
+            <TextView
+                android:id="@+id/tvFeelsLikesDegreeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/degreeLabel"
+                android:textAppearance="@android:style/TextAppearance.Material.Notification.Info"
+                app:layout_constraintEnd_toStartOf="@+id/tvFeelsLikesCelsusLabel"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tvFeelsLikeC"
+                app:layout_constraintTop_toBottomOf="@+id/tvFeelsLikeCLabel" />
+
+            <TextView
+                android:id="@+id/tvFeelsLikesCelsusLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
                 android:layout_marginEnd="8dp"
                 android:text="@string/temp_label"
-                app:layout_constraintBottom_toBottomOf="@+id/textView4"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/textView4"
-                app:layout_constraintTop_toTopOf="@+id/textView4" />
+                app:layout_constraintEnd_toEndOf="@+id/tvFeelsLikeCLabel"
+                app:layout_constraintStart_toEndOf="@+id/tvFeelsLikesDegreeLabel"
+                app:layout_constraintTop_toBottomOf="@+id/tvFeelsLikeCLabel" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/tvFeelsLikeC"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="@string/sunrise_label"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                app:layout_constraintEnd_toStartOf="@+id/ivWeatherIcon"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tvTemp" />
-
-            <TextView
-                android:id="@+id/tvSunrise"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                app:layout_constraintEnd_toEndOf="@+id/textView2"
-                app:layout_constraintStart_toStartOf="@+id/textView2"
-                app:layout_constraintTop_toBottomOf="@+id/textView2"
-                tools:text="6:00" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="@string/sunset_label"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tvTemp"
-                app:layout_constraintTop_toBottomOf="@+id/tvDate" />
-
-            <TextView
-                android:id="@+id/tvSunset"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                app:layout_constraintEnd_toEndOf="@+id/textView3"
-                app:layout_constraintStart_toStartOf="@+id/textView3"
-                app:layout_constraintTop_toBottomOf="@+id/textView3"
-                tools:text="23:00" />
-
-            <TextView
-                android:id="@+id/tvTempMin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                app:layout_constraintEnd_toStartOf="@+id/textView5"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/tvFeelsLikesDegreeLabel"
                 app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTemp"
-                tools:text="22" />
+                app:layout_constraintStart_toStartOf="@+id/tvFeelsLikeCLabel"
+                app:layout_constraintTop_toBottomOf="@+id/tvFeelsLikeCLabel"
+                tools:text="20" />
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/tvHumidityLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/humidity_label"
+                app:layout_constraintStart_toStartOf="@+id/tvCloudLabel"
+                app:layout_constraintTop_toBottomOf="@+id/tvCloudLabel" />
+
+            <TextView
+                android:id="@+id/tvHumidity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="@string/temp_min_max_delimiter"
-                app:layout_constraintEnd_toStartOf="@+id/tvTempMax"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/tvTempMin"
-                app:layout_constraintTop_toBottomOf="@+id/tvTemp" />
+                app:layout_constraintStart_toEndOf="@+id/tvHumidityLabel"
+                app:layout_constraintTop_toBottomOf="@+id/tvCloudLabel"
+                tools:text="0" />
 
             <TextView
-                android:id="@+id/tvTempMax"
+                android:id="@+id/tvPressureLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/textView5"
-                app:layout_constraintTop_toBottomOf="@+id/tvTemp"
-                tools:text="30" />
+                android:text="@string/pressure_label"
+                app:layout_constraintStart_toStartOf="@+id/tvHumidityLabel"
+                app:layout_constraintTop_toBottomOf="@+id/tvHumidityLabel" />
 
-            <ImageView
-                android:id="@+id/imageView"
+            <TextView
+                android:id="@+id/tvPressure"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="@+id/tvSunset"
-                app:layout_constraintStart_toStartOf="@+id/tvSunset"
-                app:layout_constraintTop_toBottomOf="@+id/tvSunset"
-                android:contentDescription="@string/sunseticon"
-                app:srcCompat="@drawable/ic_weather_sunset_down" />
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toEndOf="@+id/tvPressureLabel"
+                app:layout_constraintTop_toBottomOf="@+id/tvHumidityLabel"
+                tools:text="760" />
 
-            <ImageView
-                android:id="@+id/imageView2"
+            <TextView
+                android:id="@+id/tvWindLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="@+id/tvSunrise"
-                app:layout_constraintStart_toStartOf="@+id/tvSunrise"
-                app:layout_constraintTop_toBottomOf="@+id/tvSunrise"
-                android:contentDescription="@string/sunriseicon"
-                app:srcCompat="@drawable/weather_sunset_up" />
+                android:layout_marginTop="8dp"
+                android:text="@string/wind_label"
+                app:layout_constraintStart_toStartOf="@+id/tvCloudLabel"
+                app:layout_constraintTop_toBottomOf="@+id/tvPressureLabel" />
+
+            <TextView
+                android:id="@+id/tvWind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toEndOf="@+id/tvWindLabel"
+                app:layout_constraintTop_toBottomOf="@+id/tvPressureLabel"
+                tools:text="5" />
+
+            <TextView
+                android:id="@+id/tvWindDeg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toEndOf="@+id/tvWind"
+                app:layout_constraintTop_toBottomOf="@+id/tvPressureLabel"
+                tools:text="90" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -210,6 +273,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="%"
+                app:layout_constraintStart_toEndOf="@+id/tvHumidity"
+                app:layout_constraintTop_toBottomOf="@+id/tvCloudLabel" />
+
         </android.support.constraint.ConstraintLayout>
 
         <LinearLayout
@@ -219,131 +291,11 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/llCloud"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:text="@string/cloud_label" />
-
-                <TextView
-                    android:id="@+id/tvCloudPercent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    tools:text="0" />
-
-                <TextView
-                    android:id="@+id/tvCloudDescription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    tools:text="Ясно" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llTempRange"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:text="@string/temp_range_label" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llHumidity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:text="@string/humidity_label" />
-
-                <TextView
-                    android:id="@+id/tvHumidity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    tools:text="0" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llPressure"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:text="@string/pressure_label" />
-
-                <TextView
-                    android:id="@+id/tvPressure"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    tools:text="760" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llWind"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:text="@string/wind_label" />
-
-                <TextView
-                    android:id="@+id/tvWind"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    tools:text="5" />
-
-                <TextView
-                    android:id="@+id/tvWindDeg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    tools:text="90" />
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/llRainfall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:text="@string/rainfall_label" />
-
-                <TextView
-                    android:id="@+id/tvRainfall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    tools:text="без осадков" />
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView

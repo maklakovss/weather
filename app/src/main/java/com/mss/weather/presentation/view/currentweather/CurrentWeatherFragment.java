@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -41,44 +40,26 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
 
     @BindView(R.id.tvCityName)
     TextView tvCityName;
-    @BindView(R.id.tvSunrise)
-    TextView tvSunrise;
-    @BindView(R.id.tvSunset)
-    TextView tvSunset;
     @BindView(R.id.tvCloudPercent)
     TextView tvCloudPercent;
     @BindView(R.id.tvCloudDescription)
     TextView tvCloudDescription;
-    @BindView(R.id.llCloud)
-    LinearLayout llCloud;
     @BindView(R.id.tvTemp)
     TextView tvTemp;
-    @BindView(R.id.tvTempMin)
-    TextView tvTempMin;
-    @BindView(R.id.tvTempMax)
-    TextView tvTempMax;
-    @BindView(R.id.llTempRange)
-    LinearLayout llTempRange;
+    @BindView(R.id.tvFeelsLikeC)
+    TextView tvFeelsLikeC;
     @BindView(R.id.tvHumidity)
     TextView tvHumidity;
-    @BindView(R.id.llHumidity)
-    LinearLayout llHumidity;
     @BindView(R.id.tvPressure)
     TextView tvPressure;
-    @BindView(R.id.llPressure)
-    LinearLayout llPressure;
     @BindView(R.id.tvWind)
     TextView tvWind;
     @BindView(R.id.tvWindDeg)
     TextView tvWindDeg;
-    @BindView(R.id.llWind)
-    LinearLayout llWind;
-    @BindView(R.id.tvRainfall)
-    TextView tvRainfall;
-    @BindView(R.id.llRainfall)
-    LinearLayout llRainfall;
     @BindView(R.id.tvDate)
     TextView tvDate;
+    @BindView(R.id.tvTime)
+    TextView tvTime;
     @BindView(R.id.rvWeatherList)
     RecyclerView rvWeatherList;
     @BindView(R.id.progressBar)
@@ -119,31 +100,21 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
     }
 
     @Override
-    public void showCurrentWeather(@NonNull final CurrentWeather currentWeather, final DayWeather dayWeather) {
+    public void showCurrentWeather(@NonNull final CurrentWeather currentWeather) {
 
-        final SimpleDateFormat formatterDateTime = new SimpleDateFormat("dd.MM.YYYY HH:mm", Locale.getDefault());
-        tvDate.setText(formatterDateTime.format(currentWeather.getDate()));
-
+        final SimpleDateFormat formatterDate = new SimpleDateFormat("dd.MM.YYYY", Locale.getDefault());
+        tvDate.setText(formatterDate.format(currentWeather.getDate()));
         final SimpleDateFormat formatterTime = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        tvTime.setText(formatterTime.format(currentWeather.getObservationTime()));
 
         tvTemp.setText(String.valueOf((int) currentWeather.getTempC()));
+        tvFeelsLikeC.setText(String.valueOf((int) currentWeather.getFeelsLikeC()));
         tvCloudPercent.setText(String.valueOf(currentWeather.getCloudcover()));
         tvCloudDescription.setText(currentWeather.getWeatherDescLocalLanguage());
         tvHumidity.setText(String.valueOf(currentWeather.getHumidity()));
         tvPressure.setText(String.valueOf(currentWeather.getPressure()));
         tvWind.setText(String.valueOf(currentWeather.getWindspeedKmph()));
-        tvWindDeg.setText(String.valueOf(currentWeather.getWinddirDegree()));
-//        if (currentWeather.getSnow() > 0) {
-//            tvRainfall.setText(String.valueOf(currentWeather.getSnow()));
-//        } else if (currentWeather.getRain() > 0) {
-//            tvRainfall.setText(String.valueOf(currentWeather.getRain()));
-//        }
-        if (dayWeather != null) {
-            tvSunrise.setText(formatterTime.format(dayWeather.getSunrise()));
-            tvSunset.setText(formatterTime.format(dayWeather.getSunset()));
-            tvTempMin.setText(String.valueOf((int) dayWeather.getMinTempC()));
-            tvTempMax.setText(String.valueOf((int) dayWeather.getMaxTempC()));
-        }
+        tvWindDeg.setText(String.valueOf(currentWeather.getWinddir16Point()));
         if (currentWeather.getWeatherIconUrl() != null) {
             Picasso.with(this.getContext())
                     .load(currentWeather.getWeatherIconUrl())

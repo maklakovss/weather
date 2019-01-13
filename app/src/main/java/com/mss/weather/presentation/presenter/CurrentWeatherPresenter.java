@@ -3,7 +3,6 @@ package com.mss.weather.presentation.presenter;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.mss.weather.domain.interactor.WeatherInteractor;
-import com.mss.weather.domain.models.DayWeather;
 import com.mss.weather.domain.models.InfoWeather;
 import com.mss.weather.presentation.view.currentweather.CurrentWeatherView;
 
@@ -49,10 +48,7 @@ public class CurrentWeatherPresenter extends MvpPresenter<CurrentWeatherView> {
 
     private void onSuccess(InfoWeather infoWeather) {
         this.infoWeather = infoWeather;
-        DayWeather dayWeather = null;
-        if (infoWeather.getDays().size() > 0)
-            dayWeather = infoWeather.getDays().get(0);
-        getViewState().showCurrentWeather(infoWeather.getCurrentWeather(), dayWeather);
+        getViewState().showCurrentWeather(infoWeather.getCurrentWeather());
         getViewState().showWeatherList(infoWeather.getDays());
         getViewState().showProgress(false);
     }
