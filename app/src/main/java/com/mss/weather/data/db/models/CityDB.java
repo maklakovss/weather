@@ -8,6 +8,7 @@ import lombok.Data;
 public class CityDB extends RealmObject {
     @PrimaryKey
     private String id;
+
     private String areaName;
     private String country;
     private String region;

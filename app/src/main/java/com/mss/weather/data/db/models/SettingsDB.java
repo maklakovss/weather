@@ -6,7 +6,9 @@ import lombok.Data;
 
 @Data
 public class SettingsDB extends RealmObject {
+
     @PrimaryKey
     private int id = 1;
+
     private String lasCityId;
 }
