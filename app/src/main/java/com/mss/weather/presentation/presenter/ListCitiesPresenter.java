@@ -2,10 +2,9 @@ package com.mss.weather.presentation.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.mss.weather.di.MyApplication;
-import com.mss.weather.domain.WeatherInteractor;
+import com.mss.weather.domain.interactor.WeatherInteractor;
+import com.mss.weather.domain.models.City;
 import com.mss.weather.presentation.view.listcities.ListCitiesView;
-import com.mss.weather.presentation.view.models.CitySettings;
 
 import java.util.List;
 
@@ -14,23 +13,19 @@ import javax.inject.Inject;
 @InjectViewState
 public class ListCitiesPresenter extends MvpPresenter<ListCitiesView> {
 
-    @Inject
-    WeatherInteractor weatherInteractor;
+    private WeatherInteractor weatherInteractor;
 
-    public ListCitiesPresenter() {
-        MyApplication.getApplicationComponent().inject(this);
-        weatherInteractor.setOnOnCityUpdated(new WeatherInteractor.OnCityUpdated() {
-            @Override
-            public void onUpdated(CitySettings currentCity) {
-                getViewState().updateCity(weatherInteractor.getListCities().indexOf(currentCity));
-            }
-        });
+    private List<City> cities;
+
+    @Inject
+    public ListCitiesPresenter(WeatherInteractor weatherInteractor) {
+        this.weatherInteractor = weatherInteractor;
     }
 
     public void needCities() {
-        List<CitySettings> cityNamesList = weatherInteractor.getListCities();
-        getViewState().updateList(cityNamesList);
-//        getViewState().setCurrentCity(cityNamesList.indexOf(weatherInteractor.getCurrentCity()));
+        if (cities == null)
+            cities = weatherInteractor.getListCities();
+        getViewState().updateList(cities);
     }
 
     public void onClickCity(int checkedCity) {
@@ -39,15 +34,11 @@ public class ListCitiesPresenter extends MvpPresenter<ListCitiesView> {
     }
 
     public void onClickAdd() {
-        CitySettings newCity = new CitySettings("");
-        weatherInteractor.addCity(newCity);
-        weatherInteractor.setCurrentCity(newCity);
-        needCities();
-        getViewState().showSettings();
+        getViewState().showSelectCity();
     }
 
-    public void onLongClickCity(int i) {
-        getViewState().showSettings();
+    public void deleteCity(int position) {
+        weatherInteractor.deleteCity(weatherInteractor.getListCities().get(position));
+        getViewState().updateCity(position);
     }
-
 }

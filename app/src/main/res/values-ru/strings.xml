@@ -12,7 +12,7 @@
     <string name="pressure_label">Давление</string>
     <string name="wind_label">Ветер</string>
     <string name="snow_label">Снег</string>
-    <string name="rainfall_label">Осадки</string>
+    <string name="feelslikec_label">по ощущениям</string>
     <string name="city_label">Город</string>
     <string name="extended_settings_label">Настройка показа погоды</string>
     <string name="show_temp_label">Температура</string>
@@ -25,4 +25,14 @@
     <string name="settings_label">Настройки</string>
     <string name="feedback_label">Обратная связь</string>
     <string name="about_label">О программе</string>
+    <string name="search_location_hint">Введите местоположение</string>
+    <string name="region_label">Регион:</string>
+    <string name="country_label">Страна:</string>
+    <string name="selectbylocation">Поиск по GPS</string>
+    <string name="press_button">Или нажмите кнопку</string>
+    <string name="to_search_near_locations_by_gps">для поиска по GPS</string>
+    <string name="weathericon">WeatherIcon</string>
+    <string name="sunseticon">SunsetIcon</string>
+    <string name="degreeLabel">o</string>
+    <string name="sunriseicon">SunriseIcon</string>
 </resources>

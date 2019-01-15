@@ -2,26 +2,23 @@ package com.mss.weather.presentation.view.listcities;
 
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
-import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
+import com.arellomobile.mvp.viewstate.strategy.OneExecutionStateStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
-import com.mss.weather.presentation.view.models.CitySettings;
+import com.mss.weather.domain.models.City;
 
 import java.util.List;
 
 public interface ListCitiesView extends MvpView {
 
     @StateStrategyType(AddToEndSingleStrategy.class)
-    void updateList(List<CitySettings> cities);
+    void updateList(List<City> cities);
 
-//    @StateStrategyType(AddToEndSingleStrategy.class)
-//    void setCurrentCity(int checkedCity);
-
-    @StateStrategyType(SkipStrategy.class)
+    @StateStrategyType(OneExecutionStateStrategy.class)
     void showWeather();
 
-    @StateStrategyType(SkipStrategy.class)
-    void showSettings();
+    @StateStrategyType(OneExecutionStateStrategy.class)
+    void showSelectCity();
 
-    @StateStrategyType(SkipStrategy.class)
+    @StateStrategyType(OneExecutionStateStrategy.class)
     void updateCity(int position);
 }

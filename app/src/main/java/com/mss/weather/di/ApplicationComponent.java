@@ -1,11 +1,9 @@
 package com.mss.weather.di;
 
-import com.mss.weather.presentation.presenter.CitySettingsPresenter;
-import com.mss.weather.presentation.presenter.CityWeatherPresenter;
-import com.mss.weather.presentation.presenter.ListCitiesPresenter;
-import com.mss.weather.presentation.view.citysettings.CitySettingsFragment;
-import com.mss.weather.presentation.view.cityweather.CityWeatherFragment;
+import com.mss.weather.presentation.view.currentweather.CurrentWeatherFragment;
 import com.mss.weather.presentation.view.listcities.ListCitiesFragment;
+import com.mss.weather.presentation.view.main.MainActivity;
+import com.mss.weather.presentation.view.selectcity.SelectCityFragment;
 
 import javax.inject.Singleton;
 
@@ -15,17 +13,16 @@ import dagger.Component;
 @Component(modules = {ApplicationModule.class})
 public interface ApplicationComponent {
 
-    //presenters
-    void inject(ListCitiesPresenter settingsPresenter);
-
-    void inject(CityWeatherPresenter cityWeatherPresenter);
-
-    void inject(CitySettingsPresenter citySettingsPresenter);
-
     //fragments
-    void inject(CitySettingsFragment citySettingsFragment);
 
-    void inject(CityWeatherFragment cityWeatherFragment);
+    void inject(SelectCityFragment addCityFragment);
+
+    void inject(CurrentWeatherFragment currentWeatherFragment);
 
     void inject(ListCitiesFragment listCitiesFragment);
+
+
+    //activity
+
+    void inject(MainActivity mainActivity);
 }

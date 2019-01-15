@@ -11,7 +11,7 @@
     <string name="pressure_label">Pressure</string>
     <string name="wind_label">Wind</string>
     <string name="snow_label">Snow</string>
-    <string name="rainfall_label">Rainfall</string>
+    <string name="feelslikec_label">Feels like</string>
     <string name="city_label">City</string>
     <string name="extended_settings_label">Settings showing</string>
     <string name="show_temp_label">Temperature</string>
@@ -28,5 +28,15 @@
     <string name="about_label">About</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="search_location_hint">Input location</string>
+    <string name="region_label">Region:</string>
+    <string name="country_label">Country:</string>
+    <string name="selectbylocation">Search by GPS</string>
+    <string name="press_button">Or press button</string>
+    <string name="to_search_near_locations_by_gps">to search by GPS</string>
+    <string name="weathericon">WeatherIcon</string>
+    <string name="sunseticon">SunsetIcon</string>
+    <string name="degreeLabel">o</string>
+    <string name="sunriseicon">SunriseIcon</string>
 
 </resources>
