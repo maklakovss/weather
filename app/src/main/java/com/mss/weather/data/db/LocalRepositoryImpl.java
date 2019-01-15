@@ -26,9 +26,12 @@ public class LocalRepositoryImpl implements LocalRepository {
         realm.where(CityDB.class)
                 .equalTo("id", id)
                 .findFirst();
-        City city = mapCityDbToCity(realm.where(CityDB.class)
+        CityDB cityDB = realm.where(CityDB.class)
                 .equalTo("id", id)
-                .findFirst());
+                .findFirst();
+        City city = null;
+        if (cityDB != null)
+            city = mapCityDbToCity(cityDB);
         realm.close();
         return city;
     }
