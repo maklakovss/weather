@@ -7,10 +7,10 @@ import com.mss.weather.domain.repositories.CurrentWeatherLocalRepository;
 
 import io.realm.Realm;
 
-class CurrentWeatherLocalRepositoryImpl implements CurrentWeatherLocalRepository {
+public class CurrentWeatherLocalRepositoryImpl implements CurrentWeatherLocalRepository {
 
     @Override
-    public CurrentWeather getInfoWeatherById(String cityId) {
+    public CurrentWeather getCurrentWeatherById(String cityId) {
         Realm realm = Realm.getDefaultInstance();
         CurrentWeatherDB currentWeatherDB = realm.where(CurrentWeatherDB.class)
                 .equalTo("cityID", cityId)
@@ -23,7 +23,7 @@ class CurrentWeatherLocalRepositoryImpl implements CurrentWeatherLocalRepository
     }
 
     @Override
-    public void deleteInfoWeather(CurrentWeather currentWeather) {
+    public void deleteCurrentWeather(CurrentWeather currentWeather) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.where(CurrentWeatherDB.class)
@@ -35,7 +35,7 @@ class CurrentWeatherLocalRepositoryImpl implements CurrentWeatherLocalRepository
     }
 
     @Override
-    public void updateOrInsertInfoWeather(CurrentWeather currentWeather) {
+    public void updateOrInsertCurrentWeather(CurrentWeather currentWeather) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.insertOrUpdate(CurrentWeatherMapper.mapInfoWeatherDBToInfoWeather(currentWeather));

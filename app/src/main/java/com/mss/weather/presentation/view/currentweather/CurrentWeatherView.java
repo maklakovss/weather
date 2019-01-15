@@ -17,10 +17,10 @@ public interface CurrentWeatherView extends MvpView {
     void showCity(@NonNull final City city);
 
     @StateStrategyType(AddToEndSingleStrategy.class)
-    void showCurrentWeather(@NonNull final CurrentWeather currentWeather);
+    void showCurrentWeather(final CurrentWeather currentWeather);
 
     @StateStrategyType(AddToEndSingleStrategy.class)
-    void showWeatherList(@NonNull List<DayWeather> dayWeathers);
+    void showWeatherList(List<DayWeather> dayWeathers);
 
     @StateStrategyType(AddToEndSingleStrategy.class)
     void showProgress(boolean visible);

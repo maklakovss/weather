@@ -16,6 +16,6 @@ public class InfoWeatherMapper {
         InfoWeatherDB infoWeatherDB = new InfoWeatherDB();
         infoWeatherDB.setCityID(infoWeather.getCityID());
         infoWeatherDB.setDateState(infoWeather.getDateState());
-        return null;
+        return infoWeatherDB;
     }
 }

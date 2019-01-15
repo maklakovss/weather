@@ -7,7 +7,7 @@ import com.mss.weather.domain.repositories.InfoWeatherLocalRepository;
 
 import io.realm.Realm;
 
-class InfoWeatherLocalRepositoryImpl implements InfoWeatherLocalRepository {
+public class InfoWeatherLocalRepositoryImpl implements InfoWeatherLocalRepository {
 
     @Override
     public InfoWeather getInfoWeatherById(String cityId) {

@@ -4,10 +4,10 @@ import com.mss.weather.domain.models.CurrentWeather;
 
 public interface CurrentWeatherLocalRepository {
 
-    CurrentWeather getInfoWeatherById(String cityId);
+    CurrentWeather getCurrentWeatherById(String cityId);
 
-    void deleteInfoWeather(CurrentWeather currentWeather);
+    void deleteCurrentWeather(CurrentWeather currentWeather);
 
-    void updateOrInsertInfoWeather(CurrentWeather currentWeather);
+    void updateOrInsertCurrentWeather(CurrentWeather currentWeather);
 
 }

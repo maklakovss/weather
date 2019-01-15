@@ -11,7 +11,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-class DayWeatherLocalRepositoryImpl implements DayWeatherLocalRepository {
+public class DayWeatherLocalRepositoryImpl implements DayWeatherLocalRepository {
 
     @Override
     public List<DayWeather> getDayWeathersByCityId(String cityId) {

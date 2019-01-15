@@ -102,26 +102,39 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
     }
 
     @Override
-    public void showCurrentWeather(@NonNull final CurrentWeather currentWeather) {
+    public void showCurrentWeather(final CurrentWeather currentWeather) {
+        if (currentWeather != null) {
+            if (currentWeather.getDate() != null)
+                tvDate.setText(formatterDate.format(currentWeather.getDate()));
+            if (currentWeather.getObservationTime() != null)
+                tvTime.setText(formatterTime.format(currentWeather.getObservationTime()));
 
-        if (currentWeather.getDate() != null)
-            tvDate.setText(formatterDate.format(currentWeather.getDate()));
-        if (currentWeather.getObservationTime() != null)
-            tvTime.setText(formatterTime.format(currentWeather.getObservationTime()));
-
-        tvTemp.setText(String.valueOf((int) currentWeather.getTempC()));
-        tvFeelsLikeC.setText(String.valueOf((int) currentWeather.getFeelsLikeC()));
-        tvCloudPercent.setText(String.valueOf(currentWeather.getCloudcover()));
-        tvCloudDescription.setText(currentWeather.getWeatherDescLocalLanguage());
-        tvHumidity.setText(String.valueOf(currentWeather.getHumidity()));
-        tvPressure.setText(String.valueOf(Math.round(currentWeather.getPressure() / 1.333)));
-        tvWind.setText(String.valueOf(currentWeather.getWindspeedKmph()));
-        tvWindDeg.setText(String.valueOf(currentWeather.getWinddir16Point()));
-        if (currentWeather.getWeatherIconUrl() != null) {
-            Picasso.with(this.getContext())
-                    .load(currentWeather.getWeatherIconUrl())
-                    .into(ivWeatherIcon);
+            tvTemp.setText(String.valueOf((int) currentWeather.getTempC()));
+            tvFeelsLikeC.setText(String.valueOf((int) currentWeather.getFeelsLikeC()));
+            tvCloudPercent.setText(String.valueOf(currentWeather.getCloudcover()));
+            tvCloudDescription.setText(currentWeather.getWeatherDescLocalLanguage());
+            tvHumidity.setText(String.valueOf(currentWeather.getHumidity()));
+            tvPressure.setText(String.valueOf(Math.round(currentWeather.getPressure() / 1.333)));
+            tvWind.setText(String.valueOf(currentWeather.getWindspeedKmph()));
+            tvWindDeg.setText(String.valueOf(currentWeather.getWinddir16Point()));
+            if (currentWeather.getWeatherIconUrl() != null) {
+                Picasso.with(this.getContext())
+                        .load(currentWeather.getWeatherIconUrl())
+                        .into(ivWeatherIcon);
+            } else {
+                ivWeatherIcon.setImageURI(null);
+            }
         } else {
+            tvDate.setText("");
+            tvTime.setText("");
+            tvTemp.setText("");
+            tvFeelsLikeC.setText("");
+            tvCloudPercent.setText("");
+            tvCloudDescription.setText("");
+            tvHumidity.setText("");
+            tvPressure.setText("");
+            tvWind.setText("");
+            tvWindDeg.setText("");
             ivWeatherIcon.setImageURI(null);
         }
 

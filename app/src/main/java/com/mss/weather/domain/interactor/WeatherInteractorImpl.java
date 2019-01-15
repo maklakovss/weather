@@ -4,6 +4,9 @@ import com.mss.weather.domain.models.City;
 import com.mss.weather.domain.models.InfoWeather;
 import com.mss.weather.domain.models.Position;
 import com.mss.weather.domain.repositories.CityLocalRepository;
+import com.mss.weather.domain.repositories.CurrentWeatherLocalRepository;
+import com.mss.weather.domain.repositories.DayWeatherLocalRepository;
+import com.mss.weather.domain.repositories.InfoWeatherLocalRepository;
 import com.mss.weather.domain.repositories.NetworkRepository;
 import com.mss.weather.domain.repositories.SensorsRepository;
 
@@ -15,9 +18,12 @@ import io.reactivex.Maybe;
 
 public class WeatherInteractorImpl implements WeatherInteractor {
 
-    NetworkRepository networkRepository;
-    CityLocalRepository cityLocalRepository;
-    SensorsRepository sensorsRepository;
+    private final NetworkRepository networkRepository;
+    private final CityLocalRepository cityLocalRepository;
+    private final InfoWeatherLocalRepository infoWeatherLocalRepository;
+    private final CurrentWeatherLocalRepository currentWeatherLocalRepository;
+    private final DayWeatherLocalRepository dayWeatherLocalRepository;
+    private final SensorsRepository sensorsRepository;
 
     private List<City> cityList;
 
@@ -26,9 +32,15 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     @Inject
     public WeatherInteractorImpl(NetworkRepository networkRepository,
                                  CityLocalRepository cityLocalRepository,
+                                 InfoWeatherLocalRepository infoWeatherLocalRepository,
+                                 CurrentWeatherLocalRepository currentWeatherLocalRepository,
+                                 DayWeatherLocalRepository dayWeatherLocalRepository,
                                  SensorsRepository sensorsRepository) {
         this.networkRepository = networkRepository;
         this.cityLocalRepository = cityLocalRepository;
+        this.infoWeatherLocalRepository = infoWeatherLocalRepository;
+        this.currentWeatherLocalRepository = currentWeatherLocalRepository;
+        this.dayWeatherLocalRepository = dayWeatherLocalRepository;
         this.sensorsRepository = sensorsRepository;
     }
 
@@ -88,7 +100,23 @@ public class WeatherInteractorImpl implements WeatherInteractor {
 
     @Override
     public Maybe<InfoWeather> getWeatherInfo(City city) {
-        return networkRepository.getWeatherInfo(city);
+        Maybe<InfoWeather> infoWeatherMaybe = networkRepository.getWeatherInfo(city)
+                .doOnSuccess(infoWeather -> {
+                    infoWeatherLocalRepository.updateOrInsertInfoWeather(infoWeather);
+                    currentWeatherLocalRepository.updateOrInsertCurrentWeather(infoWeather.getCurrentWeather());
+                    dayWeatherLocalRepository.updateOrInsertDayWeather(infoWeather.getDays());
+                });
+        return infoWeatherMaybe;
+    }
+
+    @Override
+    public InfoWeather getLocalWeatherInfo(City city) {
+        InfoWeather infoWeather = infoWeatherLocalRepository.getInfoWeatherById(city.getId());
+        if (infoWeather != null) {
+            infoWeather.setCurrentWeather(currentWeatherLocalRepository.getCurrentWeatherById(city.getId()));
+            infoWeather.setDays(dayWeatherLocalRepository.getDayWeathersByCityId(city.getId()));
+        }
+        return infoWeather;
     }
 
 }
