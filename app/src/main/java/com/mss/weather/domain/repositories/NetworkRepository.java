@@ -1,4 +1,4 @@
-package com.mss.weather.domain;
+package com.mss.weather.domain.repositories;
 
 import com.mss.weather.domain.models.City;
 import com.mss.weather.domain.models.InfoWeather;

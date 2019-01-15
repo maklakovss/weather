@@ -2,11 +2,12 @@ package com.mss.weather.data.db.models;
 
 import java.util.Date;
 
+import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import lombok.Data;
 
 @Data
-public class ChanceWeatherDB {
+public class ChanceWeatherDB extends RealmObject {
 
     @PrimaryKey
     private String id;

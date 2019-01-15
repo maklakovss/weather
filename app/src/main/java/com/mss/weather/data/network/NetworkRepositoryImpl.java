@@ -3,10 +3,10 @@ package com.mss.weather.data.network;
 import com.mss.weather.BuildConfig;
 import com.mss.weather.data.network.mappers.CitiesResponseToCity;
 import com.mss.weather.data.network.mappers.WeatherResponseToWeatherInfo;
-import com.mss.weather.domain.NetworkRepository;
 import com.mss.weather.domain.models.City;
 import com.mss.weather.domain.models.InfoWeather;
 import com.mss.weather.domain.models.Position;
+import com.mss.weather.domain.repositories.NetworkRepository;
 
 import java.util.List;
 

@@ -1,13 +1,13 @@
 package com.mss.weather.data.db.models;
 
 import java.util.Date;
-import java.util.List;
 
+import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import lombok.Data;
 
 @Data
-public class DayWeatherDB {
+public class DayWeatherDB extends RealmObject {
 
     @PrimaryKey
     private String id;
@@ -28,5 +28,4 @@ public class DayWeatherDB {
     private float totalSnowCm;
     private float sunHour;
     private int uvIndex;
-    private List<HourWeatherDB> hourly;
 }

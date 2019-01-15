@@ -1,20 +1,16 @@
 package com.mss.weather.data.db.models;
 
 import java.util.Date;
-import java.util.List;
 
+import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import lombok.Data;
 
 @Data
-public class InfoWeatherDB {
+public class InfoWeatherDB extends RealmObject {
 
     @PrimaryKey
-    private String id;
-
-    private Date dateState;
     private String cityID;
 
-    private List<DayWeatherDB> days;
-    private CurrentWeatherDB currentWeather;
+    private Date dateState;
 }

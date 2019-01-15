@@ -39,5 +39,4 @@ public class HourWeatherDB {
     private int windGustKmph;
     private int feelsLikeC;
     private int feelsLikeF;
-    private ChanceWeatherDB chanceWeather;
 }
