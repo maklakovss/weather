@@ -119,7 +119,7 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
 
     @Override
     public void updateCity(int position) {
-        rvCitiesList.getAdapter().notifyItemChanged(position);
+        rvCitiesList.getAdapter().notifyItemRemoved(position);
     }
 
     @Override
