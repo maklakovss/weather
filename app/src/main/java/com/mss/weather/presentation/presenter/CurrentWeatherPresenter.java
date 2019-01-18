@@ -31,6 +31,7 @@ public class CurrentWeatherPresenter extends MvpPresenter<CurrentWeatherView> {
 
     private void updateWeather() {
         getViewState().showCity(weatherInteractor.getCurrentCity());
+        showInfoWeather(weatherInteractor.getLocalWeatherInfo(weatherInteractor.getCurrentCity()));
         startProgress();
         weatherInteractor.getWeatherInfo(weatherInteractor.getCurrentCity())
                 .subscribeOn(Schedulers.io())
@@ -47,9 +48,15 @@ public class CurrentWeatherPresenter extends MvpPresenter<CurrentWeatherView> {
     }
 
     private void onSuccess(InfoWeather infoWeather) {
-        this.infoWeather = infoWeather;
-        getViewState().showCurrentWeather(infoWeather.getCurrentWeather());
-        getViewState().showWeatherList(infoWeather.getDays());
+        showInfoWeather(infoWeather);
         getViewState().showProgress(false);
+    }
+
+    private void showInfoWeather(InfoWeather infoWeather) {
+        this.infoWeather = infoWeather;
+        if (infoWeather != null) {
+            getViewState().showCurrentWeather(infoWeather.getCurrentWeather());
+            getViewState().showWeatherList(infoWeather.getDays());
+        }
     }
 }
