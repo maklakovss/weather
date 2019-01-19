@@ -65,9 +65,34 @@ public class WeatherResponseToWeatherInfo {
         dayWeather.setTotalSnowCm(weather.getTotalSnowCm());
         dayWeather.setUvIndex(weather.getUvIndex());
         if (weather.getHourly() != null
-                && weather.getHourly().size() > 0)
+                && weather.getHourly().size() > 0) {
             dayWeather.setHourly(mapHourlyListToHourWeatherList(weather.getHourly(), city, dayWeather.getDate()));
+            updateMaxWeather(dayWeather);
+        }
         return dayWeather;
+    }
+
+    private static void updateMaxWeather(DayWeather dayWeather) {
+        dayWeather.setMaxWeatherCode(0);
+        dayWeather.setMaxWindspeedMiles(dayWeather.getHourly().get(0).getWindspeedMiles());
+        dayWeather.setMaxWindspeedKmph(dayWeather.getHourly().get(0).getWindspeedKmph());
+        dayWeather.setMinWindspeedMiles(dayWeather.getHourly().get(0).getWindspeedMiles());
+        dayWeather.setMinWindspeedKmph(dayWeather.getHourly().get(0).getWindspeedKmph());
+
+        for (HourWeather hourWeather : dayWeather.getHourly()) {
+            if (dayWeather.getMaxWeatherCode() < hourWeather.getWeatherCode()) {
+                dayWeather.setMaxWeatherCode(hourWeather.getWeatherCode());
+                dayWeather.setMaxWeatherIconUrl(hourWeather.getWeatherIconUrl());
+            }
+            if (dayWeather.getMaxWindspeedKmph() < hourWeather.getWindspeedKmph()) {
+                dayWeather.setMaxWindspeedKmph(hourWeather.getWindspeedKmph());
+                dayWeather.setMaxWindspeedMiles(hourWeather.getWindspeedMiles());
+            }
+            if (dayWeather.getMinWindspeedKmph() > hourWeather.getWindspeedKmph()) {
+                dayWeather.setMinWindspeedKmph(hourWeather.getWindspeedKmph());
+                dayWeather.setMinWindspeedMiles(hourWeather.getWindspeedMiles());
+            }
+        }
     }
 
     private static List<HourWeather> mapHourlyListToHourWeatherList(List<Hourly> hourly, City city, Date date) {

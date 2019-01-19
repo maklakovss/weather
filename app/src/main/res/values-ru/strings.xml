@@ -7,7 +7,7 @@
     <string name="cloud_label">Облачность</string>
     <string name="temp_label">C</string>
     <string name="temp_min_max_delimiter">-</string>
-    <string name="temp_range_label">Интервал температур</string>
+    <string name="temp_range_label">Температура</string>
     <string name="humidity_label">Влажность</string>
     <string name="pressure_label">Давление</string>
     <string name="wind_label">Ветер</string>

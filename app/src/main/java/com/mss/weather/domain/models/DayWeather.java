@@ -20,6 +20,12 @@ public class DayWeather {
     private int maxTempF;
     private int minTempC;
     private int minTempF;
+    private int maxWeatherCode;
+    private String maxWeatherIconUrl;
+    private int minWindspeedMiles;
+    private int minWindspeedKmph;
+    private int maxWindspeedMiles;
+    private int maxWindspeedKmph;
     private float totalSnowCm;
     private float sunHour;
     private int uvIndex;

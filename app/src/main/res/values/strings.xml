@@ -6,7 +6,7 @@
     <string name="cloud_label">Cloud</string>
     <string name="temp_label">C</string>
     <string name="temp_min_max_delimiter">-</string>
-    <string name="temp_range_label">Temperature range</string>
+    <string name="temp_range_label">Temperature</string>
     <string name="humidity_label">Humidity</string>
     <string name="pressure_label">Pressure</string>
     <string name="wind_label">Wind</string>

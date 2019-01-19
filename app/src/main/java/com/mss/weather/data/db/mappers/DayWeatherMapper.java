@@ -29,6 +29,12 @@ public class DayWeatherMapper {
         dayWeather.setMaxTempF(dayWeatherDB.getMaxTempF());
         dayWeather.setMinTempC(dayWeatherDB.getMinTempC());
         dayWeather.setMinTempF(dayWeatherDB.getMinTempF());
+        dayWeather.setMaxWeatherCode(dayWeatherDB.getMaxWeatherCode());
+        dayWeather.setMaxWeatherIconUrl(dayWeatherDB.getMaxWeatherIconUrl());
+        dayWeather.setMaxWindspeedKmph(dayWeatherDB.getMaxWindspeedKmph());
+        dayWeather.setMaxWindspeedMiles(dayWeatherDB.getMaxWindspeedMiles());
+        dayWeather.setMinWindspeedKmph(dayWeatherDB.getMinWindspeedKmph());
+        dayWeather.setMinWindspeedMiles(dayWeatherDB.getMinWindspeedMiles());
         dayWeather.setMoonIllumination(dayWeatherDB.getMoonIllumination());
         dayWeather.setMoonPhase(dayWeatherDB.getMoonPhase());
         dayWeather.setMoonrise(dayWeatherDB.getMoonrise());
@@ -60,6 +66,12 @@ public class DayWeatherMapper {
         dayWeatherDB.setMaxTempF(dayWeather.getMaxTempF());
         dayWeatherDB.setMinTempC(dayWeather.getMinTempC());
         dayWeatherDB.setMinTempF(dayWeather.getMinTempF());
+        dayWeatherDB.setMaxWeatherCode(dayWeather.getMaxWeatherCode());
+        dayWeatherDB.setMaxWeatherIconUrl(dayWeather.getMaxWeatherIconUrl());
+        dayWeatherDB.setMaxWindspeedKmph(dayWeather.getMaxWindspeedKmph());
+        dayWeatherDB.setMaxWindspeedMiles(dayWeather.getMaxWindspeedMiles());
+        dayWeatherDB.setMinWindspeedKmph(dayWeather.getMinWindspeedKmph());
+        dayWeatherDB.setMinWindspeedMiles(dayWeather.getMinWindspeedMiles());
         dayWeatherDB.setMoonIllumination(dayWeather.getMoonIllumination());
         dayWeatherDB.setMoonPhase(dayWeather.getMoonPhase());
         dayWeatherDB.setMoonrise(dayWeather.getMoonrise());

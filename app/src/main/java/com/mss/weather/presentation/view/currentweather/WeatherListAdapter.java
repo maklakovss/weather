@@ -5,10 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mss.weather.R;
 import com.mss.weather.domain.models.DayWeather;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -43,7 +45,15 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
         viewHolder.tvDayOfWeek.setText(formatterDayOfWeek.format(dayWeather.getDate()));
         viewHolder.tvTempMin.setText(String.valueOf(dayWeather.getMinTempC()));
         viewHolder.tvTempMax.setText(String.valueOf(dayWeather.getMaxTempC()));
-
+        viewHolder.tvWindMin.setText(String.valueOf(dayWeather.getMinWindspeedKmph()));
+        viewHolder.tvWindMax.setText(String.valueOf(dayWeather.getMaxWindspeedKmph()));
+        if (dayWeather.getMaxWeatherIconUrl() != null) {
+            Picasso.with(viewHolder.itemView.getContext())
+                    .load(dayWeather.getMaxWeatherIconUrl())
+                    .into(viewHolder.ivWeatherIcon);
+        } else {
+            viewHolder.ivWeatherIcon.setImageURI(null);
+        }
     }
 
     @Override
@@ -60,6 +70,12 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
         TextView tvTempMin;
         @BindView(R.id.tvTempMax)
         TextView tvTempMax;
+        @BindView(R.id.tvWindMin)
+        TextView tvWindMin;
+        @BindView(R.id.tvWindMax)
+        TextView tvWindMax;
+        @BindView(R.id.ivWeatherIcon)
+        ImageView ivWeatherIcon;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
