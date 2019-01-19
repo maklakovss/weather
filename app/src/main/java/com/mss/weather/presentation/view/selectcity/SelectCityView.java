@@ -21,4 +21,6 @@ public interface SelectCityView extends MvpView {
     @StateStrategyType(OneExecutionStateStrategy.class)
     void back();
 
+    @StateStrategyType(OneExecutionStateStrategy.class)
+    void hideKeyboard();
 }

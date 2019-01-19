@@ -135,6 +135,11 @@ public class SelectCityFragment extends MvpAppCompatFragment implements SelectCi
     }
 
     @Override
+    public void hideKeyboard() {
+        weatherFragmentsNavigator.hideKeyboard();
+    }
+
+    @Override
     public void onItemClick(View view, int position) {
         selectCityPresenter.onClickCity(position);
     }

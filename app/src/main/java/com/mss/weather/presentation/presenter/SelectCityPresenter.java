@@ -59,6 +59,7 @@ public class SelectCityPresenter extends MvpPresenter<SelectCityView> {
     }
 
     private void clearAndStartProgress() {
+        getViewState().hideKeyboard();
         autoCompleteCities = new ArrayList<>();
         getViewState().showCities(autoCompleteCities);
         getViewState().showProgress(true);

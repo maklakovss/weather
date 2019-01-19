@@ -1,5 +1,6 @@
 package com.mss.weather.presentation.view.main;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -10,6 +11,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
@@ -168,5 +172,17 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Weat
     @Override
     public void back() {
         getSupportFragmentManager().popBackStack();
+    }
+
+    public void hideKeyboard() {
+        final View view = getCurrentFocus();
+        if (view != null) {
+            final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        } else {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        }
     }
 }
