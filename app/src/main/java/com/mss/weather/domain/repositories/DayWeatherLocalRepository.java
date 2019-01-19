@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface DayWeatherLocalRepository {
 
-    List<DayWeather> getDayWeathersByCityId(String cityId);
+    List<DayWeather> getDayWeathersByCityId(String cityId, Date date);
 
     void deleteDayWeatherByCityID(String cityId);
 

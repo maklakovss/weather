@@ -14,10 +14,12 @@ import io.realm.RealmResults;
 public class DayWeatherLocalRepositoryImpl implements DayWeatherLocalRepository {
 
     @Override
-    public List<DayWeather> getDayWeathersByCityId(String cityId) {
+    public List<DayWeather> getDayWeathersByCityId(String cityId, Date date) {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<DayWeatherDB> dayWeatherDBs = realm.where(DayWeatherDB.class)
                 .equalTo("cityID", cityId)
+                .sort("date")
+                .greaterThanOrEqualTo("date", date)
                 .findAll();
 
         List<DayWeather> dayWeathers = null;
@@ -44,11 +46,11 @@ public class DayWeatherLocalRepositoryImpl implements DayWeatherLocalRepository 
     public void deleteOldDayWeatherByCityID(String cityId, Date date) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        realm.where(DayWeatherDB.class)
+        RealmResults<DayWeatherDB> dayWeatherDBs = realm.where(DayWeatherDB.class)
                 .equalTo("cityID", cityId)
                 .lessThan("date", date)
-                .findAll()
-                .deleteAllFromRealm();
+                .findAll();
+        dayWeatherDBs.deleteAllFromRealm();
         realm.commitTransaction();
         realm.close();
     }

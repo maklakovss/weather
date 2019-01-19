@@ -1,5 +1,7 @@
 package com.mss.weather.domain.interactor;
 
+import android.support.annotation.NonNull;
+
 import com.mss.weather.domain.models.City;
 import com.mss.weather.domain.models.InfoWeather;
 import com.mss.weather.domain.models.Position;
@@ -10,6 +12,8 @@ import com.mss.weather.domain.repositories.InfoWeatherLocalRepository;
 import com.mss.weather.domain.repositories.NetworkRepository;
 import com.mss.weather.domain.repositories.SensorsRepository;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -104,6 +108,7 @@ public class WeatherInteractorImpl implements WeatherInteractor {
                 .doOnSuccess(infoWeather -> {
                     infoWeatherLocalRepository.updateOrInsertInfoWeather(infoWeather);
                     currentWeatherLocalRepository.updateOrInsertCurrentWeather(infoWeather.getCurrentWeather());
+                    dayWeatherLocalRepository.deleteOldDayWeatherByCityID(infoWeather.getCityID(), getCurrentDate());
                     dayWeatherLocalRepository.updateOrInsertDayWeather(infoWeather.getDays());
                 });
         return infoWeatherMaybe;
@@ -114,9 +119,20 @@ public class WeatherInteractorImpl implements WeatherInteractor {
         InfoWeather infoWeather = infoWeatherLocalRepository.getInfoWeatherById(city.getId());
         if (infoWeather != null) {
             infoWeather.setCurrentWeather(currentWeatherLocalRepository.getCurrentWeatherById(city.getId()));
-            infoWeather.setDays(dayWeatherLocalRepository.getDayWeathersByCityId(city.getId()));
+            infoWeather.setDays(dayWeatherLocalRepository.getDayWeathersByCityId(city.getId(), getCurrentDate()));
         }
         return infoWeather;
+    }
+
+    @NonNull
+    private Date getCurrentDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.AM_PM, 0);
+        return calendar.getTime();
     }
 
 }
