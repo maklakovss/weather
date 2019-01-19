@@ -1,7 +1,6 @@
 package com.mss.weather.di;
 
-import android.content.Context;
-
+import com.mss.weather.MyApplication;
 import com.mss.weather.data.db.repositories.CityLocalRepositoryImpl;
 import com.mss.weather.data.db.repositories.CurrentWeatherLocalRepositoryImpl;
 import com.mss.weather.data.db.repositories.DayWeatherLocalRepositoryImpl;
@@ -28,16 +27,10 @@ import dagger.Provides;
 @Module
 public class ApplicationModule {
 
-    final private Context context;
-
-    public ApplicationModule(Context context) {
-        this.context = context;
-    }
-
     @Singleton
     @Provides
     public SensorsRepository provideSensorsRepository() {
-        return new SensorsRepositoryImpl(context);
+        return new SensorsRepositoryImpl(MyApplication.getContext());
     }
 
     @Singleton
