@@ -6,7 +6,7 @@ public interface InfoWeatherLocalRepository {
 
     InfoWeather getInfoWeatherById(String cityId);
 
-    void deleteInfoWeather(InfoWeather infoWeather);
+    void deleteInfoWeather(String cityId);
 
     void updateOrInsertInfoWeather(InfoWeather infoWeather);
 }

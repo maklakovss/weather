@@ -23,14 +23,16 @@ public class InfoWeatherLocalRepositoryImpl implements InfoWeatherLocalRepositor
     }
 
     @Override
-    public void deleteInfoWeather(InfoWeather infoWeather) {
+    public void deleteInfoWeather(String cityId) {
         Realm realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
-        realm.where(InfoWeatherDB.class)
-                .equalTo("cityID", infoWeather.getCityID())
-                .findFirst()
-                .deleteFromRealm();
-        realm.commitTransaction();
+        InfoWeatherDB infoWeatherDB = realm.where(InfoWeatherDB.class)
+                .equalTo("cityID", cityId)
+                .findFirst();
+        if (infoWeatherDB != null) {
+            realm.beginTransaction();
+            infoWeatherDB.deleteFromRealm();
+            realm.commitTransaction();
+        }
         realm.close();
     }
 

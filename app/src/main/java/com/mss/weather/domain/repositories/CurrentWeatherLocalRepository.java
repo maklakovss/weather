@@ -6,7 +6,7 @@ public interface CurrentWeatherLocalRepository {
 
     CurrentWeather getCurrentWeatherById(String cityId);
 
-    void deleteCurrentWeather(CurrentWeather currentWeather);
+    void deleteCurrentWeather(String cityId);
 
     void updateOrInsertCurrentWeather(CurrentWeather currentWeather);
 

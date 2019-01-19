@@ -90,6 +90,9 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     public void deleteCity(City city) {
         cityList.remove(city);
         cityLocalRepository.deleteCity(city);
+        infoWeatherLocalRepository.deleteInfoWeather(city.getId());
+        currentWeatherLocalRepository.deleteCurrentWeather(city.getId());
+        dayWeatherLocalRepository.deleteDayWeatherByCityID(city.getId());
     }
 
     @Override

@@ -33,12 +33,14 @@ public class DayWeatherLocalRepositoryImpl implements DayWeatherLocalRepository 
     @Override
     public void deleteDayWeatherByCityID(String cityId) {
         Realm realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
-        realm.where(DayWeatherDB.class)
+        RealmResults<DayWeatherDB> dayWeatherDBRealmResults = realm.where(DayWeatherDB.class)
                 .equalTo("cityID", cityId)
-                .findAll()
-                .deleteAllFromRealm();
-        realm.commitTransaction();
+                .findAll();
+        if (dayWeatherDBRealmResults != null) {
+            realm.beginTransaction();
+            dayWeatherDBRealmResults.deleteAllFromRealm();
+            realm.commitTransaction();
+        }
         realm.close();
     }
 

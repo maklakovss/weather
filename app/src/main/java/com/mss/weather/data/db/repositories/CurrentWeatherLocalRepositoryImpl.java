@@ -23,14 +23,16 @@ public class CurrentWeatherLocalRepositoryImpl implements CurrentWeatherLocalRep
     }
 
     @Override
-    public void deleteCurrentWeather(CurrentWeather currentWeather) {
+    public void deleteCurrentWeather(String cityId) {
         Realm realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
-        realm.where(CurrentWeatherDB.class)
-                .equalTo("cityID", currentWeather.getCityID())
-                .findFirst()
-                .deleteFromRealm();
-        realm.commitTransaction();
+        CurrentWeatherDB currentWeatherDB = realm.where(CurrentWeatherDB.class)
+                .equalTo("cityID", cityId)
+                .findFirst();
+        if (currentWeatherDB != null) {
+            realm.beginTransaction();
+            currentWeatherDB.deleteFromRealm();
+            realm.commitTransaction();
+        }
         realm.close();
     }
 
