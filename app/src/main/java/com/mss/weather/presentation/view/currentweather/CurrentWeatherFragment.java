@@ -90,7 +90,7 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
         binder = ButterKnife.bind(this, layout);
         rvWeatherList.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvWeatherList.setLayoutManager(linearLayoutManager);
         currentWeatherPresenter.onCreate();
         return layout;

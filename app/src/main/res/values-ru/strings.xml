@@ -35,4 +35,6 @@
     <string name="sunseticon">SunsetIcon</string>
     <string name="degreeLabel">o</string>
     <string name="sunriseicon">SunriseIcon</string>
+    <string name="temp_from_label">от</string>
+    <string name="temp_to_label">до</string>
 </resources>

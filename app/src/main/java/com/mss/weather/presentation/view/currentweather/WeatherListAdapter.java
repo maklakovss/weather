@@ -19,7 +19,8 @@ import butterknife.ButterKnife;
 
 public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.ViewHolder> {
 
-    final SimpleDateFormat formatterDate = new SimpleDateFormat("dd.MM.YYYY", Locale.getDefault());
+    final static SimpleDateFormat formatterDate = new SimpleDateFormat("dd.MM", Locale.getDefault());
+    final static SimpleDateFormat formatterDayOfWeek = new SimpleDateFormat("EEEE", Locale.getDefault());
     private List<DayWeather> weatherDataList;
 
     public WeatherListAdapter(List<DayWeather> weatherDataList) {
@@ -38,7 +39,8 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         DayWeather dayWeather = weatherDataList.get(i);
-        viewHolder.tvPeriod.setText(formatterDate.format(dayWeather.getDate()));
+        viewHolder.tvDate.setText(formatterDate.format(dayWeather.getDate()));
+        viewHolder.tvDayOfWeek.setText(formatterDayOfWeek.format(dayWeather.getDate()));
         viewHolder.tvTempMin.setText(String.valueOf(dayWeather.getMinTempC()));
         viewHolder.tvTempMax.setText(String.valueOf(dayWeather.getMaxTempC()));
 
@@ -50,8 +52,10 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tvPeriod)
-        TextView tvPeriod;
+        @BindView(R.id.tvDate)
+        TextView tvDate;
+        @BindView(R.id.tvDayOfWeek)
+        TextView tvDayOfWeek;
         @BindView(R.id.tvTempMin)
         TextView tvTempMin;
         @BindView(R.id.tvTempMax)

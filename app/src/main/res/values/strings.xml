@@ -38,5 +38,7 @@
     <string name="sunseticon">SunsetIcon</string>
     <string name="degreeLabel">o</string>
     <string name="sunriseicon">SunriseIcon</string>
+    <string name="temp_from_label">from</string>
+    <string name="temp_to_label">to</string>
 
 </resources>
