@@ -1,5 +1,6 @@
 package com.mss.weather.presentation.view.currentweather;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,9 +21,11 @@ import com.mss.weather.domain.models.City;
 import com.mss.weather.domain.models.CurrentWeather;
 import com.mss.weather.domain.models.DayWeather;
 import com.mss.weather.presentation.presenter.CurrentWeatherPresenter;
+import com.mss.weather.presentation.view.main.WeatherFragmentsNavigator;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -32,13 +35,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class CurrentWeatherFragment extends MvpAppCompatFragment implements CurrentWeatherView {
+public class CurrentWeatherFragment extends MvpAppCompatFragment implements CurrentWeatherView, DayListAdapter.OnItemClickListener {
+
     private static final SimpleDateFormat formatterDate = new SimpleDateFormat("dd.MM.YYYY", Locale.getDefault());
     private static final SimpleDateFormat formatterTime = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
     @Inject
     @InjectPresenter
     CurrentWeatherPresenter currentWeatherPresenter;
+
+    private WeatherFragmentsNavigator weatherFragmentsNavigator;
 
     @BindView(R.id.tvCityName)
     TextView tvCityName;
@@ -86,7 +92,7 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         setRetainInstance(true);
-        View layout = inflater.inflate(R.layout.fragment_weather, container, false);
+        View layout = inflater.inflate(R.layout.fragment_current_weather, container, false);
         binder = ButterKnife.bind(this, layout);
         rvWeatherList.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
@@ -142,7 +148,9 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
 
     @Override
     public void showWeatherList(List<DayWeather> dayWeathers) {
-        rvWeatherList.setAdapter(new WeatherListAdapter(dayWeathers));
+        final DayListAdapter dayListAdapter = new DayListAdapter(dayWeathers);
+        rvWeatherList.setAdapter(dayListAdapter);
+        dayListAdapter.setOnItemClickListener(this);
     }
 
     @Override
@@ -154,6 +162,11 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
     }
 
     @Override
+    public void showDay(String cityID, Date date) {
+        weatherFragmentsNavigator.showDayWeather(cityID, date);
+    }
+
+    @Override
     public void onDestroyView() {
         binder.unbind();
         super.onDestroyView();
@@ -162,5 +175,22 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
     @ProvidePresenter
     public CurrentWeatherPresenter providePresenter() {
         return currentWeatherPresenter;
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        currentWeatherPresenter.onClick(position);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        weatherFragmentsNavigator = (WeatherFragmentsNavigator) context;
+    }
+
+    @Override
+    public void onDetach() {
+        weatherFragmentsNavigator = null;
+        super.onDetach();
     }
 }

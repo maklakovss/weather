@@ -4,11 +4,13 @@ import android.support.annotation.NonNull;
 
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
+import com.arellomobile.mvp.viewstate.strategy.OneExecutionStateStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 import com.mss.weather.domain.models.City;
 import com.mss.weather.domain.models.CurrentWeather;
 import com.mss.weather.domain.models.DayWeather;
 
+import java.util.Date;
 import java.util.List;
 
 public interface CurrentWeatherView extends MvpView {
@@ -25,4 +27,6 @@ public interface CurrentWeatherView extends MvpView {
     @StateStrategyType(AddToEndSingleStrategy.class)
     void showProgress(boolean visible);
 
+    @StateStrategyType(OneExecutionStateStrategy.class)
+    void showDay(String cityID, Date date);
 }

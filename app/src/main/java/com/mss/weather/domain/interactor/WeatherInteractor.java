@@ -29,4 +29,6 @@ public interface WeatherInteractor {
     Maybe<InfoWeather> getWeatherInfo(City city);
 
     InfoWeather getLocalWeatherInfo(City city);
+
+    City getCityById(String cityId);
 }

@@ -125,7 +125,7 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
     @Override
     public void showWeather() {
         if (weatherFragmentsNavigator != null) {
-            weatherFragmentsNavigator.showWeather();
+            weatherFragmentsNavigator.showCurrentWeather();
         }
     }
 

@@ -18,29 +18,32 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.ViewHolder> {
+public class DayListAdapter extends RecyclerView.Adapter<DayListAdapter.ViewHolder> {
 
     final static SimpleDateFormat formatterDate = new SimpleDateFormat("dd.MM", Locale.getDefault());
     final static SimpleDateFormat formatterDayOfWeek = new SimpleDateFormat("EEEE", Locale.getDefault());
-    private List<DayWeather> weatherDataList;
 
-    public WeatherListAdapter(List<DayWeather> weatherDataList) {
-        this.weatherDataList = weatherDataList;
+    private List<DayWeather> dayWeathers;
+    private OnItemClickListener onItemClickListener;
+
+    public DayListAdapter(List<DayWeather> dayWeathers) {
+        this.dayWeathers = dayWeathers;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.weather_list_item, viewGroup, false);
+                .inflate(R.layout.list_item_day, viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        DayWeather dayWeather = weatherDataList.get(i);
+        DayWeather dayWeather = dayWeathers.get(i);
         viewHolder.tvDate.setText(formatterDate.format(dayWeather.getDate()));
         viewHolder.tvDayOfWeek.setText(formatterDayOfWeek.format(dayWeather.getDate()));
         viewHolder.tvTempMin.setText(String.valueOf(dayWeather.getMinTempC()));
@@ -58,7 +61,15 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
 
     @Override
     public int getItemCount() {
-        return weatherDataList.size();
+        return dayWeathers.size();
+    }
+
+    public void setOnItemClickListener(DayListAdapter.OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -80,6 +91,13 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        @OnClick(R.id.ibDetailDay)
+        public void onClick(View view) {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(view, getAdapterPosition());
+            }
         }
     }
 }

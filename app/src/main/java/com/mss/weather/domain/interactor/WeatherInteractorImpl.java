@@ -127,6 +127,11 @@ public class WeatherInteractorImpl implements WeatherInteractor {
         return infoWeather;
     }
 
+    @Override
+    public City getCityById(String cityId) {
+        return cityLocalRepository.getCityById(cityId);
+    }
+
     @NonNull
     private Date getCurrentDate() {
         Calendar calendar = Calendar.getInstance();

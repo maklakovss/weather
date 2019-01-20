@@ -14,7 +14,7 @@ import io.reactivex.schedulers.Schedulers;
 @InjectViewState
 public class CurrentWeatherPresenter extends MvpPresenter<CurrentWeatherView> {
 
-    private WeatherInteractor weatherInteractor;
+    private final WeatherInteractor weatherInteractor;
     private InfoWeather infoWeather;
 
     @Inject
@@ -58,5 +58,9 @@ public class CurrentWeatherPresenter extends MvpPresenter<CurrentWeatherView> {
             getViewState().showCurrentWeather(infoWeather.getCurrentWeather());
             getViewState().showWeatherList(infoWeather.getDays());
         }
+    }
+
+    public void onClick(int position) {
+        getViewState().showDay(infoWeather.getCityID(), infoWeather.getDays().get(position).getDate());
     }
 }

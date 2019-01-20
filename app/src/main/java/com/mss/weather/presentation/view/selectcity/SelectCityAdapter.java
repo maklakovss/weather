@@ -29,7 +29,7 @@ public class SelectCityAdapter extends RecyclerView.Adapter<SelectCityAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.auto_complete_city_list_item, viewGroup, false);
+                .inflate(R.layout.list_item_auto_complete_city, viewGroup, false);
         return new ViewHolder(view);
     }
 
