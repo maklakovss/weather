@@ -3,11 +3,13 @@ package com.mss.weather.domain.interactor;
 import android.support.annotation.NonNull;
 
 import com.mss.weather.domain.models.City;
+import com.mss.weather.domain.models.DayWeather;
 import com.mss.weather.domain.models.InfoWeather;
 import com.mss.weather.domain.models.Position;
 import com.mss.weather.domain.repositories.CityLocalRepository;
 import com.mss.weather.domain.repositories.CurrentWeatherLocalRepository;
 import com.mss.weather.domain.repositories.DayWeatherLocalRepository;
+import com.mss.weather.domain.repositories.HourWeatherLocalRepository;
 import com.mss.weather.domain.repositories.InfoWeatherLocalRepository;
 import com.mss.weather.domain.repositories.NetworkRepository;
 import com.mss.weather.domain.repositories.SensorsRepository;
@@ -27,6 +29,7 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     private final InfoWeatherLocalRepository infoWeatherLocalRepository;
     private final CurrentWeatherLocalRepository currentWeatherLocalRepository;
     private final DayWeatherLocalRepository dayWeatherLocalRepository;
+    private final HourWeatherLocalRepository hourWeatherLocalRepository;
     private final SensorsRepository sensorsRepository;
 
     private List<City> cityList;
@@ -39,12 +42,15 @@ public class WeatherInteractorImpl implements WeatherInteractor {
                                  InfoWeatherLocalRepository infoWeatherLocalRepository,
                                  CurrentWeatherLocalRepository currentWeatherLocalRepository,
                                  DayWeatherLocalRepository dayWeatherLocalRepository,
+                                 HourWeatherLocalRepository hourWeatherLocalRepository,
                                  SensorsRepository sensorsRepository) {
+
         this.networkRepository = networkRepository;
         this.cityLocalRepository = cityLocalRepository;
         this.infoWeatherLocalRepository = infoWeatherLocalRepository;
         this.currentWeatherLocalRepository = currentWeatherLocalRepository;
         this.dayWeatherLocalRepository = dayWeatherLocalRepository;
+        this.hourWeatherLocalRepository = hourWeatherLocalRepository;
         this.sensorsRepository = sensorsRepository;
     }
 
@@ -93,6 +99,7 @@ public class WeatherInteractorImpl implements WeatherInteractor {
         infoWeatherLocalRepository.deleteInfoWeather(city.getId());
         currentWeatherLocalRepository.deleteCurrentWeather(city.getId());
         dayWeatherLocalRepository.deleteDayWeatherByCityID(city.getId());
+        hourWeatherLocalRepository.deleteHourWeatherByCityID(city.getId());
     }
 
     @Override
@@ -112,7 +119,11 @@ public class WeatherInteractorImpl implements WeatherInteractor {
                     infoWeatherLocalRepository.updateOrInsertInfoWeather(infoWeather);
                     currentWeatherLocalRepository.updateOrInsertCurrentWeather(infoWeather.getCurrentWeather());
                     dayWeatherLocalRepository.deleteOldDayWeatherByCityID(infoWeather.getCityID(), getCurrentDate());
+                    hourWeatherLocalRepository.deleteOldHourWeatherByCityID(infoWeather.getCityID(), getCurrentDate());
                     dayWeatherLocalRepository.updateOrInsertDayWeather(infoWeather.getDays());
+                    for (DayWeather day : infoWeather.getDays()) {
+                        hourWeatherLocalRepository.updateOrInsertHourWeather(day.getHourly());
+                    }
                 });
         return infoWeatherMaybe;
     }
@@ -123,6 +134,9 @@ public class WeatherInteractorImpl implements WeatherInteractor {
         if (infoWeather != null) {
             infoWeather.setCurrentWeather(currentWeatherLocalRepository.getCurrentWeatherById(city.getId()));
             infoWeather.setDays(dayWeatherLocalRepository.getDayWeathersByCityId(city.getId(), getCurrentDate()));
+            for (DayWeather day : infoWeather.getDays()) {
+                day.setHourly(hourWeatherLocalRepository.getHourWeathersByCityId(city.getId(), day.getDate()));
+            }
         }
         return infoWeather;
     }

@@ -5,7 +5,6 @@ import com.mss.weather.data.network.models.CurrentCondition;
 import com.mss.weather.data.network.models.Hourly;
 import com.mss.weather.data.network.models.Weather;
 import com.mss.weather.data.network.models.WeatherResponse;
-import com.mss.weather.domain.models.ChanceWeather;
 import com.mss.weather.domain.models.City;
 import com.mss.weather.domain.models.CurrentWeather;
 import com.mss.weather.domain.models.DayWeather;
@@ -13,6 +12,7 @@ import com.mss.weather.domain.models.HourWeather;
 import com.mss.weather.domain.models.InfoWeather;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -107,9 +107,11 @@ public class WeatherResponseToWeatherInfo {
         HourWeather hourWeather = new HourWeather();
 
         hourWeather.setCityID(city.getId());
-        Date hourDate = (Date) date.clone();
-        hourDate.setHours(hour.getTime());
-        hourWeather.setDate(hourDate);
+        Calendar hourDate = Calendar.getInstance();
+        hourDate.setTime(date);
+        hourDate.set(Calendar.HOUR, hour.getTime() / 100);
+        hourDate.set(Calendar.MINUTE, hour.getTime() % 100);
+        hourWeather.setDate(hourDate.getTime());
 
         hourWeather.setCloudcover(hour.getCloudcover());
         hourWeather.setDewPointC(hour.getDewPointC());
@@ -133,6 +135,16 @@ public class WeatherResponseToWeatherInfo {
         hourWeather.setWindGustMiles(hour.getWindGustMiles());
         hourWeather.setWindspeedKmph(hour.getWindspeedKmph());
         hourWeather.setWindspeedMiles(hour.getWindspeedMiles());
+        hourWeather.setChanceoffog(hour.getChanceoffog());
+        hourWeather.setChanceoffrost(hour.getChanceoffrost());
+        hourWeather.setChanceofhightemp(hour.getChanceofhightemp());
+        hourWeather.setChanceofovercast(hour.getChanceofovercast());
+        hourWeather.setChanceofrain(hour.getChanceofrain());
+        hourWeather.setChanceofremdry(hour.getChanceofremdry());
+        hourWeather.setChanceofsnow(hour.getChanceofsnow());
+        hourWeather.setChanceofsunshine(hour.getChanceofsunshine());
+        hourWeather.setChanceofthunder(hour.getChanceofthunder());
+        hourWeather.setChanceofwindy(hour.getChanceofwindy());
 
         if (hour.getWeatherIconUrl() != null
                 && hour.getWeatherIconUrl().size() > 0) {
@@ -148,21 +160,6 @@ public class WeatherResponseToWeatherInfo {
                 && hour.getLangRu().size() > 0) {
             hourWeather.setLangRu(hour.getLangRu().get(0).getValue());
         }
-
-        ChanceWeather chanceWeather = new ChanceWeather();
-        chanceWeather.setCityID(city.getId());
-        chanceWeather.setDate(hourDate);
-        chanceWeather.setChanceoffog(hour.getChanceoffog());
-        chanceWeather.setChanceoffrost(hour.getChanceoffrost());
-        chanceWeather.setChanceofhightemp(hour.getChanceofhightemp());
-        chanceWeather.setChanceofovercast(hour.getChanceofovercast());
-        chanceWeather.setChanceofrain(hour.getChanceofrain());
-        chanceWeather.setChanceofremdry(hour.getChanceofremdry());
-        chanceWeather.setChanceofsnow(hour.getChanceofsnow());
-        chanceWeather.setChanceofsunshine(hour.getChanceofsunshine());
-        chanceWeather.setChanceofthunder(hour.getChanceofthunder());
-        chanceWeather.setChanceofwindy(hour.getChanceofwindy());
-        hourWeather.setChanceWeather(chanceWeather);
 
         return hourWeather;
     }

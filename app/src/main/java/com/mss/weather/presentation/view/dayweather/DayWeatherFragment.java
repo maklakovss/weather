@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
@@ -20,8 +19,10 @@ import com.mss.weather.domain.models.DayWeather;
 import com.mss.weather.domain.models.HourWeather;
 import com.mss.weather.presentation.presenter.DayWeatherPresenter;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -30,6 +31,9 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class DayWeatherFragment extends MvpAppCompatFragment implements DayWeatherView {
+
+    private static final SimpleDateFormat formatterDate = new SimpleDateFormat("dd.MM.YYYY", Locale.getDefault());
+    private static final SimpleDateFormat formatterTime = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
     public static final String DATE_KEY = "DATE_KEY";
     public static final String CITY_ID_KEY = "CITY_ID_KEY";
@@ -40,30 +44,28 @@ public class DayWeatherFragment extends MvpAppCompatFragment implements DayWeath
 
     @BindView(R.id.tvCityName)
     TextView tvCityName;
-    @BindView(R.id.tvCloudPercent)
-    TextView tvCloudPercent;
-    @BindView(R.id.tvCloudDescription)
-    TextView tvCloudDescription;
-    @BindView(R.id.tvTemp)
-    TextView tvTemp;
-    @BindView(R.id.tvFeelsLikeC)
-    TextView tvFeelsLikeC;
-    @BindView(R.id.tvHumidity)
-    TextView tvHumidity;
-    @BindView(R.id.tvPressure)
-    TextView tvPressure;
-    @BindView(R.id.tvWind)
-    TextView tvWind;
-    @BindView(R.id.tvWindDeg)
-    TextView tvWindDeg;
     @BindView(R.id.tvDate)
     TextView tvDate;
-    @BindView(R.id.tvTime)
-    TextView tvTime;
+    @BindView(R.id.tvSunrise)
+    TextView tvSunrise;
+    @BindView(R.id.tvSunset)
+    TextView tvSunset;
+    @BindView(R.id.tvSunHour)
+    TextView tvSunHour;
+    @BindView(R.id.tvUvIndexLabel)
+    TextView tvUvIndexLabel;
+    @BindView(R.id.tvUvIndex)
+    TextView tvUvIndex;
+    @BindView(R.id.tvMoonrise)
+    TextView tvMoonrise;
+    @BindView(R.id.tvMoonset)
+    TextView tvMoonset;
+    @BindView(R.id.tvMoonIllumination)
+    TextView tvMoonIllumination;
+    @BindView(R.id.tvMoonPhase)
+    TextView tvMoonPhase;
     @BindView(R.id.rvWeatherList)
-    RecyclerView rvWeatherList;
-    @BindView(R.id.ivWeatherIcon)
-    ImageView ivWeatherIcon;
+    RecyclerView rvHourWeatherList;
 
     private Unbinder binder;
 
@@ -89,10 +91,10 @@ public class DayWeatherFragment extends MvpAppCompatFragment implements DayWeath
         setRetainInstance(true);
         View layout = inflater.inflate(R.layout.fragment_day_weather, container, false);
         binder = ButterKnife.bind(this, layout);
-        rvWeatherList.setHasFixedSize(true);
+        rvHourWeatherList.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rvWeatherList.setLayoutManager(linearLayoutManager);
+        rvHourWeatherList.setLayoutManager(linearLayoutManager);
 
         Date date = new Date(getArguments().getLong(DATE_KEY));
         String cityID = getArguments().getString(CITY_ID_KEY);
@@ -109,38 +111,47 @@ public class DayWeatherFragment extends MvpAppCompatFragment implements DayWeath
     @Override
     public void showDayWeather(DayWeather dayWeather) {
         if (dayWeather != null) {
-//            if (dayWeather.getDate() != null)
-//                tvDate.setText(formatterDate.format(dayWeather.getDate()));
-//            if (dayWeather.getObservationTime() != null)
-//                tvTime.setText(formatterTime.format(dayWeather.getObservationTime()));
-//
-//            tvTemp.setText(String.valueOf((int) dayWeather.getTempC()));
-//            tvFeelsLikeC.setText(String.valueOf((int) dayWeather.getFeelsLikeC()));
-//            tvCloudPercent.setText(String.valueOf(dayWeather.getCloudcover()));
-//            tvCloudDescription.setText(dayWeather.getWeatherDescLocalLanguage());
-//            tvHumidity.setText(String.valueOf(dayWeather.getHumidity()));
-//            tvPressure.setText(String.valueOf(Math.round(dayWeather.getPressure() / 1.333)));
-//            tvWind.setText(String.valueOf(dayWeather.getWindspeedKmph()));
-//            tvWindDeg.setText(String.valueOf(dayWeather.getWinddir16Point()));
-//            if (dayWeather.getWeatherIconUrl() != null) {
-//                Picasso.with(this.getContext())
-//                        .load(dayWeather.getWeatherIconUrl())
-//                        .into(ivWeatherIcon);
-//            } else {
-//                ivWeatherIcon.setImageURI(null);
-//            }
+            if (dayWeather.getDate() != null)
+                tvDate.setText(formatterDate.format(dayWeather.getDate()));
+            else
+                tvDate.setText("");
+
+            if (dayWeather.getSunrise() != null)
+                tvSunrise.setText(formatterTime.format(dayWeather.getSunrise()));
+            else
+                tvSunrise.setText("");
+
+            if (dayWeather.getSunset() != null)
+                tvSunset.setText(formatterTime.format(dayWeather.getSunset()));
+            else
+                tvSunset.setText("");
+
+            if (dayWeather.getMoonrise() != null) {
+                tvMoonrise.setText(formatterTime.format(dayWeather.getMoonrise()));
+            } else {
+                tvMoonrise.setText("");
+            }
+
+            if (dayWeather.getMoonset() != null) {
+                tvMoonset.setText(formatterTime.format(dayWeather.getMoonset()));
+            } else {
+                tvMoonset.setText("");
+            }
+
+            tvSunHour.setText(String.valueOf(dayWeather.getSunHour()));
+            tvUvIndex.setText(String.valueOf(dayWeather.getUvIndex()));
+            tvMoonPhase.setText(dayWeather.getMoonPhase());
+            tvMoonIllumination.setText(String.valueOf(dayWeather.getMoonIllumination()));
         } else {
             tvDate.setText("");
-            tvTime.setText("");
-            tvTemp.setText("");
-            tvFeelsLikeC.setText("");
-            tvCloudPercent.setText("");
-            tvCloudDescription.setText("");
-            tvHumidity.setText("");
-            tvPressure.setText("");
-            tvWind.setText("");
-            tvWindDeg.setText("");
-            ivWeatherIcon.setImageURI(null);
+            tvSunrise.setText("");
+            tvSunset.setText("");
+            tvMoonrise.setText("");
+            tvMoonset.setText("");
+            tvSunHour.setText("");
+            tvUvIndex.setText("");
+            tvMoonPhase.setText("");
+            tvMoonIllumination.setText("");
         }
 
     }
@@ -148,9 +159,9 @@ public class DayWeatherFragment extends MvpAppCompatFragment implements DayWeath
     @Override
     public void showHoursWeatherList(List<HourWeather> hourWeathers) {
         if (hourWeathers != null) {
-            rvWeatherList.setAdapter(new HoursListAdapter(hourWeathers));
+            rvHourWeatherList.setAdapter(new HoursListAdapter(hourWeathers));
         } else {
-            rvWeatherList.setAdapter(null);
+            rvHourWeatherList.setAdapter(null);
         }
     }
 

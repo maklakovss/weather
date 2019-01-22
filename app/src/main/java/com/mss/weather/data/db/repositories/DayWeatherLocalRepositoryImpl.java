@@ -18,13 +18,13 @@ public class DayWeatherLocalRepositoryImpl implements DayWeatherLocalRepository 
         Realm realm = Realm.getDefaultInstance();
         RealmResults<DayWeatherDB> dayWeatherDBs = realm.where(DayWeatherDB.class)
                 .equalTo("cityID", cityId)
-                .sort("date")
                 .greaterThanOrEqualTo("date", date)
+                .sort("date")
                 .findAll();
 
         List<DayWeather> dayWeathers = null;
         if (dayWeatherDBs != null) {
-            dayWeathers = DayWeatherMapper.mapDayWeatherDBsToMapWeathers(dayWeatherDBs);
+            dayWeathers = DayWeatherMapper.mapDayWeatherDBsToDayWeathers(dayWeatherDBs);
         }
         realm.close();
         return dayWeathers;
@@ -61,7 +61,7 @@ public class DayWeatherLocalRepositoryImpl implements DayWeatherLocalRepository 
     public void updateOrInsertDayWeather(List<DayWeather> dayWeathers) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        realm.insertOrUpdate(DayWeatherMapper.mapDayWeathersToMapWeatherDBs(dayWeathers));
+        realm.insertOrUpdate(DayWeatherMapper.mapDayWeathersToDayWeatherDBs(dayWeathers));
         realm.commitTransaction();
         realm.close();
     }

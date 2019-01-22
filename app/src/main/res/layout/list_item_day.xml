@@ -120,12 +120,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="@string/temp_from_label"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvWindMin"
-        app:layout_constraintEnd_toStartOf="@+id/tvWindMin"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toEndOf="@+id/tvWindLabel" />
+        app:layout_constraintStart_toEndOf="@+id/tvWindLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvTempLabel" />
 
     <TextView
         android:id="@+id/tvWindMin"
@@ -133,8 +131,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/tvWindToLabel"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tvWindFromLabel"
         app:layout_constraintTop_toBottomOf="@+id/tvTempLabel"
         tools:text="2" />
@@ -144,11 +140,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="@string/temp_to_label"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvWindMax"
-        app:layout_constraintEnd_toStartOf="@+id/tvWindMax"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tvWindMin" />
+        app:layout_constraintStart_toEndOf="@+id/tvWindMin"
+        app:layout_constraintTop_toBottomOf="@+id/tvTempLabel" />
 
     <TextView
         android:id="@+id/tvWindMax"
@@ -156,8 +151,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvWindToLabel"
         app:layout_constraintTop_toBottomOf="@+id/tvTempLabel"
         tools:text="3" />

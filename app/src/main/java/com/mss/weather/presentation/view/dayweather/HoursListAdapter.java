@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mss.weather.R;
@@ -20,8 +19,7 @@ import butterknife.ButterKnife;
 
 public class HoursListAdapter extends RecyclerView.Adapter<HoursListAdapter.ViewHolder> {
 
-    final static SimpleDateFormat formatterDate = new SimpleDateFormat("dd.MM", Locale.getDefault());
-    final static SimpleDateFormat formatterDayOfWeek = new SimpleDateFormat("EEEE", Locale.getDefault());
+    final static SimpleDateFormat formatterTime = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
     private List<HourWeather> hourWeathers;
 
@@ -41,19 +39,9 @@ public class HoursListAdapter extends RecyclerView.Adapter<HoursListAdapter.View
     @Override
     public void onBindViewHolder(@NonNull HoursListAdapter.ViewHolder viewHolder, int i) {
         HourWeather hourWeather = hourWeathers.get(i);
-        viewHolder.tvDate.setText(formatterDate.format(hourWeather.getDate()));
-        viewHolder.tvDayOfWeek.setText(formatterDayOfWeek.format(hourWeather.getDate()));
-//        viewHolder.tvTempMin.setText(String.valueOf(hourWeather.getMinTempC()));
-//        viewHolder.tvTempMax.setText(String.valueOf(hourWeather.getMaxTempC()));
-//        viewHolder.tvWindMin.setText(String.valueOf(hourWeather.getMinWindspeedKmph()));
-//        viewHolder.tvWindMax.setText(String.valueOf(hourWeather.getMaxWindspeedKmph()));
-//        if (hourWeather.getMaxWeatherIconUrl() != null) {
-//            Picasso.with(viewHolder.itemView.getContext())
-//                    .load(hourWeather.getMaxWeatherIconUrl())
-//                    .into(viewHolder.ivWeatherIcon);
-//        } else {
-//            viewHolder.ivWeatherIcon.setImageURI(null);
-//        }
+        viewHolder.tvHour.setText(formatterTime.format(hourWeather.getDate()));
+        //viewHolder.tvDayOfWeek.setText(formatterDayOfWeek.format(hourWeather.getDate()));
+        //viewHolder.tvTempMin.setText(String.valueOf(hourWeather.getMinTempC()));
     }
 
     @Override
@@ -62,20 +50,9 @@ public class HoursListAdapter extends RecyclerView.Adapter<HoursListAdapter.View
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tvDate)
-        TextView tvDate;
-        @BindView(R.id.tvDayOfWeek)
-        TextView tvDayOfWeek;
-        @BindView(R.id.tvTempMin)
-        TextView tvTempMin;
-        @BindView(R.id.tvTempMax)
-        TextView tvTempMax;
-        @BindView(R.id.tvWindMin)
-        TextView tvWindMin;
-        @BindView(R.id.tvWindMax)
-        TextView tvWindMax;
-        @BindView(R.id.ivWeatherIcon)
-        ImageView ivWeatherIcon;
+
+        @BindView(R.id.tvHour)
+        TextView tvHour;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

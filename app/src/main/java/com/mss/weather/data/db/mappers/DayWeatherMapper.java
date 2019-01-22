@@ -8,21 +8,20 @@ import com.mss.weather.domain.models.DayWeather;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.realm.RealmResults;
-
 public class DayWeatherMapper {
 
     @NonNull
-    public static List<DayWeatherDB> mapDayWeathersToMapWeatherDBs(List<DayWeather> dayWeathers) {
-        List<DayWeatherDB> dayWeatherDBs = new ArrayList<>();
+    public static List<DayWeatherDB> mapDayWeathersToDayWeatherDBs(@NonNull final List<DayWeather> dayWeathers) {
+        final List<DayWeatherDB> dayWeatherDBs = new ArrayList<>();
         for (DayWeather dayWeather : dayWeathers) {
             dayWeatherDBs.add(DayWeatherMapper.mapDayWeatherToDayWeatherDB(dayWeather));
         }
         return dayWeatherDBs;
     }
 
-    public static DayWeather mapDayWeatherDBToDayWeather(DayWeatherDB dayWeatherDB) {
-        DayWeather dayWeather = new DayWeather();
+    @NonNull
+    public static DayWeather mapDayWeatherDBToDayWeather(@NonNull final DayWeatherDB dayWeatherDB) {
+        final DayWeather dayWeather = new DayWeather();
         dayWeather.setCityID(dayWeatherDB.getCityID());
         dayWeather.setDate(dayWeatherDB.getDate());
         dayWeather.setMaxTempC(dayWeatherDB.getMaxTempC());
@@ -48,8 +47,8 @@ public class DayWeatherMapper {
     }
 
     @NonNull
-    public static List<DayWeather> mapDayWeatherDBsToMapWeathers(RealmResults<DayWeatherDB> dayWeatherDBs) {
-        List<DayWeather> dayWeathers = new ArrayList<>();
+    public static List<DayWeather> mapDayWeatherDBsToDayWeathers(@NonNull final List<DayWeatherDB> dayWeatherDBs) {
+        final List<DayWeather> dayWeathers = new ArrayList<>();
         for (DayWeatherDB dayWeatherDB : dayWeatherDBs) {
             dayWeathers.add(DayWeatherMapper.mapDayWeatherDBToDayWeather(dayWeatherDB));
         }
@@ -57,8 +56,9 @@ public class DayWeatherMapper {
     }
 
 
-    public static DayWeatherDB mapDayWeatherToDayWeatherDB(DayWeather dayWeather) {
-        DayWeatherDB dayWeatherDB = new DayWeatherDB();
+    @NonNull
+    public static DayWeatherDB mapDayWeatherToDayWeatherDB(@NonNull final DayWeather dayWeather) {
+        final DayWeatherDB dayWeatherDB = new DayWeatherDB();
         dayWeatherDB.setId(dayWeather.getCityID() + " " + dayWeather.getDate().toString());
         dayWeatherDB.setCityID(dayWeather.getCityID());
         dayWeatherDB.setDate(dayWeather.getDate());
