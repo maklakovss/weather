@@ -16,7 +16,7 @@ public interface MainView extends MvpView {
     void showAddCity();
 
     @StateStrategyType(OneExecutionStateStrategy.class)
-    void showWeather();
+    void showCurrentWeather();
 
     @StateStrategyType(OneExecutionStateStrategy.class)
     void showCityList();

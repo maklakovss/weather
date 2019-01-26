@@ -1,5 +1,8 @@
 package com.mss.weather.domain.interactor;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.mss.weather.domain.models.City;
 import com.mss.weather.domain.models.InfoWeather;
 import com.mss.weather.domain.models.Position;
@@ -10,23 +13,33 @@ import io.reactivex.Maybe;
 
 public interface WeatherInteractor {
 
+    @NonNull
     List<City> getListCities();
 
+    @Nullable
     City getCurrentCity();
 
-    void setCurrentCity(City currentCity);
+    void setCurrentCity(@NonNull final City currentCity);
 
-    void addCity(City city);
+    void addCity(@NonNull final City city);
 
-    void deleteCity(City city);
+    void deleteCity(@NonNull final City city);
 
-    Maybe<List<City>> getAutoCompleteLocations(String searchTemplate);
+    @NonNull
+    Maybe<List<City>> getAutoCompleteLocations(@NonNull final String searchTemplate);
 
-    Maybe<List<City>> getLocationsByPosition(Position position);
+    @NonNull
+    Maybe<List<City>> getLocationsByPosition(@NonNull final Position position);
 
+    @NonNull
     Maybe<Position> getPosition();
 
-    Maybe<InfoWeather> getWeatherInfo(City city);
+    @NonNull
+    Maybe<InfoWeather> getWeatherInfo(@NonNull final City city);
 
-    InfoWeather getLocalWeatherInfo(City city);
+    @Nullable
+    InfoWeather getLocalWeatherInfo(@NonNull final City city);
+
+    @Nullable
+    City getCityById(@NonNull final String cityId);
 }

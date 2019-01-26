@@ -1,13 +1,17 @@
 package com.mss.weather.domain.repositories;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.mss.weather.domain.models.CurrentWeather;
 
 public interface CurrentWeatherLocalRepository {
 
-    CurrentWeather getCurrentWeatherById(String cityId);
+    @Nullable
+    CurrentWeather getCurrentWeatherById(@NonNull final String cityId);
 
-    void deleteCurrentWeather(CurrentWeather currentWeather);
+    void deleteCurrentWeather(@NonNull final String cityId);
 
-    void updateOrInsertCurrentWeather(CurrentWeather currentWeather);
+    void updateOrInsertCurrentWeather(@NonNull final CurrentWeather currentWeather);
 
 }

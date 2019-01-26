@@ -1,5 +1,6 @@
 package com.mss.weather.presentation.view.currentweather;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,9 +21,11 @@ import com.mss.weather.domain.models.City;
 import com.mss.weather.domain.models.CurrentWeather;
 import com.mss.weather.domain.models.DayWeather;
 import com.mss.weather.presentation.presenter.CurrentWeatherPresenter;
+import com.mss.weather.presentation.view.main.WeatherFragmentsNavigator;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -32,13 +35,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class CurrentWeatherFragment extends MvpAppCompatFragment implements CurrentWeatherView {
+public class CurrentWeatherFragment extends MvpAppCompatFragment implements CurrentWeatherView, DayListAdapter.OnItemClickListener {
+
     private static final SimpleDateFormat formatterDate = new SimpleDateFormat("dd.MM.YYYY", Locale.getDefault());
     private static final SimpleDateFormat formatterTime = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
     @Inject
     @InjectPresenter
     CurrentWeatherPresenter currentWeatherPresenter;
+
+    private WeatherFragmentsNavigator weatherFragmentsNavigator;
 
     @BindView(R.id.tvCityName)
     TextView tvCityName;
@@ -77,20 +83,22 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
         super.onCreate(savedInstanceState);
     }
 
+    @NonNull
     public static CurrentWeatherFragment newInstance() {
         return new CurrentWeatherFragment();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater,
+                             @NonNull final ViewGroup container,
+                             @NonNull final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         setRetainInstance(true);
-        View layout = inflater.inflate(R.layout.fragment_weather, container, false);
+        View layout = inflater.inflate(R.layout.fragment_current_weather, container, false);
         binder = ButterKnife.bind(this, layout);
         rvWeatherList.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvWeatherList.setLayoutManager(linearLayoutManager);
         currentWeatherPresenter.onCreate();
         return layout;
@@ -102,47 +110,34 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
     }
 
     @Override
-    public void showCurrentWeather(final CurrentWeather currentWeather) {
-        if (currentWeather != null) {
-            if (currentWeather.getDate() != null)
-                tvDate.setText(formatterDate.format(currentWeather.getDate()));
-            if (currentWeather.getObservationTime() != null)
-                tvTime.setText(formatterTime.format(currentWeather.getObservationTime()));
+    public void showCurrentWeather(@NonNull final CurrentWeather currentWeather) {
+        if (currentWeather.getDate() != null)
+            tvDate.setText(formatterDate.format(currentWeather.getDate()));
+        if (currentWeather.getObservationTime() != null)
+            tvTime.setText(formatterTime.format(currentWeather.getObservationTime()));
 
-            tvTemp.setText(String.valueOf((int) currentWeather.getTempC()));
-            tvFeelsLikeC.setText(String.valueOf((int) currentWeather.getFeelsLikeC()));
-            tvCloudPercent.setText(String.valueOf(currentWeather.getCloudcover()));
-            tvCloudDescription.setText(currentWeather.getWeatherDescLocalLanguage());
-            tvHumidity.setText(String.valueOf(currentWeather.getHumidity()));
-            tvPressure.setText(String.valueOf(Math.round(currentWeather.getPressure() / 1.333)));
-            tvWind.setText(String.valueOf(currentWeather.getWindspeedKmph()));
-            tvWindDeg.setText(String.valueOf(currentWeather.getWinddir16Point()));
-            if (currentWeather.getWeatherIconUrl() != null) {
-                Picasso.with(this.getContext())
-                        .load(currentWeather.getWeatherIconUrl())
-                        .into(ivWeatherIcon);
-            } else {
-                ivWeatherIcon.setImageURI(null);
-            }
+        tvTemp.setText(String.valueOf((int) currentWeather.getTempC()));
+        tvFeelsLikeC.setText(String.valueOf((int) currentWeather.getFeelsLikeC()));
+        tvCloudPercent.setText(String.valueOf(currentWeather.getCloudcover()));
+        tvCloudDescription.setText(currentWeather.getWeatherDescLocalLanguage());
+        tvHumidity.setText(String.valueOf(currentWeather.getHumidity()));
+        tvPressure.setText(String.valueOf(Math.round(currentWeather.getPressure() / 1.333)));
+        tvWind.setText(String.valueOf(currentWeather.getWindspeedKmph()));
+        tvWindDeg.setText(String.valueOf(currentWeather.getWinddir16Point()));
+        if (currentWeather.getWeatherIconUrl() != null) {
+            Picasso.with(this.getContext())
+                    .load(currentWeather.getWeatherIconUrl())
+                    .into(ivWeatherIcon);
         } else {
-            tvDate.setText("");
-            tvTime.setText("");
-            tvTemp.setText("");
-            tvFeelsLikeC.setText("");
-            tvCloudPercent.setText("");
-            tvCloudDescription.setText("");
-            tvHumidity.setText("");
-            tvPressure.setText("");
-            tvWind.setText("");
-            tvWindDeg.setText("");
             ivWeatherIcon.setImageURI(null);
         }
-
     }
 
     @Override
-    public void showWeatherList(List<DayWeather> dayWeathers) {
-        rvWeatherList.setAdapter(new WeatherListAdapter(dayWeathers));
+    public void showWeatherList(@NonNull final List<DayWeather> dayWeathers) {
+        final DayListAdapter dayListAdapter = new DayListAdapter(dayWeathers);
+        rvWeatherList.setAdapter(dayListAdapter);
+        dayListAdapter.setOnItemClickListener(this);
     }
 
     @Override
@@ -154,6 +149,31 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
     }
 
     @Override
+    public void showDay(@NonNull final String cityID, @NonNull final Date date) {
+        weatherFragmentsNavigator.showDayWeather(cityID, date);
+    }
+
+    @Override
+    public void clearCurrentWeather() {
+        tvDate.setText("");
+        tvTime.setText("");
+        tvTemp.setText("");
+        tvFeelsLikeC.setText("");
+        tvCloudPercent.setText("");
+        tvCloudDescription.setText("");
+        tvHumidity.setText("");
+        tvPressure.setText("");
+        tvWind.setText("");
+        tvWindDeg.setText("");
+        ivWeatherIcon.setImageURI(null);
+    }
+
+    @Override
+    public void clearWeatherList() {
+        rvWeatherList.setAdapter(null);
+    }
+
+    @Override
     public void onDestroyView() {
         binder.unbind();
         super.onDestroyView();
@@ -162,5 +182,22 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
     @ProvidePresenter
     public CurrentWeatherPresenter providePresenter() {
         return currentWeatherPresenter;
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        currentWeatherPresenter.onClick(position);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        weatherFragmentsNavigator = (WeatherFragmentsNavigator) context;
+    }
+
+    @Override
+    public void onDetach() {
+        weatherFragmentsNavigator = null;
+        super.onDetach();
     }
 }

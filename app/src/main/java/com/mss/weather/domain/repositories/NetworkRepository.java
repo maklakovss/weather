@@ -1,5 +1,7 @@
 package com.mss.weather.domain.repositories;
 
+import android.support.annotation.NonNull;
+
 import com.mss.weather.domain.models.City;
 import com.mss.weather.domain.models.InfoWeather;
 import com.mss.weather.domain.models.Position;
@@ -10,9 +12,12 @@ import io.reactivex.Maybe;
 
 public interface NetworkRepository {
 
-    Maybe<List<City>> getAutoCompleteCities(String startWith);
+    @NonNull
+    Maybe<List<City>> getAutoCompleteCities(@NonNull final String startWith);
 
-    Maybe<List<City>> getCitiesByCoordinate(Position position);
+    @NonNull
+    Maybe<List<City>> getCitiesByCoordinate(@NonNull final Position position);
 
-    Maybe<InfoWeather> getWeatherInfo(City city);
+    @NonNull
+    Maybe<InfoWeather> getWeatherInfo(@NonNull final City city);
 }

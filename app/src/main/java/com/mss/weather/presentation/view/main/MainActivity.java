@@ -1,5 +1,6 @@
 package com.mss.weather.presentation.view.main;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -10,6 +11,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
@@ -19,8 +23,11 @@ import com.mss.weather.MyApplication;
 import com.mss.weather.R;
 import com.mss.weather.presentation.presenter.MainPresenter;
 import com.mss.weather.presentation.view.currentweather.CurrentWeatherFragment;
+import com.mss.weather.presentation.view.dayweather.DayWeatherFragment;
 import com.mss.weather.presentation.view.listcities.ListCitiesFragment;
 import com.mss.weather.presentation.view.selectcity.SelectCityFragment;
+
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -31,6 +38,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Weat
 
     private static final String CITY_LIST_TAG = "CITY_LIST_TAG";
     private static final String WEATHER_TAG = "WEATHER_TAG";
+    private static final String DAY_TAG = "DAY_TAG";
     private static final String SETTINGS_TAG = "SETTINGS_TAG";
 
     @Inject
@@ -94,7 +102,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Weat
     }
 
     @Override
-    public void showWeather() {
+    public void showCurrentWeather() {
         CurrentWeatherFragment currentWeatherFragment = getCityWeatherFragment();
         if (currentWeatherFragment == null)
             currentWeatherFragment = createCityWeatherFragment();
@@ -106,6 +114,28 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Weat
                 .findFragmentByTag(getString(R.string.list_fragment_tag));
         if (listCitiesFragment == null)
             createListCitiesFragment();
+    }
+
+    @Override
+    public void showDayWeather(String cityID, Date date) {
+        DayWeatherFragment dayWeatherFragment = getDayWeatherFragment();
+        if (dayWeatherFragment == null) {
+            createDayWeatherFragment(cityID, date);
+        }
+    }
+
+    private DayWeatherFragment createDayWeatherFragment(String cityID, Date date) {
+        final DayWeatherFragment dayWeatherFragment = DayWeatherFragment.newInstance(cityID, date);
+        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.flMain, dayWeatherFragment);
+        ft.addToBackStack("");
+        ft.commit();
+        return dayWeatherFragment;
+    }
+
+    private DayWeatherFragment getDayWeatherFragment() {
+        return (DayWeatherFragment) getSupportFragmentManager()
+                .findFragmentByTag(DAY_TAG);
     }
 
     private void createListCitiesFragment() {
@@ -168,5 +198,17 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Weat
     @Override
     public void back() {
         getSupportFragmentManager().popBackStack();
+    }
+
+    public void hideKeyboard() {
+        final View view = getCurrentFocus();
+        if (view != null) {
+            final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        } else {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        }
     }
 }

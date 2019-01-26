@@ -1,5 +1,7 @@
 package com.mss.weather.data.network;
 
+import android.support.annotation.NonNull;
+
 import com.mss.weather.data.network.models.CitiesResponse;
 import com.mss.weather.data.network.models.WeatherResponse;
 
@@ -9,32 +11,35 @@ import retrofit2.http.Query;
 
 public interface WorldWeatherOnline {
 
+    @NonNull
     @GET("premium/v1/search.ashx")
-    Observable<CitiesResponse> getCities(@Query("q") String startWith,
+    Observable<CitiesResponse> getCities(@NonNull @Query("q") final String startWith,
                                          @Query("num_of_results") int numOfResults,
-                                         @Query("key") String key,
-                                         @Query("format") String format);
+                                         @NonNull @Query("key") final String key,
+                                         @NonNull @Query("format") String format);
 
+    @NonNull
     @GET("premium/v1/weather.ashx")
-    Observable<WeatherResponse> getWeather(@Query("q") String query,
-                                           @Query("key") String key,
-                                           @Query("format") String format,
+    Observable<WeatherResponse> getWeather(@NonNull @Query("q") final String query,
+                                           @NonNull @Query("key") final String key,
+                                           @NonNull @Query("format") final String format,
                                            @Query("num_of_days") int numOfDays,
-                                           @Query("fx") String allowsWeather,
-                                           @Query("cc") String allowCurrentWeather,
-                                           @Query("mca") String allowMonthlyClimate,
-                                           @Query("includelocation") String includeLocation,
+                                           @NonNull @Query("fx") final String allowsWeather,
+                                           @NonNull @Query("cc") final String allowCurrentWeather,
+                                           @NonNull @Query("mca") final String allowMonthlyClimate,
+                                           @NonNull @Query("includelocation") final String includeLocation,
                                            @Query("tp") int timePeriod,
-                                           @Query("showlocaltime") String showLocalTime,
-                                           @Query("lang") String language);
+                                           @NonNull @Query("showlocaltime") final String showLocalTime,
+                                           @NonNull @Query("lang") final String language);
 
+    @NonNull
     @GET("premium/v1/past-weather.ashx")
-    Observable<WeatherResponse> getPastWeather(@Query("q") String query,
-                                               @Query("key") String key,
-                                               @Query("format") String format,
-                                               @Query("date") String startDate,
-                                               @Query("enddate") String endDate,
-                                               @Query("includelocation") String includeLocation,
+    Observable<WeatherResponse> getPastWeather(@NonNull @Query("q") final String query,
+                                               @NonNull @Query("key") final String key,
+                                               @NonNull @Query("format") final String format,
+                                               @NonNull @Query("date") final String startDate,
+                                               @NonNull @Query("enddate") final String endDate,
+                                               @NonNull @Query("includelocation") final String includeLocation,
                                                @Query("tp") int timePeriod,
-                                               @Query("lang") String language);
+                                               @NonNull @Query("lang") final String language);
 }

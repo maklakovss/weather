@@ -34,5 +34,14 @@ public class HourWeather {
     private int windGustKmph;
     private int feelsLikeC;
     private int feelsLikeF;
-    private ChanceWeather chanceWeather;
+    private int chanceofrain;
+    private int chanceofremdry;
+    private int chanceofwindy;
+    private int chanceofovercast;
+    private int chanceofsunshine;
+    private int chanceoffrost;
+    private int chanceofhightemp;
+    private int chanceoffog;
+    private int chanceofsnow;
+    private int chanceofthunder;
 }

@@ -2,11 +2,12 @@ package com.mss.weather.data.db.models;
 
 import java.util.Date;
 
+import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import lombok.Data;
 
 @Data
-public class HourWeatherDB {
+public class HourWeatherDB extends RealmObject {
 
     @PrimaryKey
     private String id;
@@ -39,4 +40,14 @@ public class HourWeatherDB {
     private int windGustKmph;
     private int feelsLikeC;
     private int feelsLikeF;
+    private int chanceofrain;
+    private int chanceofremdry;
+    private int chanceofwindy;
+    private int chanceofovercast;
+    private int chanceofsunshine;
+    private int chanceoffrost;
+    private int chanceofhightemp;
+    private int chanceoffog;
+    private int chanceofsnow;
+    private int chanceofthunder;
 }

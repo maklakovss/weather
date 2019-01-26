@@ -1,12 +1,15 @@
 package com.mss.weather.data.db.mappers;
 
+import android.support.annotation.NonNull;
+
 import com.mss.weather.data.db.models.CurrentWeatherDB;
 import com.mss.weather.domain.models.CurrentWeather;
 
 public class CurrentWeatherMapper {
 
-    public static CurrentWeather mapCurrentWeatherDbToCurrentWeather(CurrentWeatherDB currentWeatherDB) {
-        CurrentWeather currentWeather = new CurrentWeather();
+    @NonNull
+    public static CurrentWeather mapCurrentWeatherDbToCurrentWeather(@NonNull final CurrentWeatherDB currentWeatherDB) {
+        final CurrentWeather currentWeather = new CurrentWeather();
         currentWeather.setCityID(currentWeatherDB.getCityID());
         currentWeather.setCloudcover(currentWeatherDB.getCloudcover());
         currentWeather.setDate(currentWeatherDB.getDate());
@@ -30,8 +33,9 @@ public class CurrentWeatherMapper {
         return currentWeather;
     }
 
-    public static CurrentWeatherDB mapInfoWeatherDBToInfoWeather(CurrentWeather currentWeather) {
-        CurrentWeatherDB currentWeatherDB = new CurrentWeatherDB();
+    @NonNull
+    public static CurrentWeatherDB mapInfoWeatherDBToInfoWeather(@NonNull final CurrentWeather currentWeather) {
+        final CurrentWeatherDB currentWeatherDB = new CurrentWeatherDB();
         currentWeatherDB.setCityID(currentWeather.getCityID());
         currentWeatherDB.setCloudcover(currentWeather.getCloudcover());
         currentWeatherDB.setDate(currentWeather.getDate());

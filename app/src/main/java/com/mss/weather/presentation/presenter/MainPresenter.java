@@ -31,7 +31,7 @@ public class MainPresenter extends MvpPresenter<MainView> {
         } else {
             City lastCity = weatherInteractor.getCurrentCity();
             if (lastCity != null) {
-                getViewState().showWeather();
+                getViewState().showCurrentWeather();
             }
         }
     }
