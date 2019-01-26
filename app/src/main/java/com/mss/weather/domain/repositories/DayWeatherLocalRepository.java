@@ -1,5 +1,8 @@
 package com.mss.weather.domain.repositories;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.mss.weather.domain.models.DayWeather;
 
 import java.util.Date;
@@ -7,12 +10,13 @@ import java.util.List;
 
 public interface DayWeatherLocalRepository {
 
-    List<DayWeather> getDayWeathersByCityId(String cityId, Date date);
+    @Nullable
+    List<DayWeather> getDayWeathersByCityId(@NonNull final String cityId, @NonNull final Date date);
 
-    void deleteDayWeatherByCityID(String cityId);
+    void deleteDayWeatherByCityID(@NonNull final String cityId);
 
-    void deleteOldDayWeatherByCityID(String cityId, Date date);
+    void deleteOldDayWeatherByCityID(@NonNull final String cityId, @NonNull final Date date);
 
-    void updateOrInsertDayWeather(List<DayWeather> dayWeathers);
+    void updateOrInsertDayWeather(@NonNull final List<DayWeather> dayWeathers);
 
 }

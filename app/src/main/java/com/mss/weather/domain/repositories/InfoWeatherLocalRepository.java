@@ -1,12 +1,16 @@
 package com.mss.weather.domain.repositories;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.mss.weather.domain.models.InfoWeather;
 
 public interface InfoWeatherLocalRepository {
 
-    InfoWeather getInfoWeatherById(String cityId);
+    @Nullable
+    InfoWeather getInfoWeatherById(@NonNull final String cityId);
 
-    void deleteInfoWeather(String cityId);
+    void deleteInfoWeather(@NonNull final String cityId);
 
-    void updateOrInsertInfoWeather(InfoWeather infoWeather);
+    void updateOrInsertInfoWeather(@NonNull final InfoWeather infoWeather);
 }
