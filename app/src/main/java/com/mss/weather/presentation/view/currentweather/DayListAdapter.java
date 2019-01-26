@@ -22,10 +22,11 @@ import butterknife.OnClick;
 
 public class DayListAdapter extends RecyclerView.Adapter<DayListAdapter.ViewHolder> {
 
-    final static SimpleDateFormat formatterDate = new SimpleDateFormat("dd.MM", Locale.getDefault());
-    final static SimpleDateFormat formatterDayOfWeek = new SimpleDateFormat("EEEE", Locale.getDefault());
+    private final static SimpleDateFormat formatterDate = new SimpleDateFormat("dd.MM", Locale.getDefault());
+    private final static SimpleDateFormat formatterDayOfWeek = new SimpleDateFormat("EEEE", Locale.getDefault());
 
-    private List<DayWeather> dayWeathers;
+    private final List<DayWeather> dayWeathers;
+
     private OnItemClickListener onItemClickListener;
 
     public DayListAdapter(List<DayWeather> dayWeathers) {
@@ -34,16 +35,16 @@ public class DayListAdapter extends RecyclerView.Adapter<DayListAdapter.ViewHold
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext())
+    public ViewHolder onCreateViewHolder(@NonNull final ViewGroup viewGroup, int i) {
+        final View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.list_item_day, viewGroup, false);
-        ViewHolder viewHolder = new ViewHolder(view);
+        final ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        DayWeather dayWeather = dayWeathers.get(i);
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
+        final DayWeather dayWeather = dayWeathers.get(i);
         viewHolder.tvDate.setText(formatterDate.format(dayWeather.getDate()));
         viewHolder.tvDayOfWeek.setText(formatterDayOfWeek.format(dayWeather.getDate()));
         viewHolder.tvTempMin.setText(String.valueOf(dayWeather.getMinTempC()));
@@ -69,32 +70,33 @@ public class DayListAdapter extends RecyclerView.Adapter<DayListAdapter.ViewHold
     }
 
     public interface OnItemClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(@NonNull final View view, int position);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tvDate)
-        TextView tvDate;
-        @BindView(R.id.tvDayOfWeek)
-        TextView tvDayOfWeek;
-        @BindView(R.id.tvTempMin)
-        TextView tvTempMin;
-        @BindView(R.id.tvTempMax)
-        TextView tvTempMax;
-        @BindView(R.id.tvWindMin)
-        TextView tvWindMin;
-        @BindView(R.id.tvWindMax)
-        TextView tvWindMax;
-        @BindView(R.id.ivWeatherIcon)
-        ImageView ivWeatherIcon;
 
-        public ViewHolder(@NonNull View itemView) {
+        @BindView(R.id.tvDate)
+        private TextView tvDate;
+        @BindView(R.id.tvDayOfWeek)
+        private TextView tvDayOfWeek;
+        @BindView(R.id.tvTempMin)
+        private TextView tvTempMin;
+        @BindView(R.id.tvTempMax)
+        private TextView tvTempMax;
+        @BindView(R.id.tvWindMin)
+        private TextView tvWindMin;
+        @BindView(R.id.tvWindMax)
+        private TextView tvWindMax;
+        @BindView(R.id.ivWeatherIcon)
+        private ImageView ivWeatherIcon;
+
+        public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
         @OnClick(R.id.ibDetailDay)
-        public void onClick(View view) {
+        public void onClick(@NonNull final View view) {
             if (onItemClickListener != null) {
                 onItemClickListener.onItemClick(view, getAdapterPosition());
             }

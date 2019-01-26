@@ -1,5 +1,7 @@
 package com.mss.weather.presentation.presenter;
 
+import android.support.annotation.NonNull;
+
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.mss.weather.domain.interactor.WeatherInteractor;
@@ -18,7 +20,7 @@ public class CurrentWeatherPresenter extends MvpPresenter<CurrentWeatherView> {
     private InfoWeather infoWeather;
 
     @Inject
-    public CurrentWeatherPresenter(WeatherInteractor weatherInteractor) {
+    public CurrentWeatherPresenter(@NonNull final WeatherInteractor weatherInteractor) {
         this.weatherInteractor = weatherInteractor;
     }
 
@@ -43,21 +45,27 @@ public class CurrentWeatherPresenter extends MvpPresenter<CurrentWeatherView> {
         getViewState().showProgress(true);
     }
 
-    private void stopProgressOnError(Throwable e) {
+    private void stopProgressOnError(@NonNull final Throwable e) {
         getViewState().showProgress(false);
     }
 
-    private void onSuccess(InfoWeather infoWeather) {
+    private void onSuccess(@NonNull final InfoWeather infoWeather) {
+        this.infoWeather = infoWeather;
         showInfoWeather(infoWeather);
         getViewState().showProgress(false);
     }
 
-    private void showInfoWeather(InfoWeather infoWeather) {
+    private void showInfoWeather(@NonNull final InfoWeather infoWeather) {
         this.infoWeather = infoWeather;
         if (infoWeather != null) {
             getViewState().showCurrentWeather(infoWeather.getCurrentWeather());
             getViewState().showWeatherList(infoWeather.getDays());
         }
+    }
+
+    private void clearInfoWeather() {
+        getViewState().clearCurrentWeather();
+        getViewState().clearWeatherList();
     }
 
     public void onClick(int position) {
