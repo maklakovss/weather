@@ -20,14 +20,14 @@
     <string name="wind_deg_label">Wind direction</string>
     <string name="save_label">Apply</string>
     <string name="cityname_label">City</string>
-    <string name="list_fragment_tag">listFragment</string>
-    <string name="weather_fragment_tag">weatherTag</string>
+    <string name="list_fragment_tag" translatable="false">listFragment</string>
+    <string name="weather_fragment_tag" translatable="false">weatherTag</string>
     <string name="refresh_label">Refresh</string>
     <string name="settings_label">Settings</string>
     <string name="feedback_label">Feedback</string>
     <string name="about_label">About</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
     <string name="search_location_hint">Input location</string>
     <string name="region_label">Region:</string>
     <string name="country_label">Country:</string>
@@ -40,5 +40,21 @@
     <string name="sunriseicon">SunriseIcon</string>
     <string name="temp_from_label">from</string>
     <string name="temp_to_label">to</string>
+    <string name="percent" translatable="false">%</string>
+    <string name="Sun">Солнце</string>
+    <string name="delimeter" translatable="false">-</string>
+    <string name="sun_hour">Sun hour</string>
+    <string name="uv_index">Uv index</string>
+    <string name="moon">Луна</string>
+    <string name="illm">Illm</string>
+    <string name="detailday" translatable="false">DetailDay</string>
+    <string name="temp_c">Temp,C</string>
+    <string name="feels_c">Feels,C</string>
+    <string name="wind_m_s">Wind,m/s</string>
+    <string name="humidity">Humidity,%</string>
+    <string name="precip_mm">Precip,mm</string>
+    <string name="android_studio">Android Studio</string>
+    <string name="android_studio_android_com" translatable="false">android.studio@android.com</string>
+    <string name="profileimage" translatable="false">ProfileImage</string>
 
 </resources>

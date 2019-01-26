@@ -47,6 +47,7 @@
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/weathericon"
         app:srcCompat="@drawable/selected_row" />
 
     <TextView
@@ -165,6 +166,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/detailday"
         app:srcCompat="@android:drawable/ic_media_play" />
 
 </android.support.constraint.ConstraintLayout>

@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Солнце"
+        android:text="@string/Sun"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
@@ -54,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="-"
+        android:text="@string/delimeter"
         app:layout_constraintStart_toEndOf="@+id/tvSunrise"
         app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
@@ -73,7 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Sun hour"
+        android:text="@string/sun_hour"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSunLabel" />
 
@@ -91,7 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Uv index"
+        android:text="@string/uv_index"
         app:layout_constraintStart_toEndOf="@+id/tvSunHour"
         app:layout_constraintTop_toTopOf="@+id/tvSunHourLabel" />
 
@@ -109,7 +109,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="Луна"
+        android:text="@string/moon"
         app:layout_constraintEnd_toStartOf="@+id/tvMoonrise"
         app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
@@ -118,7 +118,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="22:00"
         app:layout_constraintEnd_toStartOf="@+id/tvMoonDelimeter"
         app:layout_constraintTop_toBottomOf="@+id/tvDate"
         tools:text="22:00" />
@@ -128,7 +127,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="-"
+        android:text="@string/delimeter"
         app:layout_constraintEnd_toStartOf="@+id/tvMoonset"
         app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
@@ -137,7 +136,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="04:00"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDate"
         tools:text="04:00" />
@@ -157,7 +155,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="Illm"
+        android:text="@string/illm"
         app:layout_constraintEnd_toStartOf="@+id/tvMoonIllumination"
         app:layout_constraintTop_toTopOf="@+id/tvMoonIllumination" />
 

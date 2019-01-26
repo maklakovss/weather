@@ -37,4 +37,15 @@
     <string name="sunriseicon">SunriseIcon</string>
     <string name="temp_from_label">от</string>
     <string name="temp_to_label">до</string>
+    <string name="Sun">Солнце</string>
+    <string name="sun_hour">Sun hour</string>
+    <string name="uv_index">Uv index</string>
+    <string name="moon">Луна</string>
+    <string name="illm">Яркость</string>
+    <string name="temp_c">Темп,C</string>
+    <string name="feels_c">Ощущ,C</string>
+    <string name="wind_m_s">Ветер,м/с</string>
+    <string name="humidity">Влажность,%</string>
+    <string name="precip_mm">Давление,mm</string>
+    <string name="android_studio">Android Studio</string>
 </resources>

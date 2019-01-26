@@ -29,6 +29,7 @@
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/weathericon"
         app:srcCompat="?attr/actionBarItemBackground" />
 
     <TextView
@@ -37,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Temp,C"
+        android:text="@string/temp_c"
         app:layout_constraintStart_toEndOf="@+id/tvHour"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Feels,C"
+        android:text="@string/feels_c"
         app:layout_constraintStart_toEndOf="@+id/tvTempLabel"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -77,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Wind, m/s"
+        android:text="@string/wind_m_s"
         app:layout_constraintStart_toEndOf="@+id/tvFeelsLabel"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -106,7 +107,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Humidity,%"
+        android:text="@string/humidity"
         app:layout_constraintStart_toEndOf="@+id/tvWindLabel"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -125,7 +126,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Precip,mm"
+        android:text="@string/precip_mm"
         app:layout_constraintStart_toEndOf="@+id/tvHumidityLabel"
         app:layout_constraintTop_toTopOf="parent" />
 
