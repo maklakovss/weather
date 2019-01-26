@@ -1,8 +1,10 @@
 package com.mss.weather.data.network;
 
+import android.support.annotation.NonNull;
+
 import com.mss.weather.BuildConfig;
-import com.mss.weather.data.network.mappers.CitiesResponseToCity;
-import com.mss.weather.data.network.mappers.WeatherResponseToWeatherInfo;
+import com.mss.weather.data.network.mappers.CitiesResponseMapper;
+import com.mss.weather.data.network.mappers.WeatherResponseMapper;
 import com.mss.weather.domain.models.City;
 import com.mss.weather.domain.models.InfoWeather;
 import com.mss.weather.domain.models.Position;
@@ -23,10 +25,10 @@ public class NetworkRepositoryImpl implements NetworkRepository {
     private static final String FORMAT = "json";
     private static final String KEY = "fcb691d5d4c64b45a8b124513182112";
 
-    private WorldWeatherOnline worldWeatherOnline;
+    private final WorldWeatherOnline worldWeatherOnline;
 
     public NetworkRepositoryImpl() {
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+        final OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(new HttpLoggingInterceptor().setLevel((BuildConfig.DEBUG) ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE))
                 .build();
 
@@ -40,23 +42,26 @@ public class NetworkRepositoryImpl implements NetworkRepository {
     }
 
 
+    @NonNull
     @Override
-    public Maybe<List<City>> getAutoCompleteCities(String startWith) {
+    public Maybe<List<City>> getAutoCompleteCities(@NonNull final String startWith) {
         return worldWeatherOnline.getCities(startWith, 200, KEY, FORMAT)
-                .map(CitiesResponseToCity::mapCitiesResponseToCity)
+                .map(CitiesResponseMapper::mapCitiesResponseToCity)
                 .firstElement();
     }
 
+    @NonNull
     @Override
-    public Maybe<List<City>> getCitiesByCoordinate(Position position) {
+    public Maybe<List<City>> getCitiesByCoordinate(@NonNull final Position position) {
         final String query = String.valueOf(position.getLatitude()) + "," + String.valueOf(position.getLongitude());
         return worldWeatherOnline.getCities(query, 200, KEY, FORMAT)
-                .map(CitiesResponseToCity::mapCitiesResponseToCity)
+                .map(CitiesResponseMapper::mapCitiesResponseToCity)
                 .firstElement();
     }
 
+    @NonNull
     @Override
-    public Maybe<InfoWeather> getWeatherInfo(City city) {
+    public Maybe<InfoWeather> getWeatherInfo(@NonNull final City city) {
         return worldWeatherOnline.getWeather(city.getId(),
                 KEY,
                 FORMAT,
@@ -68,7 +73,7 @@ public class NetworkRepositoryImpl implements NetworkRepository {
                 1,
                 "no",
                 "ru")
-                .map(weatherResponse -> WeatherResponseToWeatherInfo.mapWeatherResponseToWeatherInfo(weatherResponse, city))
+                .map(weatherResponse -> WeatherResponseMapper.mapWeatherResponseToWeatherInfo(weatherResponse, city))
                 .firstElement();
     }
 }

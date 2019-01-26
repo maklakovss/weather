@@ -21,9 +21,9 @@ public class CityLocalRepositoryImpl implements CityLocalRepository {
     private final static Sort[] locationSortOrders = new Sort[]{Sort.ASCENDING, Sort.ASCENDING, Sort.ASCENDING};
 
     @Override
-    public City getCityById(@NonNull String id) {
-        Realm realm = Realm.getDefaultInstance();
-        CityDB cityDB = realm.where(CityDB.class)
+    public City getCityById(@NonNull final String id) {
+        final Realm realm = Realm.getDefaultInstance();
+        final CityDB cityDB = realm.where(CityDB.class)
                 .equalTo("id", id)
                 .findFirst();
         City city = null;
@@ -36,14 +36,14 @@ public class CityLocalRepositoryImpl implements CityLocalRepository {
     @Override
     @NonNull
     public List<City> getCities() {
-        Realm realm = Realm.getDefaultInstance();
-        RealmResults<CityDB> results = realm
+        final Realm realm = Realm.getDefaultInstance();
+        final RealmResults<CityDB> results = realm
                 .where(CityDB.class)
                 .sort(locationSortFields, locationSortOrders)
                 .findAll();
 
         List<City> cities = new ArrayList<>(results.size());
-        for (CityDB result : results) {
+        for (final CityDB result : results) {
             cities.add(CityMapper.mapCityDbToCity(result));
         }
         realm.close();
@@ -51,8 +51,8 @@ public class CityLocalRepositoryImpl implements CityLocalRepository {
     }
 
     @Override
-    public void addCity(@NonNull City city) {
-        Realm realm = Realm.getDefaultInstance();
+    public void addCity(@NonNull final City city) {
+        final Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.insertOrUpdate(CityMapper.mapCityToCityDb(city));
         realm.commitTransaction();
@@ -60,8 +60,8 @@ public class CityLocalRepositoryImpl implements CityLocalRepository {
     }
 
     @Override
-    public void deleteCity(@NonNull City city) {
-        Realm realm = Realm.getDefaultInstance();
+    public void deleteCity(@NonNull final City city) {
+        final Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.where(CityDB.class)
                 .equalTo("id", city.getId())
@@ -71,10 +71,11 @@ public class CityLocalRepositoryImpl implements CityLocalRepository {
         realm.close();
     }
 
+    @NonNull
     @Override
     public String getLastCityId() {
-        Realm realm = Realm.getDefaultInstance();
-        SettingsDB settingsDB = realm.where(SettingsDB.class)
+        final Realm realm = Realm.getDefaultInstance();
+        final SettingsDB settingsDB = realm.where(SettingsDB.class)
                 .equalTo("id", 1)
                 .findFirst();
         String lastCityId = "";
@@ -85,8 +86,8 @@ public class CityLocalRepositoryImpl implements CityLocalRepository {
     }
 
     @Override
-    public void setLastCityId(String lastCityID) {
-        Realm realm = Realm.getDefaultInstance();
+    public void setLastCityId(@NonNull final String lastCityID) {
+        final Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         SettingsDB settingsDB = realm.where(SettingsDB.class)
                 .equalTo("id", 1)

@@ -1,5 +1,8 @@
 package com.mss.weather.data.db.repositories;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.mss.weather.data.db.mappers.DayWeatherMapper;
 import com.mss.weather.data.db.models.DayWeatherDB;
 import com.mss.weather.domain.models.DayWeather;
@@ -13,10 +16,11 @@ import io.realm.RealmResults;
 
 public class DayWeatherLocalRepositoryImpl implements DayWeatherLocalRepository {
 
+    @Nullable
     @Override
-    public List<DayWeather> getDayWeathersByCityId(String cityId, Date date) {
-        Realm realm = Realm.getDefaultInstance();
-        RealmResults<DayWeatherDB> dayWeatherDBs = realm.where(DayWeatherDB.class)
+    public List<DayWeather> getDayWeathersByCityId(@NonNull final String cityId, @NonNull final Date date) {
+        final Realm realm = Realm.getDefaultInstance();
+        final RealmResults<DayWeatherDB> dayWeatherDBs = realm.where(DayWeatherDB.class)
                 .equalTo("cityID", cityId)
                 .greaterThanOrEqualTo("date", date)
                 .sort("date")
@@ -31,9 +35,9 @@ public class DayWeatherLocalRepositoryImpl implements DayWeatherLocalRepository 
     }
 
     @Override
-    public void deleteDayWeatherByCityID(String cityId) {
-        Realm realm = Realm.getDefaultInstance();
-        RealmResults<DayWeatherDB> dayWeatherDBRealmResults = realm.where(DayWeatherDB.class)
+    public void deleteDayWeatherByCityID(@NonNull final String cityId) {
+        final Realm realm = Realm.getDefaultInstance();
+        final RealmResults<DayWeatherDB> dayWeatherDBRealmResults = realm.where(DayWeatherDB.class)
                 .equalTo("cityID", cityId)
                 .findAll();
         if (dayWeatherDBRealmResults != null) {
@@ -45,10 +49,10 @@ public class DayWeatherLocalRepositoryImpl implements DayWeatherLocalRepository 
     }
 
     @Override
-    public void deleteOldDayWeatherByCityID(String cityId, Date date) {
-        Realm realm = Realm.getDefaultInstance();
+    public void deleteOldDayWeatherByCityID(@NonNull final String cityId, @NonNull final Date date) {
+        final Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        RealmResults<DayWeatherDB> dayWeatherDBs = realm.where(DayWeatherDB.class)
+        final RealmResults<DayWeatherDB> dayWeatherDBs = realm.where(DayWeatherDB.class)
                 .equalTo("cityID", cityId)
                 .lessThan("date", date)
                 .findAll();
@@ -58,8 +62,8 @@ public class DayWeatherLocalRepositoryImpl implements DayWeatherLocalRepository 
     }
 
     @Override
-    public void updateOrInsertDayWeather(List<DayWeather> dayWeathers) {
-        Realm realm = Realm.getDefaultInstance();
+    public void updateOrInsertDayWeather(@NonNull final List<DayWeather> dayWeathers) {
+        final Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.insertOrUpdate(DayWeatherMapper.mapDayWeathersToDayWeatherDBs(dayWeathers));
         realm.commitTransaction();

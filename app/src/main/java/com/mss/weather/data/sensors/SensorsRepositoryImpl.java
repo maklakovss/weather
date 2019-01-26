@@ -1,18 +1,17 @@
 package com.mss.weather.data.sensors;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
+import com.mss.weather.MyApplication;
 import com.mss.weather.domain.models.Position;
 import com.mss.weather.domain.repositories.SensorsRepository;
 
 import java.security.NoSuchProviderException;
-
-import javax.inject.Inject;
 
 import io.reactivex.Maybe;
 
@@ -20,22 +19,16 @@ import static android.content.Context.LOCATION_SERVICE;
 
 public class SensorsRepositoryImpl implements SensorsRepository {
 
-    final private Context context;
-
-    @Inject
-    public SensorsRepositoryImpl(Context context) {
-        this.context = context;
-    }
-
+    @NonNull
     @SuppressLint("MissingPermission")
     @Override
     public Maybe<Position> getPosition() {
-        Maybe<Position> positionMaybe = Maybe.create(e -> {
-            LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+        final Maybe<Position> positionMaybe = Maybe.create(e -> {
+            final LocationManager locationManager = (LocationManager) MyApplication.getContext().getSystemService(LOCATION_SERVICE);
             locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
-                    Position position = new Position();
+                    final Position position = new Position();
                     position.setLatitude(location.getLatitude());
                     position.setLongitude(location.getLongitude());
                     e.onSuccess(position);

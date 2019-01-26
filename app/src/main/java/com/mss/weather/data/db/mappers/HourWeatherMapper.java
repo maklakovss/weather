@@ -11,8 +11,8 @@ import java.util.List;
 public class HourWeatherMapper {
 
     @NonNull
-    public static List<HourWeather> mapHourWeatherDBsToHourWeathers(List<HourWeatherDB> hourWeatherDBS) {
-        List<HourWeather> hourWeathers = new ArrayList<>();
+    public static List<HourWeather> mapHourWeatherDBsToHourWeathers(@NonNull final List<HourWeatherDB> hourWeatherDBS) {
+        final List<HourWeather> hourWeathers = new ArrayList<>();
         for (HourWeatherDB hourWeatherDB : hourWeatherDBS) {
             hourWeathers.add(mapHourWeatherDBToHourWeather(hourWeatherDB));
         }
@@ -20,7 +20,7 @@ public class HourWeatherMapper {
     }
 
     @NonNull
-    private static HourWeather mapHourWeatherDBToHourWeather(HourWeatherDB hourWeatherDB) {
+    private static HourWeather mapHourWeatherDBToHourWeather(@NonNull final HourWeatherDB hourWeatherDB) {
         final HourWeather hourWeather = new HourWeather();
         hourWeather.setCityID(hourWeatherDB.getCityID());
         hourWeather.setDate(hourWeatherDB.getDate());
@@ -63,8 +63,8 @@ public class HourWeatherMapper {
     }
 
     @NonNull
-    public static List<HourWeatherDB> mapHourWeathersToHourWeatherDBs(List<HourWeather> hourWeathers) {
-        List<HourWeatherDB> hourWeatherDBs = new ArrayList<>();
+    public static List<HourWeatherDB> mapHourWeathersToHourWeatherDBs(@NonNull final List<HourWeather> hourWeathers) {
+        final List<HourWeatherDB> hourWeatherDBs = new ArrayList<>();
         for (HourWeather hourWeather : hourWeathers) {
             hourWeatherDBs.add(mapHourWeatherToHourWeatherDB(hourWeather));
         }
@@ -72,7 +72,7 @@ public class HourWeatherMapper {
     }
 
     @NonNull
-    private static HourWeatherDB mapHourWeatherToHourWeatherDB(HourWeather hourWeather) {
+    private static HourWeatherDB mapHourWeatherToHourWeatherDB(@NonNull final HourWeather hourWeather) {
         final HourWeatherDB hourWeatherDB = new HourWeatherDB();
         hourWeatherDB.setId(hourWeather.getCityID() + " " + hourWeather.getDate().toString());
         hourWeatherDB.setCityID(hourWeather.getCityID());

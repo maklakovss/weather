@@ -1,6 +1,5 @@
 package com.mss.weather.di;
 
-import com.mss.weather.MyApplication;
 import com.mss.weather.data.db.repositories.CityLocalRepositoryImpl;
 import com.mss.weather.data.db.repositories.CurrentWeatherLocalRepositoryImpl;
 import com.mss.weather.data.db.repositories.DayWeatherLocalRepositoryImpl;
@@ -18,7 +17,9 @@ import com.mss.weather.domain.repositories.InfoWeatherLocalRepository;
 import com.mss.weather.domain.repositories.NetworkRepository;
 import com.mss.weather.domain.repositories.SensorsRepository;
 import com.mss.weather.presentation.presenter.CurrentWeatherPresenter;
+import com.mss.weather.presentation.presenter.DayWeatherPresenter;
 import com.mss.weather.presentation.presenter.ListCitiesPresenter;
+import com.mss.weather.presentation.presenter.MainPresenter;
 import com.mss.weather.presentation.presenter.SelectCityPresenter;
 
 import javax.inject.Singleton;
@@ -28,12 +29,6 @@ import dagger.Provides;
 
 @Module
 public class ApplicationModule {
-
-    @Singleton
-    @Provides
-    public SensorsRepository provideSensorsRepository() {
-        return new SensorsRepositoryImpl(MyApplication.getContext());
-    }
 
     @Singleton
     @Provides
@@ -54,20 +49,38 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    public SelectCityPresenter provideSelectCityPresenter(WeatherInteractor weatherInteractor) {
-        return new SelectCityPresenter(weatherInteractor);
-    }
-
-    @Singleton
-    @Provides
     public CurrentWeatherPresenter provideCityWeatherPresenter(WeatherInteractor weatherInteractor) {
         return new CurrentWeatherPresenter(weatherInteractor);
     }
 
     @Singleton
     @Provides
+    public DayWeatherPresenter provideDayWeatherPresenter(WeatherInteractor weatherInteractor) {
+        return new DayWeatherPresenter(weatherInteractor);
+    }
+
+    @Singleton
+    @Provides
     public ListCitiesPresenter provideListCitiesPresenter(WeatherInteractor weatherInteractor) {
         return new ListCitiesPresenter(weatherInteractor);
+    }
+
+    @Singleton
+    @Provides
+    public MainPresenter provideMainPresenter(WeatherInteractor weatherInteractor) {
+        return new MainPresenter(weatherInteractor);
+    }
+
+    @Singleton
+    @Provides
+    public SelectCityPresenter provideSelectCityPresenter(WeatherInteractor weatherInteractor) {
+        return new SelectCityPresenter(weatherInteractor);
+    }
+
+    @Singleton
+    @Provides
+    public SensorsRepository provideSensorsRepository() {
+        return new SensorsRepositoryImpl();
     }
 
     @Singleton

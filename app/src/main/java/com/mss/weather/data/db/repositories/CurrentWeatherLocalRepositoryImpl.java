@@ -1,5 +1,7 @@
 package com.mss.weather.data.db.repositories;
 
+import android.support.annotation.NonNull;
+
 import com.mss.weather.data.db.mappers.CurrentWeatherMapper;
 import com.mss.weather.data.db.models.CurrentWeatherDB;
 import com.mss.weather.domain.models.CurrentWeather;
@@ -9,10 +11,11 @@ import io.realm.Realm;
 
 public class CurrentWeatherLocalRepositoryImpl implements CurrentWeatherLocalRepository {
 
+    @NonNull
     @Override
-    public CurrentWeather getCurrentWeatherById(String cityId) {
-        Realm realm = Realm.getDefaultInstance();
-        CurrentWeatherDB currentWeatherDB = realm.where(CurrentWeatherDB.class)
+    public CurrentWeather getCurrentWeatherById(@NonNull final String cityId) {
+        final Realm realm = Realm.getDefaultInstance();
+        final CurrentWeatherDB currentWeatherDB = realm.where(CurrentWeatherDB.class)
                 .equalTo("cityID", cityId)
                 .findFirst();
         CurrentWeather currentWeather = null;
@@ -23,9 +26,9 @@ public class CurrentWeatherLocalRepositoryImpl implements CurrentWeatherLocalRep
     }
 
     @Override
-    public void deleteCurrentWeather(String cityId) {
-        Realm realm = Realm.getDefaultInstance();
-        CurrentWeatherDB currentWeatherDB = realm.where(CurrentWeatherDB.class)
+    public void deleteCurrentWeather(@NonNull final String cityId) {
+        final Realm realm = Realm.getDefaultInstance();
+        final CurrentWeatherDB currentWeatherDB = realm.where(CurrentWeatherDB.class)
                 .equalTo("cityID", cityId)
                 .findFirst();
         if (currentWeatherDB != null) {
@@ -37,8 +40,8 @@ public class CurrentWeatherLocalRepositoryImpl implements CurrentWeatherLocalRep
     }
 
     @Override
-    public void updateOrInsertCurrentWeather(CurrentWeather currentWeather) {
-        Realm realm = Realm.getDefaultInstance();
+    public void updateOrInsertCurrentWeather(@NonNull final CurrentWeather currentWeather) {
+        final Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.insertOrUpdate(CurrentWeatherMapper.mapInfoWeatherDBToInfoWeather(currentWeather));
         realm.commitTransaction();

@@ -1,5 +1,8 @@
 package com.mss.weather.data.db.repositories;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.mss.weather.data.db.mappers.HourWeatherMapper;
 import com.mss.weather.data.db.models.HourWeatherDB;
 import com.mss.weather.domain.models.HourWeather;
@@ -13,14 +16,16 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class HourWeatherLocalRepositoryImpl implements HourWeatherLocalRepository {
+
+    @Nullable
     @Override
-    public List<HourWeather> getHourWeathersByCityId(String cityId, Date date) {
-        Calendar endDate = Calendar.getInstance();
+    public List<HourWeather> getHourWeathersByCityId(@NonNull final String cityId, @NonNull final Date date) {
+        final Calendar endDate = Calendar.getInstance();
         endDate.setTime(date);
         endDate.roll(Calendar.DATE, 1);
 
-        Realm realm = Realm.getDefaultInstance();
-        RealmResults<HourWeatherDB> hourWeatherDBS = realm.where(HourWeatherDB.class)
+        final Realm realm = Realm.getDefaultInstance();
+        final RealmResults<HourWeatherDB> hourWeatherDBS = realm.where(HourWeatherDB.class)
                 .equalTo("cityID", cityId)
                 .greaterThanOrEqualTo("date", date)
                 .lessThan("date", endDate.getTime())
@@ -37,9 +42,9 @@ public class HourWeatherLocalRepositoryImpl implements HourWeatherLocalRepositor
     }
 
     @Override
-    public void deleteHourWeatherByCityID(String cityId) {
-        Realm realm = Realm.getDefaultInstance();
-        RealmResults<HourWeatherDB> hourWeatherDBRealmResults = realm.where(HourWeatherDB.class)
+    public void deleteHourWeatherByCityID(@NonNull final String cityId) {
+        final Realm realm = Realm.getDefaultInstance();
+        final RealmResults<HourWeatherDB> hourWeatherDBRealmResults = realm.where(HourWeatherDB.class)
                 .equalTo("cityID", cityId)
                 .findAll();
         if (hourWeatherDBRealmResults != null) {
@@ -51,10 +56,10 @@ public class HourWeatherLocalRepositoryImpl implements HourWeatherLocalRepositor
     }
 
     @Override
-    public void deleteOldHourWeatherByCityID(String cityId, Date date) {
-        Realm realm = Realm.getDefaultInstance();
+    public void deleteOldHourWeatherByCityID(@NonNull final String cityId, @NonNull final Date date) {
+        final Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        RealmResults<HourWeatherDB> hourWeatherDBRealmResults = realm.where(HourWeatherDB.class)
+        final RealmResults<HourWeatherDB> hourWeatherDBRealmResults = realm.where(HourWeatherDB.class)
                 .equalTo("cityID", cityId)
                 .lessThan("date", date)
                 .findAll();
@@ -64,8 +69,8 @@ public class HourWeatherLocalRepositoryImpl implements HourWeatherLocalRepositor
     }
 
     @Override
-    public void updateOrInsertHourWeather(List<HourWeather> hourWeathers) {
-        Realm realm = Realm.getDefaultInstance();
+    public void updateOrInsertHourWeather(@NonNull final List<HourWeather> hourWeathers) {
+        final Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.insertOrUpdate(HourWeatherMapper.mapHourWeathersToHourWeatherDBs(hourWeathers));
         realm.commitTransaction();
