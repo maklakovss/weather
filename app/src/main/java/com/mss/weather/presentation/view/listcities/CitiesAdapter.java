@@ -19,10 +19,10 @@ import butterknife.ButterKnife;
 
 public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder> {
 
-    private List<City> citiesList;
+    private final List<City> citiesList;
     private OnItemClickListener onItemClickListener;
 
-    public CitiesAdapter(List<City> cities) {
+    public CitiesAdapter(@NonNull final List<City> cities) {
         citiesList = cities;
     }
 
@@ -66,12 +66,12 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder
         @BindView(R.id.cvItem)
         CardView cvItem;
 
-        ViewHolder(View view) {
+        ViewHolder(@NonNull final View view) {
             super(view);
             ButterKnife.bind(this, view);
             cvItem.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
+                public void onClick(@NonNull final View view) {
                     if (onItemClickListener != null) {
                         onItemClickListener.onItemClick(view, getAdapterPosition());
                     }

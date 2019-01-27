@@ -1,5 +1,7 @@
 package com.mss.weather.presentation.presenter;
 
+import android.support.annotation.NonNull;
+
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.mss.weather.domain.interactor.WeatherInteractor;
@@ -13,12 +15,12 @@ import javax.inject.Inject;
 @InjectViewState
 public class ListCitiesPresenter extends MvpPresenter<ListCitiesView> {
 
-    private WeatherInteractor weatherInteractor;
+    private final WeatherInteractor weatherInteractor;
 
     private List<City> cities;
 
     @Inject
-    public ListCitiesPresenter(WeatherInteractor weatherInteractor) {
+    public ListCitiesPresenter(@NonNull final WeatherInteractor weatherInteractor) {
         this.weatherInteractor = weatherInteractor;
     }
 

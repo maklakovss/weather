@@ -2,6 +2,7 @@ package com.mss.weather.presentation.view.listcities;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,6 +45,7 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
 
     private WeatherFragmentsNavigator weatherFragmentsNavigator;
 
+    @NonNull
     public static ListCitiesFragment newInstance() {
         return new ListCitiesFragment();
     }
@@ -59,7 +61,7 @@ public class ListCitiesFragment extends MvpAppCompatFragment implements ListCiti
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         setRetainInstance(true);
-        View layout = inflater.inflate(R.layout.fragment_list_cities, container, false);
+        final View layout = inflater.inflate(R.layout.fragment_list_cities, container, false);
         binder = ButterKnife.bind(this, layout);
 
         rvCitiesList.setItemAnimator(new DefaultItemAnimator());

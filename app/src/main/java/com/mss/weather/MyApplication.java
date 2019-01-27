@@ -13,21 +13,18 @@ import io.realm.RealmConfiguration;
 public class MyApplication extends Application {
 
     private static ApplicationComponent applicationComponent;
-    private static Context context;
 
     public static ApplicationComponent getApplicationComponent() {
         return applicationComponent;
     }
 
     public static Context getContext() {
-        return context.getApplicationContext();
+        return getContext();
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-
-        context = this;
 
         Realm.init(this);
         RealmConfiguration realmConfiguration = new RealmConfiguration

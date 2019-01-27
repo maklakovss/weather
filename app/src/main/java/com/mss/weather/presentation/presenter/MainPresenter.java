@@ -1,5 +1,7 @@
 package com.mss.weather.presentation.presenter;
 
+import android.support.annotation.NonNull;
+
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.mss.weather.domain.interactor.WeatherInteractor;
@@ -11,10 +13,10 @@ import javax.inject.Inject;
 @InjectViewState
 public class MainPresenter extends MvpPresenter<MainView> {
 
-    private WeatherInteractor weatherInteractor;
+    private final WeatherInteractor weatherInteractor;
 
     @Inject
-    public MainPresenter(WeatherInteractor weatherInteractor) {
+    public MainPresenter(@NonNull final WeatherInteractor weatherInteractor) {
         this.weatherInteractor = weatherInteractor;
     }
 
@@ -29,7 +31,7 @@ public class MainPresenter extends MvpPresenter<MainView> {
         if (weatherInteractor.getListCities().size() == 0) {
             getViewState().showAddCity();
         } else {
-            City lastCity = weatherInteractor.getCurrentCity();
+            final City lastCity = weatherInteractor.getCurrentCity();
             if (lastCity != null) {
                 getViewState().showCurrentWeather();
             }

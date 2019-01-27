@@ -121,6 +121,11 @@ public class SelectCityFragment extends MvpAppCompatFragment implements SelectCi
     }
 
     @Override
+    public void clearCities() {
+        rvAutoCompleteList.setAdapter(null);
+    }
+
+    @Override
     public void showProgress(boolean visible) {
         if (visible) {
             progressBar.setVisibility(View.VISIBLE);

@@ -1,5 +1,7 @@
 package com.mss.weather.presentation.view.main;
 
+import android.support.annotation.NonNull;
+
 import java.util.Date;
 
 public interface WeatherFragmentsNavigator {
@@ -12,5 +14,5 @@ public interface WeatherFragmentsNavigator {
 
     void hideKeyboard();
 
-    void showDayWeather(String cityID, Date date);
+    void showDayWeather(@NonNull String cityID, @NonNull Date date);
 }

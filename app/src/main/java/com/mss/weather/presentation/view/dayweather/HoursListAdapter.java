@@ -21,26 +21,26 @@ import butterknife.ButterKnife;
 
 public class HoursListAdapter extends RecyclerView.Adapter<HoursListAdapter.ViewHolder> {
 
-    final static SimpleDateFormat formatterTime = new SimpleDateFormat("HH:mm", Locale.getDefault());
+    private final static SimpleDateFormat formatterTime = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
-    private List<HourWeather> hourWeathers;
+    private final List<HourWeather> hourWeathers;
 
-    public HoursListAdapter(List<HourWeather> hourWeathers) {
+    public HoursListAdapter(@NonNull final List<HourWeather> hourWeathers) {
         this.hourWeathers = hourWeathers;
     }
 
     @NonNull
     @Override
-    public HoursListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext())
+    public HoursListAdapter.ViewHolder onCreateViewHolder(@NonNull final ViewGroup viewGroup, int i) {
+        final View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.list_item_hour, viewGroup, false);
-        HoursListAdapter.ViewHolder viewHolder = new HoursListAdapter.ViewHolder(view);
+        final HoursListAdapter.ViewHolder viewHolder = new HoursListAdapter.ViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HoursListAdapter.ViewHolder viewHolder, int i) {
-        HourWeather hourWeather = hourWeathers.get(i);
+    public void onBindViewHolder(@NonNull final HoursListAdapter.ViewHolder viewHolder, int i) {
+        final HourWeather hourWeather = hourWeathers.get(i);
         viewHolder.tvHour.setText(formatterTime.format(hourWeather.getDate()));
         viewHolder.tvTemp.setText(String.valueOf(hourWeather.getTempC()));
         viewHolder.tvFeels.setText(String.valueOf(hourWeather.getFeelsLikeC()));
@@ -56,8 +56,6 @@ public class HoursListAdapter extends RecyclerView.Adapter<HoursListAdapter.View
         } else {
             viewHolder.ivWeatherIcon.setImageURI(null);
         }
-        //viewHolder.tvDayOfWeek.setText(formatterDayOfWeek.format(hourWeather.getDate()));
-        //viewHolder.tvTempMin.setText(String.valueOf(hourWeather.getMinTempC()));
     }
 
     @Override

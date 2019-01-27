@@ -1,12 +1,13 @@
 package com.mss.weather.presentation.presenter;
 
+import android.support.annotation.NonNull;
+
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.mss.weather.domain.interactor.WeatherInteractor;
 import com.mss.weather.domain.models.City;
 import com.mss.weather.presentation.view.selectcity.SelectCityView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -17,16 +18,16 @@ import io.reactivex.schedulers.Schedulers;
 @InjectViewState
 public class SelectCityPresenter extends MvpPresenter<SelectCityView> {
 
-    private WeatherInteractor weatherInteractor;
+    private final WeatherInteractor weatherInteractor;
 
     private List<City> autoCompleteCities;
 
     @Inject
-    public SelectCityPresenter(WeatherInteractor weatherInteractor) {
+    public SelectCityPresenter(@NonNull final WeatherInteractor weatherInteractor) {
         this.weatherInteractor = weatherInteractor;
     }
 
-    public void searchClicked(String searchTemplate) {
+    public void searchClicked(@NonNull final String searchTemplate) {
         clearAndStartProgress();
         weatherInteractor.getAutoCompleteLocations(searchTemplate)
                 .subscribeOn(Schedulers.io())
@@ -60,12 +61,11 @@ public class SelectCityPresenter extends MvpPresenter<SelectCityView> {
 
     private void clearAndStartProgress() {
         getViewState().hideKeyboard();
-        autoCompleteCities = new ArrayList<>();
-        getViewState().showCities(autoCompleteCities);
+        getViewState().clearCities();
         getViewState().showProgress(true);
     }
 
-    private void onSuccess(List<City> cities) {
+    private void onSuccess(@NonNull final List<City> cities) {
         autoCompleteCities = cities;
         getViewState().showCities(cities);
         getViewState().showProgress(false);

@@ -3,6 +3,7 @@ package com.mss.weather.presentation.view.main;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -54,7 +55,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Weat
     @BindView(R.id.nav_view)
     NavigationView navigationView;
 
-    ListCitiesFragment listCitiesFragment;
+    private ListCitiesFragment listCitiesFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Weat
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
@@ -124,6 +125,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Weat
         }
     }
 
+    @NonNull
     private DayWeatherFragment createDayWeatherFragment(String cityID, Date date) {
         final DayWeatherFragment dayWeatherFragment = DayWeatherFragment.newInstance(cityID, date);
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -133,6 +135,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Weat
         return dayWeatherFragment;
     }
 
+    @Nullable
     private DayWeatherFragment getDayWeatherFragment() {
         return (DayWeatherFragment) getSupportFragmentManager()
                 .findFragmentByTag(DAY_TAG);
@@ -141,11 +144,12 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Weat
     private void createListCitiesFragment() {
         listCitiesFragment = ListCitiesFragment.newInstance();
         listCitiesFragment.setRetainInstance(true);
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.flMain, listCitiesFragment, CITY_LIST_TAG);
         fragmentTransaction.commit();
     }
 
+    @Nullable
     private CurrentWeatherFragment getCityWeatherFragment() {
         return (CurrentWeatherFragment) getSupportFragmentManager()
                 .findFragmentByTag(WEATHER_TAG);
@@ -161,11 +165,13 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Weat
         return currentWeatherFragment;
     }
 
+    @Nullable
     private SelectCityFragment getAddCityFragment() {
         return (SelectCityFragment) getSupportFragmentManager()
                 .findFragmentByTag(SETTINGS_TAG);
     }
 
+    @Nullable
     private SelectCityFragment createAddCityFragment() {
         final SelectCityFragment addCityFragment = SelectCityFragment.newInstance();
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

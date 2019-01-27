@@ -15,6 +15,9 @@ public interface SelectCityView extends MvpView {
     @StateStrategyType(AddToEndSingleStrategy.class)
     void showCities(@NonNull List<City> cities);
 
+    @StateStrategyType(OneExecutionStateStrategy.class)
+    void clearCities();
+
     @StateStrategyType(AddToEndSingleStrategy.class)
     void showProgress(boolean visible);
 
