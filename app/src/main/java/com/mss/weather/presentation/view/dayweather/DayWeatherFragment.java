@@ -69,9 +69,9 @@ public class DayWeatherFragment extends MvpAppCompatFragment implements DayWeath
 
     private Unbinder binder;
 
-    public static DayWeatherFragment newInstance(String cityID, Date date) {
+    public static DayWeatherFragment newInstance(@NonNull final String cityID, @NonNull final Date date) {
         final DayWeatherFragment dayWeatherFragment = new DayWeatherFragment();
-        Bundle bundle = new Bundle();
+        final Bundle bundle = new Bundle();
         bundle.putLong(DATE_KEY, date.getTime());
         bundle.putString(CITY_ID_KEY, cityID);
         dayWeatherFragment.setArguments(bundle);
@@ -89,15 +89,15 @@ public class DayWeatherFragment extends MvpAppCompatFragment implements DayWeath
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         setRetainInstance(true);
-        View layout = inflater.inflate(R.layout.fragment_day_weather, container, false);
+        final View layout = inflater.inflate(R.layout.fragment_day_weather, container, false);
         binder = ButterKnife.bind(this, layout);
         rvHourWeatherList.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvHourWeatherList.setLayoutManager(linearLayoutManager);
 
-        Date date = new Date(getArguments().getLong(DATE_KEY));
-        String cityID = getArguments().getString(CITY_ID_KEY);
+        final Date date = new Date(getArguments().getLong(DATE_KEY));
+        final String cityID = getArguments().getString(CITY_ID_KEY);
         dayWeatherPresenter.onCreate(cityID, date);
 
         return layout;
@@ -109,60 +109,61 @@ public class DayWeatherFragment extends MvpAppCompatFragment implements DayWeath
     }
 
     @Override
-    public void showDayWeather(DayWeather dayWeather) {
-        if (dayWeather != null) {
-            if (dayWeather.getDate() != null)
-                tvDate.setText(formatterDate.format(dayWeather.getDate()));
-            else
-                tvDate.setText("");
-
-            if (dayWeather.getSunrise() != null)
-                tvSunrise.setText(formatterTime.format(dayWeather.getSunrise()));
-            else
-                tvSunrise.setText("");
-
-            if (dayWeather.getSunset() != null)
-                tvSunset.setText(formatterTime.format(dayWeather.getSunset()));
-            else
-                tvSunset.setText("");
-
-            if (dayWeather.getMoonrise() != null) {
-                tvMoonrise.setText(formatterTime.format(dayWeather.getMoonrise()));
-            } else {
-                tvMoonrise.setText("");
-            }
-
-            if (dayWeather.getMoonset() != null) {
-                tvMoonset.setText(formatterTime.format(dayWeather.getMoonset()));
-            } else {
-                tvMoonset.setText("");
-            }
-
-            tvSunHour.setText(String.valueOf(dayWeather.getSunHour()));
-            tvUvIndex.setText(String.valueOf(dayWeather.getUvIndex()));
-            tvMoonPhase.setText(dayWeather.getMoonPhase());
-            tvMoonIllumination.setText(String.valueOf(dayWeather.getMoonIllumination()));
-        } else {
+    public void showDayWeather(@NonNull final DayWeather dayWeather) {
+        if (dayWeather.getDate() != null)
+            tvDate.setText(formatterDate.format(dayWeather.getDate()));
+        else
             tvDate.setText("");
+
+        if (dayWeather.getSunrise() != null)
+            tvSunrise.setText(formatterTime.format(dayWeather.getSunrise()));
+        else
             tvSunrise.setText("");
+
+        if (dayWeather.getSunset() != null)
+            tvSunset.setText(formatterTime.format(dayWeather.getSunset()));
+        else
             tvSunset.setText("");
+
+        if (dayWeather.getMoonrise() != null) {
+            tvMoonrise.setText(formatterTime.format(dayWeather.getMoonrise()));
+        } else {
             tvMoonrise.setText("");
-            tvMoonset.setText("");
-            tvSunHour.setText("");
-            tvUvIndex.setText("");
-            tvMoonPhase.setText("");
-            tvMoonIllumination.setText("");
         }
 
+        if (dayWeather.getMoonset() != null) {
+            tvMoonset.setText(formatterTime.format(dayWeather.getMoonset()));
+        } else {
+            tvMoonset.setText("");
+        }
+
+        tvSunHour.setText(String.valueOf(dayWeather.getSunHour()));
+        tvUvIndex.setText(String.valueOf(dayWeather.getUvIndex()));
+        tvMoonPhase.setText(dayWeather.getMoonPhase());
+        tvMoonIllumination.setText(String.valueOf(dayWeather.getMoonIllumination()));
     }
 
     @Override
-    public void showHoursWeatherList(List<HourWeather> hourWeathers) {
-        if (hourWeathers != null) {
-            rvHourWeatherList.setAdapter(new HoursListAdapter(hourWeathers));
-        } else {
-            rvHourWeatherList.setAdapter(null);
-        }
+    public void showHoursWeatherList(@NonNull final List<HourWeather> hourWeathers) {
+        rvHourWeatherList.setAdapter(new HoursListAdapter(hourWeathers));
+    }
+
+    @Override
+    public void clearDayWeather() {
+        tvDate.setText("");
+        tvSunrise.setText("");
+        tvSunset.setText("");
+        tvMoonrise.setText("");
+        tvMoonset.setText("");
+        tvSunHour.setText("");
+        tvUvIndex.setText("");
+        tvMoonPhase.setText("");
+        tvMoonIllumination.setText("");
+    }
+
+    @Override
+    public void clearHoursWeatherList() {
+        rvHourWeatherList.setAdapter(null);
     }
 
     @Override

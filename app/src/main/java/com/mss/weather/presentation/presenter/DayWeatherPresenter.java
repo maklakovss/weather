@@ -1,5 +1,7 @@
 package com.mss.weather.presentation.presenter;
 
+import android.support.annotation.NonNull;
+
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.mss.weather.domain.interactor.WeatherInteractor;
@@ -15,22 +17,22 @@ import javax.inject.Inject;
 @InjectViewState
 public class DayWeatherPresenter extends MvpPresenter<DayWeatherView> {
 
-    private WeatherInteractor weatherInteractor;
+    private final WeatherInteractor weatherInteractor;
 
     @Inject
-    public DayWeatherPresenter(WeatherInteractor weatherInteractor) {
+    public DayWeatherPresenter(@NonNull final WeatherInteractor weatherInteractor) {
         this.weatherInteractor = weatherInteractor;
     }
 
-    public void onCreate(String cityId, Date date) {
-        City city = weatherInteractor.getCityById(cityId);
+    public void onCreate(@NonNull final String cityId, @NonNull final Date date) {
+        final City city = weatherInteractor.getCityById(cityId);
         if (city != null) {
             getViewState().showCity(city);
 
-            InfoWeather infoWeather = weatherInteractor.getLocalWeatherInfo(city);
+            final InfoWeather infoWeather = weatherInteractor.getLocalWeatherInfo(city);
             if (infoWeather != null) {
                 DayWeather dayWeather = null;
-                for (DayWeather day : infoWeather.getDays()) {
+                for (final DayWeather day : infoWeather.getDays()) {
                     if (day.getDate().equals(date)) {
                         dayWeather = day;
                         break;
@@ -39,6 +41,9 @@ public class DayWeatherPresenter extends MvpPresenter<DayWeatherView> {
                 if (dayWeather != null) {
                     getViewState().showDayWeather(dayWeather);
                     getViewState().showHoursWeatherList(dayWeather.getHourly());
+                } else {
+                    getViewState().clearDayWeather();
+                    getViewState().clearHoursWeatherList();
                 }
             }
         }

@@ -76,19 +76,19 @@ public class DayListAdapter extends RecyclerView.Adapter<DayListAdapter.ViewHold
     class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.tvDate)
-        private TextView tvDate;
+        TextView tvDate;
         @BindView(R.id.tvDayOfWeek)
-        private TextView tvDayOfWeek;
+        TextView tvDayOfWeek;
         @BindView(R.id.tvTempMin)
-        private TextView tvTempMin;
+        TextView tvTempMin;
         @BindView(R.id.tvTempMax)
-        private TextView tvTempMax;
+        TextView tvTempMax;
         @BindView(R.id.tvWindMin)
-        private TextView tvWindMin;
+        TextView tvWindMin;
         @BindView(R.id.tvWindMax)
-        private TextView tvWindMax;
+        TextView tvWindMax;
         @BindView(R.id.ivWeatherIcon)
-        private ImageView ivWeatherIcon;
+        ImageView ivWeatherIcon;
 
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);

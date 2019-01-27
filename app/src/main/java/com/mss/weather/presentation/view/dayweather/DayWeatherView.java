@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
+import com.arellomobile.mvp.viewstate.strategy.OneExecutionStateStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 import com.mss.weather.domain.models.City;
 import com.mss.weather.domain.models.DayWeather;
@@ -17,8 +18,14 @@ public interface DayWeatherView extends MvpView {
     void showCity(@NonNull final City city);
 
     @StateStrategyType(AddToEndSingleStrategy.class)
-    void showDayWeather(final DayWeather dayWeather);
+    void showDayWeather(@NonNull final DayWeather dayWeather);
 
     @StateStrategyType(AddToEndSingleStrategy.class)
-    void showHoursWeatherList(List<HourWeather> hourWeathers);
+    void showHoursWeatherList(@NonNull List<HourWeather> hourWeathers);
+
+    @StateStrategyType(OneExecutionStateStrategy.class)
+    void clearDayWeather();
+
+    @StateStrategyType(OneExecutionStateStrategy.class)
+    void clearHoursWeatherList();
 }

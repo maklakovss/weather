@@ -7,18 +7,18 @@ public class ItemTouchHelperCallback extends android.support.v7.widget.helper.It
 
     private final DismissItemTouchHelper helper;
 
-    public ItemTouchHelperCallback(DismissItemTouchHelper helper) {
+    public ItemTouchHelperCallback(@NonNull final DismissItemTouchHelper helper) {
         this.helper = helper;
     }
 
     @Override
-    public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+    public int getMovementFlags(@NonNull final RecyclerView recyclerView, @NonNull final RecyclerView.ViewHolder viewHolder) {
         int swipeFlags = android.support.v7.widget.helper.ItemTouchHelper.START | android.support.v7.widget.helper.ItemTouchHelper.END;
         return makeMovementFlags(0, swipeFlags);
     }
 
     @Override
-    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+    public boolean onMove(@NonNull final RecyclerView recyclerView, @NonNull final RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
         return false;
     }
 
@@ -33,7 +33,7 @@ public class ItemTouchHelperCallback extends android.support.v7.widget.helper.It
     }
 
     @Override
-    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+    public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
         helper.onItemDismiss(viewHolder.getAdapterPosition());
     }
 }
