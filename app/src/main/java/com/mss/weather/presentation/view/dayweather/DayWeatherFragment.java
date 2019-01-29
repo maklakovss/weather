@@ -69,15 +69,6 @@ public class DayWeatherFragment extends MvpAppCompatFragment implements DayWeath
 
     private Unbinder binder;
 
-    public static DayWeatherFragment newInstance(@NonNull final String cityID, @NonNull final Date date) {
-        final DayWeatherFragment dayWeatherFragment = new DayWeatherFragment();
-        final Bundle bundle = new Bundle();
-        bundle.putLong(DATE_KEY, date.getTime());
-        bundle.putString(CITY_ID_KEY, cityID);
-        dayWeatherFragment.setArguments(bundle);
-        return dayWeatherFragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         MyApplication.getApplicationComponent().inject(this);

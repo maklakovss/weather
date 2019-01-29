@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/listCitiesFragment">
+
+    <fragment
+        android:id="@+id/currentWeatherFragment"
+        android:name="com.mss.weather.presentation.view.currentweather.CurrentWeatherFragment"
+        android:label="fragment_current_weather"
+        tools:layout="@layout/fragment_current_weather">
+        <action
+            android:id="@+id/action_currentWeatherFragment_to_dayWeatherFragment"
+            app:destination="@id/dayWeatherFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dayWeatherFragment"
+        android:name="com.mss.weather.presentation.view.dayweather.DayWeatherFragment"
+        android:label="fragment_day_weather"
+        tools:layout="@layout/fragment_day_weather" />
+    <fragment
+        android:id="@+id/listCitiesFragment"
+        android:name="com.mss.weather.presentation.view.listcities.ListCitiesFragment"
+        android:label="fragment_list_cities"
+        tools:layout="@layout/fragment_list_cities">
+        <action
+            android:id="@+id/action_listCitiesFragment_to_currentWeatherFragment"
+            app:destination="@id/currentWeatherFragment" />
+        <action
+            android:id="@+id/action_listCitiesFragment_to_selectCityFragment"
+            app:destination="@id/selectCityFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectCityFragment"
+        android:name="com.mss.weather.presentation.view.selectcity.SelectCityFragment"
+        android:label="fragment_select_city"
+        tools:layout="@layout/fragment_select_city" />
+</navigation>

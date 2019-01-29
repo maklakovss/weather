@@ -83,11 +83,6 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
         super.onCreate(savedInstanceState);
     }
 
-    @NonNull
-    public static CurrentWeatherFragment newInstance() {
-        return new CurrentWeatherFragment();
-    }
-
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater,
                              @NonNull final ViewGroup container,
