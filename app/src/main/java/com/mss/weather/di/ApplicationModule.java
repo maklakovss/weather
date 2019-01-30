@@ -118,5 +118,4 @@ public class ApplicationModule {
     public HourWeatherLocalRepository provideHourWeatherLocalRepository() {
         return new HourWeatherLocalRepositoryImpl();
     }
-
 }

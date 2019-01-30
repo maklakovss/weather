@@ -9,15 +9,9 @@ public interface MainView extends MvpView {
     @StateStrategyType(OneExecutionStateStrategy.class)
     void closeDrawer();
 
-//    @StateStrategyType(AddToEndSingleStrategy.class)
-//    void showFragment();
-
     @StateStrategyType(OneExecutionStateStrategy.class)
     void showAddCity();
 
     @StateStrategyType(OneExecutionStateStrategy.class)
     void showCurrentWeather();
-
-    @StateStrategyType(OneExecutionStateStrategy.class)
-    void showCityList();
 }

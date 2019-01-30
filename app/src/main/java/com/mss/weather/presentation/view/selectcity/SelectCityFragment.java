@@ -55,10 +55,6 @@ public class SelectCityFragment extends MvpAppCompatFragment implements SelectCi
 
     private WeatherFragmentsNavigator weatherFragmentsNavigator;
 
-    public static SelectCityFragment newInstance() {
-        return new SelectCityFragment();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         MyApplication.getApplicationComponent().inject(this);

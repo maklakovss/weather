@@ -3,9 +3,7 @@ package com.mss.weather.presentation.view.main;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,15 +21,15 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.mss.weather.MyApplication;
 import com.mss.weather.R;
 import com.mss.weather.presentation.presenter.MainPresenter;
-import com.mss.weather.presentation.view.currentweather.CurrentWeatherFragment;
 import com.mss.weather.presentation.view.dayweather.DayWeatherFragment;
 import com.mss.weather.presentation.view.listcities.ListCitiesFragment;
-import com.mss.weather.presentation.view.selectcity.SelectCityFragment;
 
 import java.util.Date;
 
 import javax.inject.Inject;
 
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -45,6 +43,8 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Weat
     @Inject
     @InjectPresenter
     MainPresenter mainPresenter;
+
+    NavController navController;
 
     @BindView(R.id.flMain)
     FrameLayout flMain;
@@ -63,6 +63,9 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Weat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation);
         ButterKnife.bind(this);
+
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+
         setSupportActionBar(toolbar);
 
         final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -79,106 +82,26 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Weat
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        mainPresenter.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        mainPresenter.onStop();
-        super.onStop();
-    }
-
-    @Override
     public void closeDrawer() {
         drawer.closeDrawer(GravityCompat.START);
     }
 
     @Override
     public void showAddCity() {
-        SelectCityFragment addCityFragment = getAddCityFragment();
-        if (addCityFragment == null)
-            addCityFragment = createAddCityFragment();
+        navController.navigate(R.id.action_listCitiesFragment_to_selectCityFragment);
     }
 
     @Override
     public void showCurrentWeather() {
-        CurrentWeatherFragment currentWeatherFragment = getCityWeatherFragment();
-        if (currentWeatherFragment == null)
-            currentWeatherFragment = createCityWeatherFragment();
-    }
-
-    @Override
-    public void showCityList() {
-        listCitiesFragment = (ListCitiesFragment) getSupportFragmentManager()
-                .findFragmentByTag(getString(R.string.list_fragment_tag));
-        if (listCitiesFragment == null)
-            createListCitiesFragment();
+        navController.navigate(R.id.action_listCitiesFragment_to_currentWeatherFragment);
     }
 
     @Override
     public void showDayWeather(String cityID, Date date) {
-        DayWeatherFragment dayWeatherFragment = getDayWeatherFragment();
-        if (dayWeatherFragment == null) {
-            createDayWeatherFragment(cityID, date);
-        }
-    }
-
-    @NonNull
-    private DayWeatherFragment createDayWeatherFragment(String cityID, Date date) {
-        final DayWeatherFragment dayWeatherFragment = DayWeatherFragment.newInstance(cityID, date);
-        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.flMain, dayWeatherFragment);
-        ft.addToBackStack("");
-        ft.commit();
-        return dayWeatherFragment;
-    }
-
-    @Nullable
-    private DayWeatherFragment getDayWeatherFragment() {
-        return (DayWeatherFragment) getSupportFragmentManager()
-                .findFragmentByTag(DAY_TAG);
-    }
-
-    private void createListCitiesFragment() {
-        listCitiesFragment = ListCitiesFragment.newInstance();
-        listCitiesFragment.setRetainInstance(true);
-        final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.flMain, listCitiesFragment, CITY_LIST_TAG);
-        fragmentTransaction.commit();
-    }
-
-    @Nullable
-    private CurrentWeatherFragment getCityWeatherFragment() {
-        return (CurrentWeatherFragment) getSupportFragmentManager()
-                .findFragmentByTag(WEATHER_TAG);
-    }
-
-    @NonNull
-    private CurrentWeatherFragment createCityWeatherFragment() {
-        final CurrentWeatherFragment currentWeatherFragment = CurrentWeatherFragment.newInstance();
-        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.flMain, currentWeatherFragment);
-        ft.addToBackStack("");
-        ft.commit();
-        return currentWeatherFragment;
-    }
-
-    @Nullable
-    private SelectCityFragment getAddCityFragment() {
-        return (SelectCityFragment) getSupportFragmentManager()
-                .findFragmentByTag(SETTINGS_TAG);
-    }
-
-    @Nullable
-    private SelectCityFragment createAddCityFragment() {
-        final SelectCityFragment addCityFragment = SelectCityFragment.newInstance();
-        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.flMain, addCityFragment, SETTINGS_TAG);
-        ft.addToBackStack("");
-        ft.commit();
-        return addCityFragment;
+        final Bundle bundle = new Bundle();
+        bundle.putLong(DayWeatherFragment.DATE_KEY, date.getTime());
+        bundle.putString(DayWeatherFragment.CITY_ID_KEY, cityID);
+        navController.navigate(R.id.action_currentWeatherFragment_to_dayWeatherFragment, bundle);
     }
 
     @Override
