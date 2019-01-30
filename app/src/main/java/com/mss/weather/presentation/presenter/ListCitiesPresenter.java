@@ -43,4 +43,18 @@ public class ListCitiesPresenter extends MvpPresenter<ListCitiesView> {
         weatherInteractor.deleteCity(weatherInteractor.getListCities().get(position));
         getViewState().updateCity(position);
     }
+
+    @Override
+    protected void onFirstViewAttach() {
+        super.onFirstViewAttach();
+        if (weatherInteractor.getListCities().size() == 0) {
+            getViewState().showSelectCity();
+        } else {
+            final City lastCity = weatherInteractor.getCurrentCity();
+            if (lastCity != null) {
+                getViewState().showWeather();
+            }
+        }
+    }
+
 }

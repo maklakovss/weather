@@ -22,25 +22,4 @@ public class MainPresenter extends MvpPresenter<MainView> {
     public void onNavigationItemSelected(int itemId) {
         getViewState().closeDrawer();
     }
-
-//    @Override
-//    protected void onFirstViewAttach() {
-//        super.onFirstViewAttach();
-//        getViewState().showCityList();
-//        if (weatherInteractor.getListCities().size() == 0) {
-//            getViewState().showAddCity();
-//        } else {
-//            final City lastCity = weatherInteractor.getCurrentCity();
-//            if (lastCity != null) {
-//                getViewState().showCurrentWeather();
-//            }
-//        }
-//    }
-
-    public void onStart() {
-    }
-
-    public void onStop() {
-
-    }
 }

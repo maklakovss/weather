@@ -82,18 +82,6 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Weat
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        mainPresenter.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        mainPresenter.onStop();
-        super.onStop();
-    }
-
-    @Override
     public void closeDrawer() {
         drawer.closeDrawer(GravityCompat.START);
     }
