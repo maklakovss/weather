@@ -15,4 +15,6 @@ public interface WeatherFragmentsNavigator {
     void hideKeyboard();
 
     void showDayWeather(@NonNull String cityID, @NonNull Date date);
+
+    void showHistory(String cityID);
 }
