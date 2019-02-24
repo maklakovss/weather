@@ -23,7 +23,7 @@ public class NetworkRepositoryImpl implements NetworkRepository {
 
     private static final String BASE_URL = "http://api.worldweatheronline.com/";
     private static final String FORMAT = "json";
-    private static final String KEY = "fcb691d5d4c64b45a8b124513182112";
+    private static final String KEY = "db8d42d95fb54c8eaf6140043192402";
 
     private final WorldWeatherOnline worldWeatherOnline;
 

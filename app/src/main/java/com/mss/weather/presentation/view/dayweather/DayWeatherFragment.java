@@ -82,6 +82,7 @@ public class DayWeatherFragment extends MvpAppCompatFragment implements DayWeath
         setRetainInstance(true);
         final View layout = inflater.inflate(R.layout.fragment_day_weather, container, false);
         binder = ButterKnife.bind(this, layout);
+
         rvHourWeatherList.setHasFixedSize(true);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
