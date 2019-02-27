@@ -76,15 +76,23 @@ public class HistoryFragment extends MvpAppCompatFragment implements HistoryView
 
     @Override
     public void addStatistics(@NonNull final List<Entry> entryList, int colorLine, int colorValue, @NonNull final String label) {
-        LineDataSet dataSet = new LineDataSet(entryList, label);
-        dataSet.setColor(colorLine);
-        dataSet.setValueTextColor(colorValue);
         LineData lineData = lcHistoryChart.getData();
         if (lineData == null) {
-            lineData = new LineData(dataSet);
+            lineData = new LineData();
+        }
+        LineDataSet dataSet = new LineDataSet(entryList, label);
+        dataSet.setColor(colorLine);
+        dataSet.setFillColor(colorLine);
+        dataSet.setDrawCircles(false);
+        if (lineData.getDataSetCount() > 0) {
+            dataSet.setFillAlpha(255);
+            dataSet.setDrawFilled(true);
+            final LineDataSet lastDataset = (LineDataSet) lineData.getDataSetByIndex(lineData.getDataSetCount() - 1);
+            dataSet.setFillFormatter(new FillFormatter(lastDataset));
         }
         lineData.addDataSet(dataSet);
         lcHistoryChart.setData(lineData);
+        lcHistoryChart.setRenderer(new FillLineLegendRenderer(lcHistoryChart, lcHistoryChart.getAnimator(), lcHistoryChart.getViewPortHandler()));
         lcHistoryChart.invalidate();
     }
 

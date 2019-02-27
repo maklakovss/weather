@@ -11,7 +11,9 @@ import com.mss.weather.domain.models.City;
 import com.mss.weather.presentation.view.history.HistoryView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import javax.inject.Inject;
 
@@ -31,10 +33,25 @@ public class HistoryWeatherPresenter extends MvpPresenter<HistoryView> {
         }
         getViewState().clearStatistics();
 
-        List<Entry> entries = new ArrayList<Entry>();
-        for (int i = 0; i < 12; i++) {
-            entries.add(new Entry(i, i));
+        Random random = new Random();
+
+        List<Float>[] months = new List[12];
+        for (int m = 0; m < 12; m++) {
+            months[m] = new ArrayList<>(24 * 31);
+            for (int i = 0; i < 24 * 31; i++) {
+                months[m].add(random.nextFloat());
+            }
+            Collections.sort(months[m]);
         }
-        getViewState().addStatistics(entries, Color.RED, Color.BLUE, "label");
+
+        final float countSegments = 9;
+
+        for (int j = 0; j <= countSegments; j++) {
+            List<Entry> entries = new ArrayList<Entry>();
+            for (int i = 0; i < 12; i++) {
+                entries.add(new Entry(i, months[i].get(Math.max(0, (int) (months[i].size() * (j / countSegments) - 1)))));
+            }
+            getViewState().addStatistics(entries, Color.rgb(0, (int) (95 + Math.abs(j - (countSegments + 1) / 2f) * 320 / countSegments), 0), Color.BLUE, "label");
+        }
     }
 }
