@@ -48,4 +48,15 @@
     <string name="humidity">Влажность,%</string>
     <string name="precip_mm">Давление,mm</string>
     <string name="android_studio">Android Studio</string>
+    <string name="apply_label">Применить</string>
+    <string name="parametr_label">Параметр</string>
+    <string name="year_label">Года</string>
+    <string name="hours_label">Часы</string>
+    <string name="month_label">Месяца</string>
+    <string-array name="parametrs_array">
+        <item>Температура воздуха, C</item>
+        <item>Скорость ветра, м/с</item>
+        <item>Осадки, мм</item>
+        <item>Температура воды, С</item>
+    </string-array>
 </resources>

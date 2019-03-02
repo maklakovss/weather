@@ -8,14 +8,15 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.List;
 
-public class FillFormatter implements IFillFormatter {
-    private ILineDataSet boundaryDataSet;
+public class CustomFillFormatter implements IFillFormatter {
 
-    public FillFormatter() {
+    private final ILineDataSet boundaryDataSet;
+
+    public CustomFillFormatter() {
         this(null);
     }
 
-    public FillFormatter(ILineDataSet boundaryDataSet) {
+    public CustomFillFormatter(ILineDataSet boundaryDataSet) {
         this.boundaryDataSet = boundaryDataSet;
     }
 

@@ -5,6 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvCityName"
+        tools:visibility="gone" />
+
     <TextView
         android:id="@+id/tvCityName"
         android:layout_width="wrap_content"
@@ -15,16 +30,142 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Tyumen" />
 
+    <Button
+        android:id="@+id/btnApply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/apply_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvParamLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/parametr_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnApply" />
+
+    <Spinner
+        android:id="@+id/spParameter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvParamLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvParamLabel"
+        app:layout_constraintTop_toTopOf="@+id/tvParamLabel" />
+
+    <TextView
+        android:id="@+id/tvYearLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/year_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spParameter" />
+
+    <Spinner
+        android:id="@+id/spYearFrom"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/spParameter"
+        app:layout_constraintTop_toTopOf="@+id/tvYearLabel" />
+
+    <TextView
+        android:id="@+id/tvYearToLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="-"
+        app:layout_constraintBottom_toBottomOf="@+id/tvYearLabel"
+        app:layout_constraintStart_toEndOf="@+id/spYearFrom"
+        app:layout_constraintTop_toTopOf="@+id/tvYearLabel" />
+
+    <Spinner
+        android:id="@+id/spYearTo"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvYearLabel"
+        app:layout_constraintStart_toEndOf="@+id/tvYearToLabel"
+        app:layout_constraintTop_toTopOf="@+id/tvYearLabel" />
+
+    <TextView
+        android:id="@+id/tvHoursLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/hours_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spYearFrom" />
+
+    <Spinner
+        android:id="@+id/spHourFrom"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/tvHoursLabel"
+        app:layout_constraintStart_toStartOf="@+id/spYearFrom"
+        app:layout_constraintTop_toTopOf="@+id/tvHoursLabel" />
+
+    <TextView
+        android:id="@+id/tvHourToLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="-"
+        app:layout_constraintBottom_toBottomOf="@+id/tvHoursLabel"
+        app:layout_constraintStart_toEndOf="@+id/spHourFrom"
+        app:layout_constraintTop_toTopOf="@+id/tvHoursLabel" />
+
+    <Spinner
+        android:id="@+id/spHourTo"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvHoursLabel"
+        app:layout_constraintStart_toEndOf="@+id/tvHourToLabel"
+        app:layout_constraintTop_toTopOf="@+id/tvHoursLabel" />
+
+    <TextView
+        android:id="@+id/tvMonthsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/month_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spHourFrom" />
+
+    <Spinner
+        android:id="@+id/spMonth"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvMonthsLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/spHourFrom"
+        app:layout_constraintTop_toTopOf="@+id/tvMonthsLabel"
+        app:layout_constraintVertical_bias="0.0" />
+
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/lcHistoryChart"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCityName" />
+        app:layout_constraintTop_toBottomOf="@+id/spMonth" />
+
 </android.support.constraint.ConstraintLayout>

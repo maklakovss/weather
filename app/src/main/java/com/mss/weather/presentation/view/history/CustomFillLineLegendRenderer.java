@@ -14,9 +14,9 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.util.List;
 
-public class FillLineLegendRenderer extends LineChartRenderer {
+public class CustomFillLineLegendRenderer extends LineChartRenderer {
 
-    public FillLineLegendRenderer(LineDataProvider chart, ChartAnimator animator, ViewPortHandler viewPortHandler) {
+    public CustomFillLineLegendRenderer(LineDataProvider chart, ChartAnimator animator, ViewPortHandler viewPortHandler) {
         super(chart, animator, viewPortHandler);
     }
 
@@ -55,7 +55,7 @@ public class FillLineLegendRenderer extends LineChartRenderer {
 
     private void generateFilledPath(final ILineDataSet dataSet, final int startIndex, final int endIndex, final Path outputPath) {
 
-        final List<Entry> boundaryEntry = ((FillFormatter) dataSet.getFillFormatter()).getFillLineBoundary();
+        final List<Entry> boundaryEntry = ((CustomFillFormatter) dataSet.getFillFormatter()).getFillLineBoundary();
 
         final float phaseY = mAnimator.getPhaseY();
         final Path filled = outputPath;
