@@ -18,11 +18,11 @@ public interface HistoryView extends MvpView {
     void clearStatistics();
 
     @StateStrategyType(OneExecutionStateStrategy.class)
-    void addStatistics(@NonNull final LineData lineData);
+    void showStatistics(@NonNull final LineData lineData);
 
     @StateStrategyType(AddToEndSingleStrategy.class)
     void showProgress(boolean visible);
 
     @StateStrategyType(AddToEndSingleStrategy.class)
-    void fillSpiners(Integer[] years, String[] months, Integer[] hours);
+    void fillSpiners(@NonNull final String[] parameters, @NonNull final Integer[] years, @NonNull final String[] months, @NonNull final Integer[] hours);
 }

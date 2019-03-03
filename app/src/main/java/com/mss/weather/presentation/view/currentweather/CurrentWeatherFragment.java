@@ -71,7 +71,7 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
     TextView tvTime;
     @BindView(R.id.rvWeatherList)
     RecyclerView rvWeatherList;
-    @BindView(R.id.progressBar)
+    @BindView(R.id.progressBarHistory)
     ProgressBar progressBar;
     @BindView(R.id.ivWeatherIcon)
     ImageView ivWeatherIcon;

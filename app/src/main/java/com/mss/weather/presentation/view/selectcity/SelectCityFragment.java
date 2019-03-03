@@ -50,7 +50,7 @@ public class SelectCityFragment extends MvpAppCompatFragment implements SelectCi
     EditText etLocationTemplate;
     @BindView(R.id.rvAutoCompleteList)
     RecyclerView rvAutoCompleteList;
-    @BindView(R.id.progressBar)
+    @BindView(R.id.progressBarHistory)
     ProgressBar progressBar;
 
     private WeatherFragmentsNavigator weatherFragmentsNavigator;

@@ -5,11 +5,13 @@ import android.support.annotation.NonNull;
 import com.mss.weather.BuildConfig;
 import com.mss.weather.data.network.mappers.CitiesResponseMapper;
 import com.mss.weather.data.network.mappers.WeatherResponseMapper;
+import com.mss.weather.data.network.utils.DateStringToDate;
 import com.mss.weather.domain.models.City;
 import com.mss.weather.domain.models.InfoWeather;
 import com.mss.weather.domain.models.Position;
 import com.mss.weather.domain.repositories.NetworkRepository;
 
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Maybe;
@@ -72,6 +74,20 @@ public class NetworkRepositoryImpl implements NetworkRepository {
                 "no",
                 1,
                 "no",
+                "ru")
+                .map(weatherResponse -> WeatherResponseMapper.mapWeatherResponseToWeatherInfo(weatherResponse, city))
+                .firstElement();
+    }
+
+    @Override
+    public Maybe<InfoWeather> getPastWeatherInfo(@NonNull final City city, @NonNull final Date dateFrom, @NonNull final Date dateTo) {
+        return worldWeatherOnline.getPastWeather(city.getId(),
+                KEY,
+                FORMAT,
+                DateStringToDate.dateToString(dateFrom),
+                DateStringToDate.dateToString(dateTo),
+                "no",
+                1,
                 "ru")
                 .map(weatherResponse -> WeatherResponseMapper.mapWeatherResponseToWeatherInfo(weatherResponse, city))
                 .firstElement();

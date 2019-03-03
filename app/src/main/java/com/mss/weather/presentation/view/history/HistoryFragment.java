@@ -40,8 +40,8 @@ public class HistoryFragment extends MvpAppCompatFragment implements HistoryView
     TextView tvCityName;
     @BindView(R.id.lcHistoryChart)
     LineChart lcHistoryChart;
-    @BindView(R.id.progressBar)
-    ProgressBar progressBar;
+    @BindView(R.id.progressBarHistory)
+    ProgressBar progressBarHistory;
     @BindView(R.id.spParameter)
     Spinner spParameter;
     @BindView(R.id.spYearFrom)
@@ -72,22 +72,32 @@ public class HistoryFragment extends MvpAppCompatFragment implements HistoryView
         final View layout = inflater.inflate(R.layout.fragment_history, container, false);
         binder = ButterKnife.bind(this, layout);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
-                R.array.parametrs_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spParameter.setAdapter(adapter);
-
         final String cityID = getArguments().getString(CITY_ID_KEY);
-        historyWeatherPresenter.onCreate(cityID);
+        historyWeatherPresenter.onCreate(cityID, getResources().getStringArray(R.array.parametrs_array));
 
         return layout;
     }
 
-    @OnClick(R.id.btnApply)
-    public void onClick(View view) {
-        historyWeatherPresenter.clickApply((String) spParameter.getSelectedItem());
+    @ProvidePresenter
+    HistoryWeatherPresenter providePresenter() {
+        return historyWeatherPresenter;
     }
 
+    @Override
+    public void onDestroyView() {
+        binder.unbind();
+        super.onDestroyView();
+    }
+
+    @OnClick(R.id.btnApply)
+    public void onClick(View view) {
+        historyWeatherPresenter.clickApply(spParameter.getSelectedItemPosition(),
+                spYearFrom.getSelectedItemPosition(),
+                spYearTo.getSelectedItemPosition(),
+                spHourFrom.getSelectedItemPosition(),
+                spHourTo.getSelectedItemPosition(),
+                spMonth.getSelectedItemPosition());
+    }
 
     @Override
     public void showCity(@NonNull final City city) {
@@ -100,7 +110,7 @@ public class HistoryFragment extends MvpAppCompatFragment implements HistoryView
     }
 
     @Override
-    public void addStatistics(@NonNull final LineData lineData) {
+    public void showStatistics(@NonNull final LineData lineData) {
         lcHistoryChart.setData(lineData);
         lcHistoryChart.setRenderer(new CustomFillLineLegendRenderer(lcHistoryChart, lcHistoryChart.getAnimator(), lcHistoryChart.getViewPortHandler()));
         lcHistoryChart.invalidate();
@@ -109,14 +119,19 @@ public class HistoryFragment extends MvpAppCompatFragment implements HistoryView
     @Override
     public void showProgress(boolean visible) {
         if (visible)
-            progressBar.setVisibility(View.VISIBLE);
+            progressBarHistory.setVisibility(View.VISIBLE);
         else
-            progressBar.setVisibility(View.GONE);
+            progressBarHistory.setVisibility(View.GONE);
     }
 
     @Override
-    public void fillSpiners(Integer[] years, String[] months, Integer[] hours) {
-        ArrayAdapter<Integer> adapterYears = new ArrayAdapter<Integer>(this.getContext(),
+    public void fillSpiners(@NonNull final String[] parameters, @NonNull final Integer[] years, @NonNull final String[] months, @NonNull final Integer[] hours) {
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(this.getContext(),
+                android.R.layout.simple_spinner_item, parameters);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spParameter.setAdapter(adapter);
+
+        ArrayAdapter<Integer> adapterYears = new ArrayAdapter<>(this.getContext(),
                 android.R.layout.simple_spinner_item, years);
         adapterYears.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spYearFrom.setAdapter(adapterYears);
@@ -124,7 +139,7 @@ public class HistoryFragment extends MvpAppCompatFragment implements HistoryView
         spYearTo.setAdapter(adapterYears);
         spYearTo.setSelection(years.length - 1);
 
-        ArrayAdapter<Integer> adapterHours = new ArrayAdapter<Integer>(this.getContext(),
+        ArrayAdapter<Integer> adapterHours = new ArrayAdapter<>(this.getContext(),
                 android.R.layout.simple_spinner_item, hours);
         adapterHours.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spHourFrom.setAdapter(adapterHours);
@@ -132,21 +147,10 @@ public class HistoryFragment extends MvpAppCompatFragment implements HistoryView
         spHourTo.setAdapter(adapterHours);
         spHourTo.setSelection(hours.length - 1);
 
-        ArrayAdapter<String> adapterMonths = new ArrayAdapter<String>(this.getContext(),
+        ArrayAdapter<String> adapterMonths = new ArrayAdapter<>(this.getContext(),
                 android.R.layout.simple_spinner_item, months);
         adapterMonths.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spMonth.setAdapter(adapterMonths);
 
-    }
-
-    @ProvidePresenter
-    HistoryWeatherPresenter providePresenter() {
-        return historyWeatherPresenter;
-    }
-
-    @Override
-    public void onDestroyView() {
-        binder.unbind();
-        super.onDestroyView();
     }
 }

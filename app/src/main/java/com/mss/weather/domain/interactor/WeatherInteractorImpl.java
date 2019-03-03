@@ -155,6 +155,12 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     }
 
     @NonNull
+    @Override
+    public Maybe<InfoWeather> getWeatherStatistics(final @NonNull City city, @NonNull final Date dateFrom, @NonNull final Date dateTo) {
+        return networkRepository.getPastWeatherInfo(city, dateFrom, dateTo);
+    }
+
+    @NonNull
     private Date getCurrentDate() {
         final Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR, 0);

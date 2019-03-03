@@ -19,4 +19,9 @@ public class DateStringToDate {
             return null;
         }
     }
+
+    @NonNull
+    public static String dateToString(@NonNull final Date date) {
+        return format.format(date);
+    }
 }
