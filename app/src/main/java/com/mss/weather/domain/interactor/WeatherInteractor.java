@@ -47,4 +47,8 @@ public interface WeatherInteractor {
 
     @NonNull
     Observable<InfoWeather> getWeatherStatistics(@NonNull final City city, @NonNull final Date dateFrom, @NonNull final Date dateTo);
+
+    void saveLocalWeatherStatistic(@NonNull final InfoWeather infoWeather);
+
+    InfoWeather getLocalWeatherStatistic(@NonNull final City city, @NonNull final Date dateFrom, @NonNull final Date dateTo);
 }

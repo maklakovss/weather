@@ -83,15 +83,35 @@ public class HistoryWeatherPresenter extends MvpPresenter<HistoryView> {
         }
 
         List<DateRange> dateRangeList = getDateRangeList(years[selectedYearFrom], selectedMonthFrom, years[selectedYearTo], selectedMonthTo);
+        List<InfoWeather> localWheaters = new ArrayList<>();
+        List<DateRange> localRanges = new ArrayList<>();
+        for (DateRange dateRange : dateRangeList) {
+            InfoWeather infoWeather = weatherInteractor.getLocalWeatherStatistic(city, dateRange.dateFrom, dateRange.dateTo);
+            if (infoWeather != null) {
+                localRanges.add(dateRange);
+                localWheaters.add(infoWeather);
+            }
+        }
+        dateRangeList.removeAll(localRanges);
 
-        Observable.fromIterable(dateRangeList)
-                .concatMap(dateRange -> weatherInteractor.getWeatherStatistics(city, dateRange.dateFrom, dateRange.dateTo))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(infoWeather -> onNext(infoWeather))
-                .doOnError(e -> onError(e))
-                .toList()
-                .subscribe(infoWeathers -> onSuccess(infoWeathers), e -> stopProgressOnError(e));
+        if (dateRangeList.size() > 0) {
+            Observable.fromIterable(dateRangeList)
+                    .concatMap(dateRange -> weatherInteractor.getWeatherStatistics(city, dateRange.dateFrom, dateRange.dateTo))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnNext(infoWeather -> onNext(infoWeather))
+                    .doOnError(e -> onError(e))
+                    .toList()
+                    .subscribe(
+                            infoWeathers -> {
+                                localWheaters.addAll(infoWeathers);
+                                onSuccess(localWheaters);
+                            },
+                            e -> stopProgressOnError(e)
+                    );
+        } else {
+            onSuccess(localWheaters);
+        }
     }
 
     private void onError(Throwable e) {
@@ -120,6 +140,7 @@ public class HistoryWeatherPresenter extends MvpPresenter<HistoryView> {
 
     private void onNext(final InfoWeather infoWeather) {
         if (infoWeather != null && infoWeather.getDays() != null && infoWeather.getDays().size() > 0) {
+            weatherInteractor.saveLocalWeatherStatistic(infoWeather);
             log = monthAndYearFormat.format(infoWeather.getDays().get(0).getDate()) + " - OK\n" + log;
             getViewState().setProgressLogText(log);
         }
@@ -178,7 +199,11 @@ public class HistoryWeatherPresenter extends MvpPresenter<HistoryView> {
             int i = 0;
             for (String day : days) {
                 List<Float> statistic = statistics.get(day);
-                entries.add(new Entry(i, statistic.get(Math.max(0, (int) (statistic.size() * (j / COUNT_SEGMENTS) - 1)))));
+                if (statistic.size() > 0) {
+                    int index = Math.max(0, (int) (statistic.size() * (j / COUNT_SEGMENTS) - 1));
+                    System.out.println(day + " " + j + " " + statistic.size() + " " + index);
+                    entries.add(new Entry(i, statistic.get(index)));
+                }
                 i++;
             }
 

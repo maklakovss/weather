@@ -11,10 +11,10 @@ import java.util.List;
 public class DayWeatherMapper {
 
     @NonNull
-    public static List<DayWeatherDB> mapDayWeathersToDayWeatherDBs(@NonNull final List<DayWeather> dayWeathers) {
+    public static List<DayWeatherDB> mapDayWeathersToDayWeatherDBs(@NonNull final List<DayWeather> dayWeathers, boolean isPast) {
         final List<DayWeatherDB> dayWeatherDBs = new ArrayList<>();
         for (DayWeather dayWeather : dayWeathers) {
-            dayWeatherDBs.add(DayWeatherMapper.mapDayWeatherToDayWeatherDB(dayWeather));
+            dayWeatherDBs.add(DayWeatherMapper.mapDayWeatherToDayWeatherDB(dayWeather, isPast));
         }
         return dayWeatherDBs;
     }
@@ -55,11 +55,11 @@ public class DayWeatherMapper {
         return dayWeathers;
     }
 
-
     @NonNull
-    public static DayWeatherDB mapDayWeatherToDayWeatherDB(@NonNull final DayWeather dayWeather) {
+    public static DayWeatherDB mapDayWeatherToDayWeatherDB(@NonNull final DayWeather dayWeather, boolean isPast) {
         final DayWeatherDB dayWeatherDB = new DayWeatherDB();
         dayWeatherDB.setId(dayWeather.getCityID() + " " + dayWeather.getDate().toString());
+        dayWeatherDB.setPast(isPast);
         dayWeatherDB.setCityID(dayWeather.getCityID());
         dayWeatherDB.setDate(dayWeather.getDate());
         dayWeatherDB.setMaxTempC(dayWeather.getMaxTempC());
@@ -83,5 +83,4 @@ public class DayWeatherMapper {
         dayWeatherDB.setUvIndex(dayWeather.getUvIndex());
         return dayWeatherDB;
     }
-
 }

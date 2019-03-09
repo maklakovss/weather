@@ -63,18 +63,19 @@ public class HourWeatherMapper {
     }
 
     @NonNull
-    public static List<HourWeatherDB> mapHourWeathersToHourWeatherDBs(@NonNull final List<HourWeather> hourWeathers) {
+    public static List<HourWeatherDB> mapHourWeathersToHourWeatherDBs(@NonNull final List<HourWeather> hourWeathers, boolean isPast) {
         final List<HourWeatherDB> hourWeatherDBs = new ArrayList<>();
         for (HourWeather hourWeather : hourWeathers) {
-            hourWeatherDBs.add(mapHourWeatherToHourWeatherDB(hourWeather));
+            hourWeatherDBs.add(mapHourWeatherToHourWeatherDB(hourWeather, isPast));
         }
         return hourWeatherDBs;
     }
 
     @NonNull
-    private static HourWeatherDB mapHourWeatherToHourWeatherDB(@NonNull final HourWeather hourWeather) {
+    private static HourWeatherDB mapHourWeatherToHourWeatherDB(@NonNull final HourWeather hourWeather, boolean isPast) {
         final HourWeatherDB hourWeatherDB = new HourWeatherDB();
         hourWeatherDB.setId(hourWeather.getCityID() + " " + hourWeather.getDate().toString());
+        hourWeatherDB.setPast(isPast);
         hourWeatherDB.setCityID(hourWeather.getCityID());
         hourWeatherDB.setDate(hourWeather.getDate());
         hourWeatherDB.setCloudcover(hourWeather.getCloudcover());
