@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Maybe;
+import io.reactivex.Observable;
 
 public interface NetworkRepository {
 
@@ -22,5 +23,5 @@ public interface NetworkRepository {
     @NonNull
     Maybe<InfoWeather> getWeatherInfo(@NonNull final City city);
 
-    Maybe<InfoWeather> getPastWeatherInfo(@NonNull final City city, @NonNull final Date dateFrom, @NonNull final Date dateTo);
+    Observable<InfoWeather> getPastWeatherInfo(@NonNull final City city, @NonNull final Date dateFrom, @NonNull final Date dateTo);
 }

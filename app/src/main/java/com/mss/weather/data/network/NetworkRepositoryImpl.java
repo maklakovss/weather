@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Maybe;
+import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -80,7 +81,7 @@ public class NetworkRepositoryImpl implements NetworkRepository {
     }
 
     @Override
-    public Maybe<InfoWeather> getPastWeatherInfo(@NonNull final City city, @NonNull final Date dateFrom, @NonNull final Date dateTo) {
+    public Observable<InfoWeather> getPastWeatherInfo(@NonNull final City city, @NonNull final Date dateFrom, @NonNull final Date dateTo) {
         return worldWeatherOnline.getPastWeather(city.getId(),
                 KEY,
                 FORMAT,
@@ -89,7 +90,6 @@ public class NetworkRepositoryImpl implements NetworkRepository {
                 "no",
                 1,
                 "ru")
-                .map(weatherResponse -> WeatherResponseMapper.mapWeatherResponseToWeatherInfo(weatherResponse, city))
-                .firstElement();
+                .map(weatherResponse -> WeatherResponseMapper.mapWeatherResponseToWeatherInfo(weatherResponse, city));
     }
 }

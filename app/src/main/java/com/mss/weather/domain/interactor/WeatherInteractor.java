@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Maybe;
+import io.reactivex.Observable;
 
 public interface WeatherInteractor {
 
@@ -45,5 +46,5 @@ public interface WeatherInteractor {
     City getCityById(@NonNull final String cityId);
 
     @NonNull
-    Maybe<InfoWeather> getWeatherStatistics(@NonNull final City city, @NonNull final Date dateFrom, @NonNull final Date dateTo);
+    Observable<InfoWeather> getWeatherStatistics(@NonNull final City city, @NonNull final Date dateFrom, @NonNull final Date dateTo);
 }

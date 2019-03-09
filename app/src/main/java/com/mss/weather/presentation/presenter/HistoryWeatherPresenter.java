@@ -18,19 +18,25 @@ import com.mss.weather.presentation.view.history.HistoryView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import lombok.Data;
 
 @InjectViewState
 public class HistoryWeatherPresenter extends MvpPresenter<HistoryView> {
+
+    private static final SimpleDateFormat dayOfYearFormat = new SimpleDateFormat("MMdd");
 
     private final WeatherInteractor weatherInteractor;
 
@@ -65,49 +71,36 @@ public class HistoryWeatherPresenter extends MvpPresenter<HistoryView> {
         int selectedMonthFrom = 1;
         int selectedMonthTo = 12;
         if (selectedMonth != 0) {
-            selectedMonthFrom = selectedMonth;
-            selectedMonthTo = selectedMonth;
+            selectedMonthFrom = selectedMonth - 1;
+            selectedMonthTo = selectedMonth - 1;
         }
-        Calendar dateFrom = null;
-        Calendar dateTo = null;
-        dateFrom = Calendar.getInstance();
-        dateFrom.set(years[selectedYearFrom], selectedMonthFrom, 1);
-        dateTo = (Calendar) dateFrom.clone();
-        dateTo.add(Calendar.MONTH, 1);
-        dateTo.add(Calendar.DAY_OF_MONTH, -1);
 
-        weatherInteractor.getWeatherStatistics(city, dateFrom.getTime(), dateTo.getTime())
+        List<DateRange> dateRangeList = getDateRangeList(years[selectedYearFrom], selectedMonthFrom, years[selectedYearTo], selectedMonthTo);
+
+        Observable.fromIterable(dateRangeList)
+                .concatMap(dateRange -> weatherInteractor.getWeatherStatistics(city, dateRange.dateFrom, dateRange.dateTo))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(infoWeather -> onSuccess(infoWeather), e -> stopProgressOnError(e));
+                .doOnNext(infoWeather -> System.out.println(infoWeather.getDays().size()))
+                .toList()
+                .subscribe(infoWeathers -> onSuccess(infoWeathers), e -> stopProgressOnError(e));
+    }
 
-//        final Maybe<List<List<Float>>> maybe = Maybe.create(e -> {
-//            List<List<Float>> statistics = new ArrayList<>(365);
-//            Calendar dateFrom = null;
-//            Calendar dateTo = null;
-//            for (int year = selectedYearFrom; year <= selectedYearTo; year++) {
-//                for (int month = selectedMonthFrom; month <= selectedMonthTo; month++) {
-//                    if (dateFrom == null) {
-//                        dateFrom = Calendar.getInstance();
-//                        dateFrom.set(year, month, 1);
-//                        dateTo = (Calendar) dateFrom.clone();
-//                    } else {
-//                        dateFrom = dateTo;
-//                    }
-//                    dateTo.roll(Calendar.MONTH, 1);
-//                    InfoWeather infoWeather = networkRepository.getPastWeatherInfo(city, dateFrom.getTime(), dateTo.getTime());
-//                    for (DayWeather day : infoWeather.getDays()) {
-//                        List<Float> dayStatistics = new ArrayList<>(24);
-//                        for (HourWeather hourWeather : day.getHourly()) {
-//                            dayStatistics.add(new Float(hourWeather.getTempC()));
-//                        }
-//                        statistics.add(dayStatistics);
-//                    }
-//                }
-//            }
-//            e.onSuccess(statistics);
-//        });
-//        return maybe;
+    private List<DateRange> getDateRangeList(int selectedYearFrom, int selectedMonthFrom, int selectedYearTo, int selectedMonthTo) {
+        final List<DateRange> result = new ArrayList<>((selectedMonthTo - selectedMonthFrom + 1) * (selectedYearTo - selectedYearFrom + 1));
+        for (int year = selectedYearFrom; year <= selectedYearTo; year++) {
+            for (int month = selectedMonthFrom; month <= selectedMonthTo; month++) {
+                Calendar dateFrom = null;
+                Calendar dateTo = null;
+                dateFrom = Calendar.getInstance();
+                dateFrom.set(year, month, 1);
+                dateTo = (Calendar) dateFrom.clone();
+                dateTo.add(Calendar.MONTH, 1);
+                dateTo.add(Calendar.DAY_OF_MONTH, -1);
+                result.add(new DateRange(dateFrom.getTime(), dateTo.getTime()));
+            }
+        }
+        return result;
     }
 
     private void stopProgressOnError(Throwable e) {
@@ -115,31 +108,50 @@ public class HistoryWeatherPresenter extends MvpPresenter<HistoryView> {
         getViewState().showProgress(false);
     }
 
-    private void onSuccess(InfoWeather infoWeather) {
-        List<List<Float>> statistics = new ArrayList<>(365);
-        for (DayWeather day : infoWeather.getDays()) {
-            List<Float> dayStatistics = new ArrayList<>(24);
-            for (HourWeather hourWeather : day.getHourly()) {
-                dayStatistics.add(new Float(hourWeather.getTempC()));
+    private void onSuccess(List<InfoWeather> infoWeathers) {
+        HashMap<String, List<Float>> days = new HashMap<>();
+        for (InfoWeather infoWeather : infoWeathers) {
+            for (DayWeather day : infoWeather.getDays()) {
+                String dayOfYear = dayOfYearFormat.format(day.getDate());
+                List<Float> dayStatistics = days.get(dayOfYear);
+                if (dayStatistics == null) {
+                    dayStatistics = new ArrayList<>(24);
+                }
+                for (HourWeather hourWeather : day.getHourly()) {
+                    dayStatistics.add(new Float(hourWeather.getTempC()));
+                }
+                days.put(dayOfYear, dayStatistics);
             }
-            statistics.add(dayStatistics);
         }
 
-        getViewState().showStatistics(mapStatisticsToLineData(statistics));
+        getViewState().showStatistics(mapStatisticsToLineData(days));
         getViewState().showProgress(false);
     }
 
-    private LineData mapStatisticsToLineData(List<List<Float>> statistics) {
+    private LineData mapStatisticsToLineData(HashMap<String, List<Float>> statistics) {
 
+        tuneData(statistics);
+
+
+        String[] days = new String[statistics.keySet().size()];
+        int ii = 0;
+        for (String day : statistics.keySet()) {
+            days[ii++] = day;
+
+        }
+
+        Arrays.sort(days);
         LineData lineData = new LineData();
-
         for (int j = 0; j <= COUNT_SEGMENTS; j++) {
             List<Entry> entries = new ArrayList<Entry>();
-            for (int i = 0; i < statistics.size(); i++) {
-                List<Float> dayStatistics = statistics.get(i);
-                Collections.sort(dayStatistics);
-                entries.add(new Entry(i, dayStatistics.get(Math.max(0, (int) (dayStatistics.size() * (j / COUNT_SEGMENTS) - 1)))));
+
+            int i = 0;
+            for (String day : days) {
+                List<Float> statistic = statistics.get(day);
+                entries.add(new Entry(i, statistic.get(Math.max(0, (int) (statistic.size() * (j / COUNT_SEGMENTS) - 1)))));
+                i++;
             }
+
             LineDataSet dataSet = new LineDataSet(entries, "");
             int color = Color.rgb(0, (int) (95 + Math.abs(j - (COUNT_SEGMENTS + 1) / 2f) * 320 / COUNT_SEGMENTS), 0);
             dataSet.setColor(color);
@@ -154,6 +166,24 @@ public class HistoryWeatherPresenter extends MvpPresenter<HistoryView> {
             lineData.addDataSet(dataSet);
         }
         return lineData;
+    }
+
+    private void tuneData(HashMap<String, List<Float>> statistics) {
+        Random random = new Random();
+        for (List<Float> statistic : statistics.values()) {
+            Collections.sort(statistic);
+            Float previousValue = Float.MIN_VALUE;
+            for (int i = 0; i < statistic.size(); i++) {
+                Float value = statistic.get(i);
+                if (previousValue.equals(value)) {
+                    value += random.nextFloat() - 0.5f;
+                    statistic.set(i, value);
+                } else {
+                    previousValue = value;
+                }
+            }
+            Collections.sort(statistic);
+        }
     }
 
     private void initRanges() {

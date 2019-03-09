@@ -22,6 +22,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Maybe;
+import io.reactivex.Observable;
 
 public class WeatherInteractorImpl implements WeatherInteractor {
 
@@ -156,7 +157,7 @@ public class WeatherInteractorImpl implements WeatherInteractor {
 
     @NonNull
     @Override
-    public Maybe<InfoWeather> getWeatherStatistics(final @NonNull City city, @NonNull final Date dateFrom, @NonNull final Date dateTo) {
+    public Observable<InfoWeather> getWeatherStatistics(final @NonNull City city, @NonNull final Date dateFrom, @NonNull final Date dateTo) {
         return networkRepository.getPastWeatherInfo(city, dateFrom, dateTo);
     }
 
