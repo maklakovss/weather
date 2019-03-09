@@ -37,11 +37,13 @@ import lombok.Data;
 public class HistoryWeatherPresenter extends MvpPresenter<HistoryView> {
 
     private static final SimpleDateFormat dayOfYearFormat = new SimpleDateFormat("MMdd");
+    private static final SimpleDateFormat monthAndYearFormat = new SimpleDateFormat("YYYY MMMM");
 
     private final WeatherInteractor weatherInteractor;
 
     final private static int COUNT_YEARS = 10;
     final private float COUNT_SEGMENTS = 9;
+    private String log;
     private Integer[] years;
     private String[] months;
     private Integer[] hours;
@@ -59,17 +61,22 @@ public class HistoryWeatherPresenter extends MvpPresenter<HistoryView> {
 
         city = weatherInteractor.getCityById(cityId);
         if (city != null) {
-            getViewState().showCity(city);
+            getViewState().showCityInfo(city);
         }
-        getViewState().clearStatistics();
+        getViewState().clearChartData();
         getViewState().showProgress(false);
     }
 
     public void clickApply(int selectedParameter, int selectedYearFrom, int selectedYearTo, int selectedHourFrom, int selectedHourTo, int selectedMonth) {
         getViewState().showProgress(true);
+        getViewState().setProgressLogText("");
+        getViewState().showProgressLog(true);
+        getViewState().showChart(false);
 
-        int selectedMonthFrom = 1;
-        int selectedMonthTo = 12;
+        log = "";
+
+        int selectedMonthFrom = 0;
+        int selectedMonthTo = 11;
         if (selectedMonth != 0) {
             selectedMonthFrom = selectedMonth - 1;
             selectedMonthTo = selectedMonth - 1;
@@ -81,9 +88,15 @@ public class HistoryWeatherPresenter extends MvpPresenter<HistoryView> {
                 .concatMap(dateRange -> weatherInteractor.getWeatherStatistics(city, dateRange.dateFrom, dateRange.dateTo))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(infoWeather -> System.out.println(infoWeather.getDays().size()))
+                .doOnNext(infoWeather -> onNext(infoWeather))
+                .doOnError(e -> onError(e))
                 .toList()
                 .subscribe(infoWeathers -> onSuccess(infoWeathers), e -> stopProgressOnError(e));
+    }
+
+    private void onError(Throwable e) {
+        log = e.toString() + log;
+        getViewState().setProgressLogText(log);
     }
 
     private List<DateRange> getDateRangeList(int selectedYearFrom, int selectedMonthFrom, int selectedYearTo, int selectedMonthTo) {
@@ -97,35 +110,52 @@ public class HistoryWeatherPresenter extends MvpPresenter<HistoryView> {
                 dateTo = (Calendar) dateFrom.clone();
                 dateTo.add(Calendar.MONTH, 1);
                 dateTo.add(Calendar.DAY_OF_MONTH, -1);
-                result.add(new DateRange(dateFrom.getTime(), dateTo.getTime()));
+                if (dateTo.getTime().getTime() < (new Date().getTime())) {
+                    result.add(new DateRange(dateFrom.getTime(), dateTo.getTime()));
+                }
             }
         }
         return result;
     }
 
+    private void onNext(final InfoWeather infoWeather) {
+        if (infoWeather != null && infoWeather.getDays() != null && infoWeather.getDays().size() > 0) {
+            log = monthAndYearFormat.format(infoWeather.getDays().get(0).getDate()) + " - OK\n" + log;
+            getViewState().setProgressLogText(log);
+        }
+    }
+
     private void stopProgressOnError(Throwable e) {
-        getViewState().clearStatistics();
         getViewState().showProgress(false);
     }
 
     private void onSuccess(List<InfoWeather> infoWeathers) {
         HashMap<String, List<Float>> days = new HashMap<>();
         for (InfoWeather infoWeather : infoWeathers) {
-            for (DayWeather day : infoWeather.getDays()) {
-                String dayOfYear = dayOfYearFormat.format(day.getDate());
-                List<Float> dayStatistics = days.get(dayOfYear);
-                if (dayStatistics == null) {
-                    dayStatistics = new ArrayList<>(24);
+            if (infoWeather.getDays() != null) {
+                for (DayWeather day : infoWeather.getDays()) {
+                    String dayOfYear = dayOfYearFormat.format(day.getDate());
+                    List<Float> dayStatistics = days.get(dayOfYear);
+                    if (dayStatistics == null) {
+                        dayStatistics = new ArrayList<>(24);
+                    }
+                    for (HourWeather hourWeather : day.getHourly()) {
+                        dayStatistics.add(new Float(hourWeather.getTempC()));
+                    }
+                    days.put(dayOfYear, dayStatistics);
                 }
-                for (HourWeather hourWeather : day.getHourly()) {
-                    dayStatistics.add(new Float(hourWeather.getTempC()));
-                }
-                days.put(dayOfYear, dayStatistics);
             }
         }
 
-        getViewState().showStatistics(mapStatisticsToLineData(days));
         getViewState().showProgress(false);
+        if (days.size() > 0) {
+            getViewState().showProgressLog(false);
+            getViewState().setChartDate(mapStatisticsToLineData(days));
+            getViewState().showChart(true);
+        } else {
+            log = "No data\n" + log;
+            getViewState().setProgressLogText(log);
+        }
     }
 
     private LineData mapStatisticsToLineData(HashMap<String, List<Float>> statistics) {

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -54,6 +55,10 @@ public class HistoryFragment extends MvpAppCompatFragment implements HistoryView
     Spinner spHourTo;
     @BindView(R.id.spMonth)
     Spinner spMonth;
+    @BindView(R.id.tvProgressLog)
+    TextView tvProgressLog;
+    @BindView(R.id.svLog)
+    ScrollView svLog;
 
     private Unbinder binder;
 
@@ -100,28 +105,8 @@ public class HistoryFragment extends MvpAppCompatFragment implements HistoryView
     }
 
     @Override
-    public void showCity(@NonNull final City city) {
+    public void showCityInfo(@NonNull final City city) {
         tvCityName.setText(city.getAreaName());
-    }
-
-    @Override
-    public void clearStatistics() {
-        lcHistoryChart.clear();
-    }
-
-    @Override
-    public void showStatistics(@NonNull final LineData lineData) {
-        lcHistoryChart.setData(lineData);
-        lcHistoryChart.setRenderer(new CustomFillLineLegendRenderer(lcHistoryChart, lcHistoryChart.getAnimator(), lcHistoryChart.getViewPortHandler()));
-        lcHistoryChart.invalidate();
-    }
-
-    @Override
-    public void showProgress(boolean visible) {
-        if (visible)
-            progressBarHistory.setVisibility(View.VISIBLE);
-        else
-            progressBarHistory.setVisibility(View.GONE);
     }
 
     @Override
@@ -152,5 +137,49 @@ public class HistoryFragment extends MvpAppCompatFragment implements HistoryView
         adapterMonths.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spMonth.setAdapter(adapterMonths);
 
+    }
+
+    @Override
+    public void clearChartData() {
+        lcHistoryChart.clear();
+    }
+
+    @Override
+    public void setChartDate(@NonNull final LineData lineData) {
+        lcHistoryChart.setData(lineData);
+        lcHistoryChart.setRenderer(new CustomFillLineLegendRenderer(lcHistoryChart, lcHistoryChart.getAnimator(), lcHistoryChart.getViewPortHandler()));
+        lcHistoryChart.invalidate();
+    }
+
+    @Override
+    public void showChart(boolean visible) {
+        if (visible) {
+            lcHistoryChart.setVisibility(View.VISIBLE);
+        } else {
+            lcHistoryChart.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void showProgress(boolean visible) {
+        if (visible) {
+            progressBarHistory.setVisibility(View.VISIBLE);
+        } else {
+            progressBarHistory.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void showProgressLog(boolean visible) {
+        if (visible) {
+            svLog.setVisibility(View.VISIBLE);
+        } else {
+            svLog.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void setProgressLogText(@NonNull final String logText) {
+        tvProgressLog.setText(logText);
     }
 }

@@ -12,17 +12,26 @@ import com.mss.weather.domain.models.City;
 public interface HistoryView extends MvpView {
 
     @StateStrategyType(AddToEndSingleStrategy.class)
-    void showCity(@NonNull final City city);
+    void showCityInfo(@NonNull final City city);
+
+    @StateStrategyType(AddToEndSingleStrategy.class)
+    void fillSpiners(@NonNull final String[] parameters, @NonNull final Integer[] years, @NonNull final String[] months, @NonNull final Integer[] hours);
 
     @StateStrategyType(OneExecutionStateStrategy.class)
-    void clearStatistics();
+    void clearChartData();
 
     @StateStrategyType(OneExecutionStateStrategy.class)
-    void showStatistics(@NonNull final LineData lineData);
+    void setChartDate(@NonNull final LineData lineData);
+
+    @StateStrategyType(AddToEndSingleStrategy.class)
+    void showChart(boolean visible);
 
     @StateStrategyType(AddToEndSingleStrategy.class)
     void showProgress(boolean visible);
 
     @StateStrategyType(AddToEndSingleStrategy.class)
-    void fillSpiners(@NonNull final String[] parameters, @NonNull final Integer[] years, @NonNull final String[] months, @NonNull final Integer[] hours);
+    void showProgressLog(boolean visible);
+
+    @StateStrategyType(OneExecutionStateStrategy.class)
+    void setProgressLogText(@NonNull final String logText);
 }
