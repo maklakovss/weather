@@ -3,6 +3,7 @@ package com.mss.weather.data.db.models;
 import java.util.Date;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
 import lombok.Data;
 
@@ -12,7 +13,11 @@ public class DayWeatherDB extends RealmObject {
     @PrimaryKey
     private String id;
 
+    @Index
+    private boolean isPast;
+    @Index
     private String cityID;
+    @Index
     private Date date;
 
     private Date sunrise;

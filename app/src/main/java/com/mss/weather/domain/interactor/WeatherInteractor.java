@@ -7,9 +7,11 @@ import com.mss.weather.domain.models.City;
 import com.mss.weather.domain.models.InfoWeather;
 import com.mss.weather.domain.models.Position;
 
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Maybe;
+import io.reactivex.Observable;
 
 public interface WeatherInteractor {
 
@@ -42,4 +44,11 @@ public interface WeatherInteractor {
 
     @Nullable
     City getCityById(@NonNull final String cityId);
+
+    @NonNull
+    Observable<InfoWeather> getWeatherStatistics(@NonNull final City city, @NonNull final Date dateFrom, @NonNull final Date dateTo);
+
+    void saveLocalWeatherStatistic(@NonNull final InfoWeather infoWeather);
+
+    InfoWeather getLocalWeatherStatistic(@NonNull final City city, @NonNull final Date dateFrom, @NonNull final Date dateTo);
 }

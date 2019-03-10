@@ -6,9 +6,11 @@ import com.mss.weather.domain.models.City;
 import com.mss.weather.domain.models.InfoWeather;
 import com.mss.weather.domain.models.Position;
 
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Maybe;
+import io.reactivex.Observable;
 
 public interface NetworkRepository {
 
@@ -20,4 +22,6 @@ public interface NetworkRepository {
 
     @NonNull
     Maybe<InfoWeather> getWeatherInfo(@NonNull final City city);
+
+    Observable<InfoWeather> getPastWeatherInfo(@NonNull final City city, @NonNull final Date dateFrom, @NonNull final Date dateTo);
 }

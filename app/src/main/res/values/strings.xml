@@ -56,5 +56,17 @@
     <string name="android_studio">Android Studio</string>
     <string name="android_studio_android_com" translatable="false">android.studio@android.com</string>
     <string name="profileimage" translatable="false">ProfileImage</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="apply_label">Apply</string>
+    <string name="parametr_label">Parametr</string>
+    <string name="year_label">Year</string>
+    <string name="hours_label">Hours</string>
+    <string name="month_label">Month</string>
+    <string-array name="parametrs_array">
+        <item>Temperature, C</item>
+        <item>Wind, m/s</item>
+        <item>Hymidity</item>
+        <item>Temperature water, C</item>
+    </string-array>
 
 </resources>

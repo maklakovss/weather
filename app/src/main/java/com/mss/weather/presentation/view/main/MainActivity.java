@@ -105,6 +105,13 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Weat
     }
 
     @Override
+    public void showHistory(String cityID) {
+        final Bundle bundle = new Bundle();
+        bundle.putString(DayWeatherFragment.CITY_ID_KEY, cityID);
+        navController.navigate(R.id.action_currentWeatherFragment_to_historyFragment, bundle);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return super.onCreateOptionsMenu(menu);

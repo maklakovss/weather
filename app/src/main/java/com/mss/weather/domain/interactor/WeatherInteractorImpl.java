@@ -22,6 +22,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Maybe;
+import io.reactivex.Observable;
 
 public class WeatherInteractorImpl implements WeatherInteractor {
 
@@ -127,9 +128,9 @@ public class WeatherInteractorImpl implements WeatherInteractor {
                     currentWeatherLocalRepository.updateOrInsertCurrentWeather(infoWeather.getCurrentWeather());
                     dayWeatherLocalRepository.deleteOldDayWeatherByCityID(infoWeather.getCityID(), getCurrentDate());
                     hourWeatherLocalRepository.deleteOldHourWeatherByCityID(infoWeather.getCityID(), getCurrentDate());
-                    dayWeatherLocalRepository.updateOrInsertDayWeather(infoWeather.getDays());
+                    dayWeatherLocalRepository.updateOrInsertDayWeather(infoWeather.getDays(), false);
                     for (DayWeather day : infoWeather.getDays()) {
-                        hourWeatherLocalRepository.updateOrInsertHourWeather(day.getHourly());
+                        hourWeatherLocalRepository.updateOrInsertHourWeather(day.getHourly(), false);
                     }
                 });
     }
@@ -140,9 +141,9 @@ public class WeatherInteractorImpl implements WeatherInteractor {
         final InfoWeather infoWeather = infoWeatherLocalRepository.getInfoWeatherById(city.getId());
         if (infoWeather != null) {
             infoWeather.setCurrentWeather(currentWeatherLocalRepository.getCurrentWeatherById(city.getId()));
-            infoWeather.setDays(dayWeatherLocalRepository.getDayWeathersByCityId(city.getId(), getCurrentDate()));
+            infoWeather.setDays(dayWeatherLocalRepository.getDayWeathersByCityId(city.getId(), getCurrentDate(), getCurrentDate(), false));
             for (DayWeather day : infoWeather.getDays()) {
-                day.setHourly(hourWeatherLocalRepository.getHourWeathersByCityId(city.getId(), day.getDate()));
+                day.setHourly(hourWeatherLocalRepository.getHourWeathersByCityId(city.getId(), day.getDate(), false));
             }
         }
         return infoWeather;
@@ -152,6 +153,34 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     @Override
     public City getCityById(String cityId) {
         return cityLocalRepository.getCityById(cityId);
+    }
+
+    @NonNull
+    @Override
+    public Observable<InfoWeather> getWeatherStatistics(final @NonNull City city, @NonNull final Date dateFrom, @NonNull final Date dateTo) {
+        return networkRepository.getPastWeatherInfo(city, dateFrom, dateTo);
+    }
+
+    @Override
+    public void saveLocalWeatherStatistic(@NonNull InfoWeather infoWeather) {
+        dayWeatherLocalRepository.updateOrInsertDayWeather(infoWeather.getDays(), true);
+        for (DayWeather day : infoWeather.getDays()) {
+            hourWeatherLocalRepository.updateOrInsertHourWeather(day.getHourly(), true);
+        }
+    }
+
+    @Override
+    public InfoWeather getLocalWeatherStatistic(@NonNull City city, @NonNull Date dateFrom, @NonNull Date dateTo) {
+        List<DayWeather> days = dayWeatherLocalRepository.getDayWeathersByCityId(city.getId(), dateFrom, dateTo, true);
+        if (days != null && days.size() > 0) {
+            final InfoWeather infoWeather = new InfoWeather();
+            infoWeather.setDays(days);
+            for (DayWeather day : days) {
+                day.setHourly(hourWeatherLocalRepository.getHourWeathersByCityId(city.getId(), day.getDate(), true));
+            }
+            return infoWeather;
+        }
+        return null;
     }
 
     @NonNull

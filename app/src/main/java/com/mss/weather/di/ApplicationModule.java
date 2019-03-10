@@ -44,7 +44,8 @@ public class ApplicationModule {
                 infoWeatherLocalRepository,
                 currentWeatherLocalRepository,
                 dayWeatherLocalRepository,
-                hourWeatherLocalRepository, sensorsRepository);
+                hourWeatherLocalRepository,
+                sensorsRepository);
     }
 
     @Singleton

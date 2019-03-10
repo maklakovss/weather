@@ -11,12 +11,14 @@ import java.util.List;
 public interface DayWeatherLocalRepository {
 
     @Nullable
-    List<DayWeather> getDayWeathersByCityId(@NonNull final String cityId, @NonNull final Date date);
+    List<DayWeather> getDayWeathersByCityId(@NonNull final String cityId, @NonNull final Date date, boolean isPast);
+
+    @Nullable
+    List<DayWeather> getDayWeathersByCityId(@NonNull final String cityId, @NonNull final Date dateFrom, Date dateTo, boolean isPast);
 
     void deleteDayWeatherByCityID(@NonNull final String cityId);
 
     void deleteOldDayWeatherByCityID(@NonNull final String cityId, @NonNull final Date date);
 
-    void updateOrInsertDayWeather(@NonNull final List<DayWeather> dayWeathers);
-
+    void updateOrInsertDayWeather(@NonNull final List<DayWeather> dayWeathers, boolean isPast);
 }

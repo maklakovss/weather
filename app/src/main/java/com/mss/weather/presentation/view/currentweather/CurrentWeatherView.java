@@ -35,4 +35,7 @@ public interface CurrentWeatherView extends MvpView {
 
     @StateStrategyType(OneExecutionStateStrategy.class)
     void showDay(@NonNull final String cityID, @NonNull final Date date);
+
+    @StateStrategyType(OneExecutionStateStrategy.class)
+    void showHistory(String cityID);
 }

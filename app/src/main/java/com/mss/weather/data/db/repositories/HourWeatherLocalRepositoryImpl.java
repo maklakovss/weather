@@ -19,13 +19,14 @@ public class HourWeatherLocalRepositoryImpl implements HourWeatherLocalRepositor
 
     @Nullable
     @Override
-    public List<HourWeather> getHourWeathersByCityId(@NonNull final String cityId, @NonNull final Date date) {
+    public List<HourWeather> getHourWeathersByCityId(@NonNull final String cityId, @NonNull final Date date, boolean isPast) {
         final Calendar endDate = Calendar.getInstance();
         endDate.setTime(date);
         endDate.roll(Calendar.DATE, 1);
 
         final Realm realm = Realm.getDefaultInstance();
         final RealmResults<HourWeatherDB> hourWeatherDBS = realm.where(HourWeatherDB.class)
+                .equalTo("isPast", isPast)
                 .equalTo("cityID", cityId)
                 .greaterThanOrEqualTo("date", date)
                 .lessThan("date", endDate.getTime())
@@ -38,7 +39,6 @@ public class HourWeatherLocalRepositoryImpl implements HourWeatherLocalRepositor
         }
         realm.close();
         return dayWeathers;
-
     }
 
     @Override
@@ -60,6 +60,7 @@ public class HourWeatherLocalRepositoryImpl implements HourWeatherLocalRepositor
         final Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         final RealmResults<HourWeatherDB> hourWeatherDBRealmResults = realm.where(HourWeatherDB.class)
+                .equalTo("isPast", false)
                 .equalTo("cityID", cityId)
                 .lessThan("date", date)
                 .findAll();
@@ -69,10 +70,10 @@ public class HourWeatherLocalRepositoryImpl implements HourWeatherLocalRepositor
     }
 
     @Override
-    public void updateOrInsertHourWeather(@NonNull final List<HourWeather> hourWeathers) {
+    public void updateOrInsertHourWeather(@NonNull final List<HourWeather> hourWeathers, boolean isPast) {
         final Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        realm.insertOrUpdate(HourWeatherMapper.mapHourWeathersToHourWeatherDBs(hourWeathers));
+        realm.insertOrUpdate(HourWeatherMapper.mapHourWeathersToHourWeatherDBs(hourWeathers, isPast));
         realm.commitTransaction();
         realm.close();
     }

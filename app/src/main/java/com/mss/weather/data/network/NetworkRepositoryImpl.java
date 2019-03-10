@@ -5,14 +5,17 @@ import android.support.annotation.NonNull;
 import com.mss.weather.BuildConfig;
 import com.mss.weather.data.network.mappers.CitiesResponseMapper;
 import com.mss.weather.data.network.mappers.WeatherResponseMapper;
+import com.mss.weather.data.network.utils.DateStringToDate;
 import com.mss.weather.domain.models.City;
 import com.mss.weather.domain.models.InfoWeather;
 import com.mss.weather.domain.models.Position;
 import com.mss.weather.domain.repositories.NetworkRepository;
 
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Maybe;
+import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -23,7 +26,7 @@ public class NetworkRepositoryImpl implements NetworkRepository {
 
     private static final String BASE_URL = "http://api.worldweatheronline.com/";
     private static final String FORMAT = "json";
-    private static final String KEY = "fcb691d5d4c64b45a8b124513182112";
+    private static final String KEY = "db8d42d95fb54c8eaf6140043192402";
 
     private final WorldWeatherOnline worldWeatherOnline;
 
@@ -75,5 +78,18 @@ public class NetworkRepositoryImpl implements NetworkRepository {
                 "ru")
                 .map(weatherResponse -> WeatherResponseMapper.mapWeatherResponseToWeatherInfo(weatherResponse, city))
                 .firstElement();
+    }
+
+    @Override
+    public Observable<InfoWeather> getPastWeatherInfo(@NonNull final City city, @NonNull final Date dateFrom, @NonNull final Date dateTo) {
+        return worldWeatherOnline.getPastWeather(city.getId(),
+                KEY,
+                FORMAT,
+                DateStringToDate.dateToString(dateFrom),
+                DateStringToDate.dateToString(dateTo),
+                "no",
+                1,
+                "ru")
+                .map(weatherResponse -> WeatherResponseMapper.mapWeatherResponseToWeatherInfo(weatherResponse, city));
     }
 }

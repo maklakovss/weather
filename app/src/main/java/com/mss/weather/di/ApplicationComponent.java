@@ -2,6 +2,7 @@ package com.mss.weather.di;
 
 import com.mss.weather.presentation.view.currentweather.CurrentWeatherFragment;
 import com.mss.weather.presentation.view.dayweather.DayWeatherFragment;
+import com.mss.weather.presentation.view.history.HistoryFragment;
 import com.mss.weather.presentation.view.listcities.ListCitiesFragment;
 import com.mss.weather.presentation.view.main.MainActivity;
 import com.mss.weather.presentation.view.selectcity.SelectCityFragment;
@@ -23,6 +24,8 @@ public interface ApplicationComponent {
     void inject(ListCitiesFragment listCitiesFragment);
 
     void inject(DayWeatherFragment dayWeatherFragment);
+
+    void inject(HistoryFragment historyFragment);
 
 
     //activity

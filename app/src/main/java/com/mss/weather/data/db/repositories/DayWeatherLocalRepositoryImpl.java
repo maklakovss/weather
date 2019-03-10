@@ -18,11 +18,32 @@ public class DayWeatherLocalRepositoryImpl implements DayWeatherLocalRepository 
 
     @Nullable
     @Override
-    public List<DayWeather> getDayWeathersByCityId(@NonNull final String cityId, @NonNull final Date date) {
+    public List<DayWeather> getDayWeathersByCityId(@NonNull final String cityId, @NonNull final Date date, boolean isPast) {
         final Realm realm = Realm.getDefaultInstance();
         final RealmResults<DayWeatherDB> dayWeatherDBs = realm.where(DayWeatherDB.class)
+                .equalTo("isPast", isPast)
                 .equalTo("cityID", cityId)
                 .greaterThanOrEqualTo("date", date)
+                .sort("date")
+                .findAll();
+
+        List<DayWeather> dayWeathers = null;
+        if (dayWeatherDBs != null) {
+            dayWeathers = DayWeatherMapper.mapDayWeatherDBsToDayWeathers(dayWeatherDBs);
+        }
+        realm.close();
+        return dayWeathers;
+    }
+
+    @Nullable
+    @Override
+    public List<DayWeather> getDayWeathersByCityId(@NonNull final String cityId, @NonNull final Date dateFrom, Date dateTo, boolean isPast) {
+        final Realm realm = Realm.getDefaultInstance();
+        final RealmResults<DayWeatherDB> dayWeatherDBs = realm.where(DayWeatherDB.class)
+                .equalTo("isPast", isPast)
+                .equalTo("cityID", cityId)
+                .greaterThanOrEqualTo("date", dateFrom)
+                .lessThanOrEqualTo("date", dateTo)
                 .sort("date")
                 .findAll();
 
@@ -53,6 +74,7 @@ public class DayWeatherLocalRepositoryImpl implements DayWeatherLocalRepository 
         final Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         final RealmResults<DayWeatherDB> dayWeatherDBs = realm.where(DayWeatherDB.class)
+                .equalTo("isPast", false)
                 .equalTo("cityID", cityId)
                 .lessThan("date", date)
                 .findAll();
@@ -62,10 +84,10 @@ public class DayWeatherLocalRepositoryImpl implements DayWeatherLocalRepository 
     }
 
     @Override
-    public void updateOrInsertDayWeather(@NonNull final List<DayWeather> dayWeathers) {
+    public void updateOrInsertDayWeather(@NonNull final List<DayWeather> dayWeathers, boolean isPast) {
         final Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        realm.insertOrUpdate(DayWeatherMapper.mapDayWeathersToDayWeatherDBs(dayWeathers));
+        realm.insertOrUpdate(DayWeatherMapper.mapDayWeathersToDayWeatherDBs(dayWeathers, isPast));
         realm.commitTransaction();
         realm.close();
     }

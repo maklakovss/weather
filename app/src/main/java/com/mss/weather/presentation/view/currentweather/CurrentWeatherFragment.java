@@ -33,6 +33,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class CurrentWeatherFragment extends MvpAppCompatFragment implements CurrentWeatherView, DayListAdapter.OnItemClickListener {
@@ -70,7 +71,7 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
     TextView tvTime;
     @BindView(R.id.rvWeatherList)
     RecyclerView rvWeatherList;
-    @BindView(R.id.progressBar)
+    @BindView(R.id.progressBarHistory)
     ProgressBar progressBar;
     @BindView(R.id.ivWeatherIcon)
     ImageView ivWeatherIcon;
@@ -97,6 +98,11 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
         rvWeatherList.setLayoutManager(linearLayoutManager);
         currentWeatherPresenter.onCreate();
         return layout;
+    }
+
+    @OnClick(R.id.ibShowHistory)
+    public void onHistoryClick(View view) {
+        currentWeatherPresenter.onHistoryClick();
     }
 
     @Override
@@ -149,6 +155,11 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
     }
 
     @Override
+    public void showHistory(String cityID) {
+        weatherFragmentsNavigator.showHistory(cityID);
+    }
+
+    @Override
     public void clearCurrentWeather() {
         tvDate.setText("");
         tvTime.setText("");
@@ -181,7 +192,7 @@ public class CurrentWeatherFragment extends MvpAppCompatFragment implements Curr
 
     @Override
     public void onItemClick(View view, int position) {
-        currentWeatherPresenter.onClick(position);
+        currentWeatherPresenter.onShowDayClick(position);
     }
 
     @Override

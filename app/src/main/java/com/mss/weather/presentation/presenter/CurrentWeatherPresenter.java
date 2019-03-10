@@ -68,7 +68,11 @@ public class CurrentWeatherPresenter extends MvpPresenter<CurrentWeatherView> {
         getViewState().clearWeatherList();
     }
 
-    public void onClick(int position) {
+    public void onShowDayClick(int position) {
         getViewState().showDay(infoWeather.getCityID(), infoWeather.getDays().get(position).getDate());
+    }
+
+    public void onHistoryClick() {
+        getViewState().showHistory(infoWeather.getCityID());
     }
 }

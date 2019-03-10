@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_currentWeatherFragment_to_dayWeatherFragment"
             app:destination="@id/dayWeatherFragment" />
+        <action
+            android:id="@+id/action_currentWeatherFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
     </fragment>
     <fragment
         android:id="@+id/dayWeatherFragment"
@@ -36,4 +39,9 @@
         android:name="com.mss.weather.presentation.view.selectcity.SelectCityFragment"
         android:label="fragment_select_city"
         tools:layout="@layout/fragment_select_city" />
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.mss.weather.presentation.view.history.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
 </navigation>
