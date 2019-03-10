@@ -2,8 +2,8 @@ package com.mss.weather.data.db.repositories;
 
 import android.support.annotation.NonNull;
 
-import com.mss.weather.data.db.models.SettingsDB;
 import com.mss.weather.domain.models.City;
+import com.mss.weather.domain.models.Settings;
 import com.mss.weather.domain.repositories.CityLocalRepository;
 
 import java.util.List;
@@ -20,9 +20,13 @@ public class CityLocalRepositoryImpl implements CityLocalRepository {
     @Override
     public City getCityById(@NonNull final String id) {
         final Realm realm = Realm.getDefaultInstance();
-        final City city = realm.where(City.class)
+        final City result = realm.where(City.class)
                 .equalTo("id", id)
                 .findFirst();
+        City city = null;
+        if (result != null) {
+            city = realm.copyFromRealm(result);
+        }
         realm.close();
         return city;
     }
@@ -65,12 +69,12 @@ public class CityLocalRepositoryImpl implements CityLocalRepository {
     @Override
     public String getLastCityId() {
         final Realm realm = Realm.getDefaultInstance();
-        final SettingsDB settingsDB = realm.where(SettingsDB.class)
+        final Settings settings = realm.where(Settings.class)
                 .equalTo("id", 1)
                 .findFirst();
         String lastCityId = "";
-        if (settingsDB != null)
-            lastCityId = settingsDB.getLasCityId();
+        if (settings != null)
+            lastCityId = settings.getLastCityId();
         realm.close();
         return lastCityId;
     }
@@ -79,13 +83,13 @@ public class CityLocalRepositoryImpl implements CityLocalRepository {
     public void setLastCityId(@NonNull final String lastCityID) {
         final Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        SettingsDB settingsDB = realm.where(SettingsDB.class)
+        Settings settingsDB = realm.where(Settings.class)
                 .equalTo("id", 1)
                 .findFirst();
         if (settingsDB == null) {
-            settingsDB = new SettingsDB();
+            settingsDB = new Settings();
         }
-        settingsDB.setLasCityId(lastCityID);
+        settingsDB.setLastCityId(lastCityID);
         realm.insertOrUpdate(settingsDB);
         realm.commitTransaction();
         realm.close();
