@@ -1,13 +1,32 @@
 package com.mss.weather.domain.models;
 
+import android.support.annotation.NonNull;
+
+import io.realm.RealmModel;
+import io.realm.annotations.PrimaryKey;
 import lombok.Data;
 
 @Data
-public class PastHourWeather {
+public class PastHourWeather implements RealmModel {
+
+    @PrimaryKey
+    @NonNull
+    private String id;
+
+    @NonNull
     private String cityID;
-    private Integer year;
-    private Integer month;
-    private Integer hour;
+
+    @NonNull
+    private int year;
+
+    @NonNull
+    private int month;
+
+    @NonNull
+    private int day;
+
+    @NonNull
+    private int hour;
 
     private int tempC;
     private int windSpeedKmph;
